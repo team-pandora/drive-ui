@@ -1,0 +1,65 @@
+        <Paper>
+          <Menu
+            id="demo-positioned-menu"
+            aria-labelledby="demo-positioned-button"
+            anchorEl={maya}
+            open={showMenu}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+          >
+            <MenuList sx={{ width: 300 }} dense>
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <CreateNewFolderOutlined />
+                </ListItemIcon>
+                <ListItemText>Folder</ListItemText>
+              </MenuItem>
+
+              <Divider />
+
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <UploadFile />
+                </ListItemIcon>
+                <ListItemText>Upload Files</ListItemText>
+              </MenuItem>
+
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <DriveFolderUpload />
+                </ListItemIcon>
+                <ListItemText>Upload Folder</ListItemText>
+              </MenuItem>
+
+              <Divider />
+
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <Article sx={{ color: "blue" }} />
+                </ListItemIcon>
+                <ListItemText>Google docs</ListItemText>
+              </MenuItem>
+
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <Article sx={{ color: "orange" }} />
+                </ListItemIcon>
+                <ListItemText>PDF File</ListItemText>
+              </MenuItem>
+
+              <MenuItem onClick={handleClose}>
+                <ListItemIcon>
+                  <Article sx={{ color: "green" }} />
+                </ListItemIcon>
+                <ListItemText>Excel File</ListItemText>
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Paper>
