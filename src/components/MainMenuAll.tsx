@@ -13,7 +13,7 @@ import {
   UploadFile,
   DriveFolderUpload,
 } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import i18next from "i18next";
 
 const MainMenu: React.FC<{
@@ -71,21 +71,21 @@ const MainMenu: React.FC<{
           <ListItemIcon>
             <Article sx={{ color: "blue" }} />
           </ListItemIcon>
-          <ListItemText>Google docs</ListItemText>
+          <ListItemText>{`${i18next.t("mainMenu.GoogleDocs")}`}</ListItemText>
         </MenuItem>
 
         <MenuItem>
           <ListItemIcon onClick={props.handleClose}>
             <Article sx={{ color: "orange" }} />
           </ListItemIcon>
-          <ListItemText>PDF File</ListItemText>
+          <ListItemText>{`${i18next.t("mainMenu.PDFfile")}`}</ListItemText>
         </MenuItem>
 
         <MenuItem onClick={props.handleClose}>
           <ListItemIcon>
             <Article sx={{ color: "green" }} />
           </ListItemIcon>
-          <ListItemText>Excel File</ListItemText>
+          <ListItemText>{`${i18next.t("mainMenu.ExcelFile")}`}</ListItemText>
         </MenuItem>
       </MenuList>
     </Menu>

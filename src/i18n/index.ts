@@ -1,28 +1,16 @@
+import React from 'react';
 import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next';
-
-import hebrew from './he';
-import english from './en';
+import { initReactI18next, useTranslation } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import HttpApi from 'i18next-http-backend';
 
-const resources = {
-    he: {
-        translation: hebrew,
-    },
-    en: {
-        translation: english,
-    },
-};
-
-i18next.use(initReactI18next).use(LanguageDetector).init({
-    resources,
-    // lng: 'he',
+i18next.use(initReactI18next).use(LanguageDetector).use(HttpApi).init({
     fallbackLng: 'en',
     detection: {
-        order: ['htmlTag','cookie', 'localStorage', 'path', 'subdomain'],
+        order: ['cookie','htmlTag', 'localStorage', 'path', 'subdomain'],
         caches: ['cookie'],
     },
-    interpolation: {
-        escapeValue: false,
-    }
+    backend: {
+        loadPath: '/assets/locales/{{lng}}/translation.json',
+    },
 });

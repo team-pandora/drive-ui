@@ -19,6 +19,7 @@ import { filesActions } from "../../store/files";
 import { uiActions } from "../../store/ui";
 import ContextMenu from "../ContextMenu";
 import FileType from "../FileType";
+import i18next from "i18next";
 
 type Order = "asc" | "desc";
 
@@ -129,9 +130,9 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
               gutterBottom
               component="div"
             >
-              פריטים שבאשפה יימחקו סופית אחרי 30 יום
+             {`${i18next.t("messages.BinMsg")}`}
             </Typography>
-            <Button sx={{ color: "#000000", margin: "0px 1%" }}>ריקון האשפה</Button>
+            <Button sx={{ color: "#000000", margin: "0px 1%", textTransform: "none" }}>{`${i18next.t("buttons.Bin")}`}</Button>
           </Box>
           <Table>
             <TableHeader

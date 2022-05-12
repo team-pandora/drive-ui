@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
     name: 'ui',
-    initialState: { mainMenuIsVisible: false, anchorEl: null, language: 'he', contextMenu: false, contextMenuPosition: {x: 0, y: 0} || null },
+    initialState: { mainMenuIsVisible: false, anchorEl: null, language: 'en', contextMenu: false, contextMenuPosition: {x: 0, y: 0} || null },
     reducers: {
         toggleMainMenu: (state) => {
             state.mainMenuIsVisible = !state.mainMenuIsVisible;

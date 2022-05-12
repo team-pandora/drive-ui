@@ -23,7 +23,7 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
   const [page, setPage] = React.useState(0);
   const rowsPerPage = 12;
 
-    const fileicon = FileType('folder');
+  const fileicon = FileType('folder');
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,

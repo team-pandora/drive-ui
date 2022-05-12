@@ -11,14 +11,16 @@ import RecentlyButton from './navButtons/RecentlyButton';
 import FavoritesButton from './navButtons/FavoritesButton';
 import TrashButton from './navButtons/TrashButton';
 
-const Buttons = styled(Box)({
+const ButtonsBox = styled(Box)({
   height: "260px",
   borderBottom: "solid 1px lightgray",
+  // backgroundColor: "pink",
+  // direction: "rtl",
 });
 
 const PagesButtons = () => {
   return (
-    <Buttons>
+    <ButtonsBox>
       <List>
         <MyDriveButton />
         <SharedButton />
@@ -26,7 +28,7 @@ const PagesButtons = () => {
         <FavoritesButton />
         <TrashButton />
       </List>
-    </Buttons>
+    </ButtonsBox>
   );
 };
 

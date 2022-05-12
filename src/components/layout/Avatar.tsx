@@ -38,12 +38,12 @@ const UserAvatar: React.FC<{ name: string }> = (props) => {
 
   const selectEnglish = () => {
     dispatch(uiActions.setLanguage("en"));
-    // i18next.changeLanguage("en");
+    i18next.changeLanguage("en");
   }
 
   const selectHebrew = () => {
     dispatch(uiActions.setLanguage("he"));
-    // i18next.changeLanguage("he");
+    i18next.changeLanguage("he");
   }
 
   return (

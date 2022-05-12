@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "./components/layout/toolBar/ToolBar";
 import Sidebar from "./components/layout/sideNav/Sidebar";
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -9,15 +9,20 @@ import Recently from "./pages/Recently";
 import Favorites from "./pages/Favorites";
 import Trash from './pages/Trash';
 import Quota from "./pages/Quota";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import cookies from "js-cookie";
+import { uiActions } from "./store/ui";
 
-function App() {  
+function App() {
+  const dispatch = useDispatch();
+  const currentLanguageCode = cookies.get("i18next") || 'en';
+  const { t } = useTranslation();
+  dispatch(uiActions.setLanguage(currentLanguageCode));
   const lang = useSelector((state: any) => state.ui.language);
   const dir = lang === "en" ? "ltr" : "rtl";
-  
-  return (
 
+  return (
     <Box dir={dir}>
       <Navbar />
       <Stack direction="row" spacing={2} justifyContent="space-evenly">

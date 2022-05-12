@@ -3,6 +3,7 @@ import { styled, InputBase, Box, IconButton } from "@mui/material";
 import { width } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
+import i18next from "i18next";
 
 const SearchBox = styled(Box)(() => ({
   display: "flex",
@@ -37,7 +38,7 @@ const SearchBar = () => {
           <SearchIcon sx={{ color: "#5f6368" }} />
         </IconButton>
         <Search sx={{ width: "100%" }}>
-          <InputBase sx={{ width: "100%" }} placeholder="חיפוש ב-Drive" />
+          <InputBase sx={{ width: "100%" }} placeholder={`${i18next.t("search.Search")}`} />
         </Search>
       </PlaceHolderAndIcon>
     </SearchBox>

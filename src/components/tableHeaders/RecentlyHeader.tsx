@@ -8,6 +8,7 @@ import { visuallyHidden } from "@mui/utils";
 import { useSelector } from "react-redux";
 import { sortableheadCells } from "../../data/myDriveTable";
 import { RecentI } from "../../data/fakedata";
+import i18next from "i18next";
 
 interface HeadCell {
     disablePadding: boolean;
@@ -15,27 +16,6 @@ interface HeadCell {
     label: string;
     numeric: boolean;
 }
-
-const headCells: readonly HeadCell[] = [
-    {
-      id: "name",
-      numeric: false,
-      disablePadding: false,
-      label: 'שם',
-    },
-    {
-      id: "owner",
-      numeric: false,
-      disablePadding: false,
-      label: 'בעלים',
-    },
-    {
-      id: "size",
-      numeric: false,
-      disablePadding: false,
-      label: `גודל הקובץ`,
-    },
-];
 
 
 type Order = "asc" | "desc";
@@ -50,6 +30,26 @@ interface EnhancedTableProps {
 }
 
 function TableHeader(props: EnhancedTableProps) {
+  const headCells: readonly HeadCell[] = [
+    {
+      id: "name",
+      numeric: false,
+      disablePadding: false,
+      label: `${i18next.t("tableHeader.Name")}`,
+    },
+    {
+      id: "owner",
+      numeric: false,
+      disablePadding: false,
+      label: `${i18next.t("tableHeader.Owner")}`,
+    },
+    {
+      id: "size",
+      numeric: false,
+      disablePadding: false,
+      label: `${i18next.t("tableHeader.Size")}`,
+    },
+];
   const lang = useSelector((state: any) => state.ui.language);
   const dir = lang === "en" ? false : true;
 
@@ -67,8 +67,6 @@ function TableHeader(props: EnhancedTableProps) {
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     document.addEventListener("contextmenu", (event) => {
       event.preventDefault();
-      const xPos = event.pageX + "px";
-      const yPos = event.pageY + "px";
     });
   };
 

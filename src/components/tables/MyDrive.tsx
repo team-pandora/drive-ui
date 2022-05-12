@@ -123,7 +123,6 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row);
                   const labelId = `enhanced-table-checkbox-${index}`;
-                  console.log(row.fsObjectUpdatedAt.toString())
 
                   return (
                     <TableRow

@@ -8,7 +8,7 @@ import { visuallyHidden } from "@mui/utils";
 import { useSelector } from "react-redux";
 import { sortableheadCells } from "../../data/myDriveTable";
 import { TrashI } from "../../data/fakedata";
-
+import i18next from "i18next";
 interface HeadCell {
     disablePadding: boolean;
     id: keyof TrashI;
@@ -21,25 +21,25 @@ const headCells: readonly HeadCell[] = [
       id: "name",
       numeric: false,
       disablePadding: false,
-      label: 'שם',
+      label: `${i18next.t("tableHeader.Name")}`,
     },
     {
       id: "owner",
       numeric: false,
       disablePadding: false,
-      label: 'בעלים',
+      label: `${i18next.t("tableHeader.Owner")}`,
     },
     {
       id: "fsObjectUpdatedAt",
       numeric: false,
       disablePadding: false,
-      label: `תאריך ההעברה לאשפה`,
+      label: `${i18next.t("tableHeader.DateBinned")}`,
     },
     {
       id: "size",
       numeric: false,
       disablePadding: false,
-      label: `גודל הקובץ`,
+      label: `${i18next.t("tableHeader.Size")}`,
     },
 ];
 

@@ -8,35 +8,16 @@ import { visuallyHidden } from "@mui/utils";
 import { useSelector } from "react-redux";
 import { sortableheadCells } from "../../data/myDriveTable";
 import { SharedI } from "../../data/fakedata";
-
+import i18next from "i18next";
 
 interface HeadCell {
-    disablePadding: boolean;
-    id: keyof SharedI;
-    label: string;
-    numeric: boolean;
-  }
-  
-const headCells: readonly HeadCell[] = [
-    {
-      id: "name",
-      numeric: false,
-      disablePadding: true,
-      label: 'שם',
-    },
-    {
-      id: "sharedBy",
-      numeric: false,
-      disablePadding: false,
-      label: 'שותף על ידי',
-    },
-    {
-      id: "stateCreatedAt",
-      numeric: false,
-      disablePadding: false,
-      label: `תאריך השיתוף`,
-    },
-  ];
+  disablePadding: boolean;
+  id: keyof SharedI;
+  label: string;
+  numeric: boolean;
+}
+
+
 
 type Order = "asc" | "desc";
 
@@ -50,6 +31,26 @@ interface EnhancedTableProps {
 }
 
 function TableHeader(props: EnhancedTableProps) {
+  const headCells: readonly HeadCell[] = [
+    {
+      id: "name",
+      numeric: false,
+      disablePadding: true,
+      label: `${i18next.t("tableHeader.Name")}`,
+    },
+    {
+      id: "sharedBy",
+      numeric: false,
+      disablePadding: false,
+      label: `${i18next.t("tableHeader.SharedBy")}`,
+    },
+    {
+      id: "stateCreatedAt",
+      numeric: false,
+      disablePadding: false,
+      label: `${i18next.t("tableHeader.ShareDate")}`,
+    },
+  ];
   const lang = useSelector((state: any) => state.ui.language);
   const dir = lang === "en" ? false : true;
 
@@ -63,12 +64,9 @@ function TableHeader(props: EnhancedTableProps) {
       onRequestSort(event, property);
     };
 
-
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     document.addEventListener("contextmenu", (event) => {
       event.preventDefault();
-      const xPos = event.pageX + "px";
-      const yPos = event.pageY + "px";
     });
   };
 
@@ -91,7 +89,7 @@ function TableHeader(props: EnhancedTableProps) {
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : "asc"}
                 onClick={createSortHandler(headCell.id)}
-                dir='ltr'
+                dir="ltr"
               >
                 {headCell.label}
                 {orderBy === headCell.id ? (

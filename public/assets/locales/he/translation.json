@@ -1,0 +1,60 @@
+{
+    "sideBar": {
+      "myDrive": "האחסון שלי",
+      "SharedWithMe": "שותפו איתי",
+      "Recently": "לאחרונה",
+      "Favorites": "מסומן בכוכב",
+      "Trash": "אשפה",
+      "Storage": "אחסון"
+    },
+    "mainMenu": {
+      "Folder": "תיקייה",
+      "UploadFiles": "העלאת קבצים",
+      "UploadFolder": "העלאת תיקייה",
+      "PDFfile": "קובץ PDF",
+      "ExcelFile": "קובץ Excel",
+      "GoogleDocs": "גוגל Docs"
+    },
+    "tableHeader": {
+      "Name": "שם",
+      "Owner": "בעלים",
+      "LastModified": "השינוי האחרון",
+      "Size": "גודל הקובץ",
+      "Type": "סוג",
+      "SharedBy": "שותף על ידי",
+      "ShareDate": "תאריך השיתוף",
+      "DateBinned": "תאריך ההעברה לאשפה"
+    },
+    "pageHeader": {
+      "MyDrive": "האחסון שלי",
+      "SharedWithMe": "קבצים ששותפו איתי",
+      "Recent": "לאחרונה",
+      "Favorites": "מסומן בכוכב",
+      "Trash": "אשפה של האחסון שלי",
+      "Storage": "אחסון"
+    },
+    "buttons": {
+        "New": "חדש",
+        "Bin": "ריקון האשפה"
+    },
+    "contextMenu": {
+      "Rename": "שינוי שם",
+      "Remove": "הסרה",
+      "Download": "הורדה",
+      "Share": "שיתוף",
+      "MoveTo": "העבר אל",
+      "Copy": "צור עותק",
+      "Info": "פרטים",
+      "ExternalTransfer": "העברה למרחב חיצוני",
+      "Favorite": "הוספה לפריטים המסמונים בכוכב",
+      "Unfavorite": "הסרה מהפריטים המסומנים בכוכב",
+      "Shortcut": "צור קיצור דרך"
+    },
+    "search": {
+      "Search": "חיפוש ב-Drive"
+    },
+    "messages": {
+      "BinMsg": "פריטים שבאשפה יימחקו סופית אחרי 30 יום"
+    }
+  }
+  

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import './i18n';
+import "./i18n";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -14,16 +14,17 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-
 root.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-          <App />
-          <ReactQueryDevtools />
-        </QueryClientProvider>
-      </React.StrictMode>
-    </Provider>
-  </BrowserRouter>
+  <Suspense>
+    <BrowserRouter>
+      <Provider store={store}>
+        <React.StrictMode>
+          <QueryClientProvider client={queryClient}>
+            <App />
+            <ReactQueryDevtools />
+          </QueryClientProvider>
+        </React.StrictMode>
+      </Provider>
+    </BrowserRouter>
+  </Suspense>
 );

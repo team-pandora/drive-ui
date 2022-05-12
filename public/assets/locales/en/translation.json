@@ -1,0 +1,61 @@
+{
+    "sideBar": {
+      "myDrive": "My drive",
+      "SharedWithMe": "Shared with me",
+      "Recently": "Recent",
+      "Favorites": "Starred",
+      "Trash": "Bin",
+      "Storage": "Storage"
+    },
+    "mainMenu": {
+      "Folder": "Folder",
+      "UploadFiles": "Upload file",
+      "UploadFolder": "Upload folder",
+      "PDFfile": "PDF file",
+      "ExcelFile": "Excel file",
+      "GoogleDocs": "Google Docs"
+    },
+    "tableHeader": {
+      "Name": "Name",
+      "Owner": "Owner",
+      "LastModified": "Last modified",
+      "Size": "File size",
+      "Type": "Type",
+      "SharedBy": "Shared by",
+      "ShareDate": "Share date",
+      "DateBinned": "Date binned"
+    },
+    "pageHeader": {
+      "MyDrive": "My Drive",
+      "SharedWithMe": "Shared with me",
+      "Recent": "Recent",
+      "Favorites": "Starred",
+      "Trash": "Bin for My Drive",
+      "Storage": "Storage"
+    },
+    "buttons": {
+        "New": "New",
+        "Bin": "Empty bin"
+    },
+    "contextMenu": {
+      "Rename": "Rename",
+      "Remove": "Remove",
+      "Download": "Download",
+      "Share": "Share",
+      "MoveTo": "Move to",
+      "Copy": "Copy",
+      "Info": "Info",
+      "ExternalTransfer": "Move to external",
+      "Favorite": "Add to favorites",
+      "Unfavorite": "Remove from favorites",
+      "Shortcut": "Create shortcut"
+    },
+    "search": {
+      "Search": "Search in Drive"
+    },
+    "messages": {
+      "BinMsg": "Items in the bin are deleted forever after 30 days"
+    }
+
+  }
+  

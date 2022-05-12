@@ -3,6 +3,7 @@ import { AppBar, Toolbar, styled, Box } from "@mui/material";
 import SearchBar from "./Search";
 import Logo from "../Logo";
 import ToolBarIcons from "./ToolBarIcons";
+import { LogoIcon } from "../../../assets/LogoIcon";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -25,7 +26,8 @@ const Navbar = () => {
     >
       <StyledToolbar>
         <RightSide>
-          <Logo />
+          <LogoIcon />
+          {/* <Logo /> */}
           <SearchBar />
         </RightSide>
         <ToolBarIcons />

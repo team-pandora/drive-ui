@@ -20,6 +20,7 @@ const ButtonStyled = styled(Button)({
   color: "black",
   backgroundColor: "white",
   borderRadius: "20px",
+  textTransform: "none",
   ":hover": { backgroundColor: "rgba(0,0,0,.04)" },
   display: "flex",
   justifyContent: "space-between",
