@@ -10,15 +10,17 @@ const SearchBox = styled(Box)(() => ({
   // gap: "10px",
   alignItems: "center",
   backgroundColor: "rgba(0,0,0,.04)",
-  width: "640px",
+  width: "600px",
   height: "50px",
-  borderRadius: 10,
+    borderRadius: "10px 10px 0px 0px",   
+//   borderRadius: 10,
+  borderBottom: "2px solid #4285f4",
 }));
 
 const Search = styled("div")(() => ({
-  padding: "0 10px",
-  borderRadius: 8,
-  width: "40%",
+//   padding: "0 10px",
+//   borderRadius: 8,
+  width: "100%",
 }));
 
 const PlaceHolderAndIcon = styled(Box)(() => ({
@@ -35,11 +37,8 @@ const SearchBar = () => {
   return (
     <SearchBox dir={dir}>
       <PlaceHolderAndIcon>
-        <IconButton sx={{}}>
-          <SearchIcon sx={{ color: "#5f6368" }} />
-        </IconButton>
         <Search sx={{ width: "100%" }}>
-          <InputBase sx={{ width: "100%" }} placeholder={`${i18next.t("search.Search")}`} />
+          <InputBase sx={{ width: "100%", fontSize: '14px' }} placeholder={`הוספת אנשים וקבוצות`} />
         </Search>
       </PlaceHolderAndIcon>
     </SearchBox>

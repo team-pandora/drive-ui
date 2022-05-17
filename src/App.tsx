@@ -40,10 +40,10 @@ function App() {
           <Route path='/file?folderId' exact>
             <MyDrive />
           </Route>
-          <Route path='/shared'>
+          <Route path='/shared' exact>
             <Shared />
           </Route>
-          <Route path='/recently'>
+          <Route path='/recently' exact>
             <Recently />
           </Route>
           <Route path='/favorites'>

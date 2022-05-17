@@ -19,7 +19,7 @@ const NavLinkStyle = styled(NavLink)({
 
 const TrashButton = () => {
   return (
-    <NavLinkStyle activeStyle={{ color: "#1967d2" }} to="trash">
+    <NavLinkStyle activeStyle={{ color: "#1967d2" }} to="/trash">
       <ListItem disablePadding>
         <ListItemButton>
           <ListItemIcon>

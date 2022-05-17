@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Table,
@@ -8,6 +8,8 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
+  LinearProgress,
+  Stack,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import TableHeader from "../tableHeaders/MyDriveHeader";
@@ -43,6 +45,15 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+
+  const handleScroll = () => {
+    console.log("scrolling");
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleClick = (event: React.MouseEvent<unknown>, file: any) => {
     const selectedIndex = selectedFiles.indexOf(file.stateId);
@@ -94,7 +105,8 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
   };
 
   const handleDoubleClick = (event: any, file: any) => {
-    history.push(`/folder/${file.stateId}`);
+    history.push(`/folder/${file.fsObjectId}`);
+    dispatch(filesActions.setFiles([]));
   };
 
   const isSelected = (file: any) => {

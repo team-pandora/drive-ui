@@ -19,7 +19,7 @@ const NavLinkStyle = styled(NavLink)({
 
 const MyDriveButton = () => {
   return (
-    <NavLinkStyle activeStyle={{ color: "#1967d2" }} to="my-drive">
+    <NavLinkStyle activeStyle={{ color: "#1967d2" }} to="/my-drive">
       <ListItem disablePadding>
         <ListItemButton>
           <ListItemIcon>

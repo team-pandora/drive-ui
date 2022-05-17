@@ -1,20 +1,23 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import TableCell from "@mui/material/TableCell";
+import React, { Fragment } from "react";
+import {
+  Box,
+  TableCell,
+  TableRow,
+  LinearProgress,
+  Stack,
+} from "@mui/material";
 import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 import { useSelector } from "react-redux";
 import { sortableheadCells } from "../../data/myDriveTable";
 import { MyDriveI } from "../../data/fakedata";
 import i18next from "i18next";
-
 interface HeadCell {
-    disablePadding: boolean;
-    id: keyof MyDriveI;
-    label: string;
-    numeric: boolean;
+  disablePadding: boolean;
+  id: keyof MyDriveI;
+  label: string;
+  numeric: boolean;
 }
 
 type Order = "asc" | "desc";
@@ -54,7 +57,7 @@ function TableHeader(props: EnhancedTableProps) {
       disablePadding: false,
       label: `${i18next.t("tableHeader.Size")}`,
     },
-];
+  ];
   const lang = useSelector((state: any) => state.ui.language);
   const dir = lang === "en" ? false : true;
 
@@ -68,7 +71,6 @@ function TableHeader(props: EnhancedTableProps) {
       onRequestSort(event, property);
     };
 
-
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     document.addEventListener("contextmenu", (event) => {
       event.preventDefault();
@@ -78,41 +80,43 @@ function TableHeader(props: EnhancedTableProps) {
   };
 
   return (
-    <TableHead
-      sx={{ backgroundColor: "white" }}
-      onClick={(event) => handleClick(event, "name")}
-    >
-      <TableRow>
-        <TableCell padding="checkbox"></TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            {sortableheadCells.includes(headCell.id) && (
-              <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "asc"}
-                onClick={createSortHandler(headCell.id)}
-                dir='ltr'
-              >
-                {headCell.label}
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </Box>
-                ) : null}
-              </TableSortLabel>
-            )}
-            {!sortableheadCells.includes(headCell.id) && headCell.label}
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
+    <Fragment>
+      <TableHead
+        sx={{ backgroundColor: "white" }}
+        onClick={(event) => handleClick(event, "name")}
+      >
+        <TableRow>
+          <TableCell padding="checkbox"></TableCell>
+          {headCells.map((headCell) => (
+            <TableCell
+              key={headCell.id}
+              align={headCell.numeric ? "right" : "left"}
+              padding={headCell.disablePadding ? "none" : "normal"}
+              sortDirection={orderBy === headCell.id ? order : false}
+            >
+              {sortableheadCells.includes(headCell.id) && (
+                <TableSortLabel
+                  active={orderBy === headCell.id}
+                  direction={orderBy === headCell.id ? order : "asc"}
+                  onClick={createSortHandler(headCell.id)}
+                  dir="ltr"
+                >
+                  {headCell.label}
+                  {orderBy === headCell.id ? (
+                    <Box component="span" sx={visuallyHidden}>
+                      {order === "desc"
+                        ? "sorted descending"
+                        : "sorted ascending"}
+                    </Box>
+                  ) : null}
+                </TableSortLabel>
+              )}
+              {!sortableheadCells.includes(headCell.id) && headCell.label}
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+    </Fragment>
   );
 }
 

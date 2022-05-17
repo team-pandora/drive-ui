@@ -20,7 +20,7 @@ const NavLinkStyle = styled(NavLink)({
 
 const SharedButton = () => {
     return (
-        <NavLinkStyle activeStyle={{ color: "#1967d2"}} to="shared">
+        <NavLinkStyle activeStyle={{ color: "#1967d2"}} to="/shared">
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>

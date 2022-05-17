@@ -19,7 +19,7 @@ const NavLinkStyle = styled(NavLink)({
 
 const RecentlyButton = () => {
   return (
-    <NavLinkStyle activeStyle={{ color: "#1967d2" }} to="recently">
+    <NavLinkStyle activeStyle={{ color: "#1967d2" }} to="/recently">
       <ListItem disablePadding>
         <ListItemButton>
           <ListItemIcon>
