@@ -12,16 +12,16 @@ const AvatarIcon = styled(Avatar)({
   height: "32px",
 });
 
-function stringAvatar(name: string) {
+function stringAvatar(name: string, color: string) {
   return {
     sx: {
-      bgcolor: "pink",
+      bgcolor: `${color}`,
     },
     children: name[0],
   };
 }
 
-const UserAvatar: React.FC<{ name: string }> = (props) => {
+const UserAvatar: React.FC<{ name: string, color: string }> = (props) => {
   const dispatch = useDispatch();
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -49,7 +49,7 @@ const UserAvatar: React.FC<{ name: string }> = (props) => {
   return (
     <Fragment>
     <IconButton onClick={handleClick}>
-      <AvatarIcon {...stringAvatar(props.name)} />
+      <AvatarIcon {...stringAvatar(props.name, props.color)} />
     </IconButton>
     <Menu
         anchorEl={anchorEl}

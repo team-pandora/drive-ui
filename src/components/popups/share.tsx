@@ -17,7 +17,7 @@ const SharePopup = () => {
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
-      PaperProps={{ sx: { maxWidth: "650px" }, elevation: 0 }}
+      PaperProps={{ sx: { maxWidth: "650px", backgroundColor: "transparent" }, elevation: 0 }}
     >
       <ShareDialog />
     </Dialog>

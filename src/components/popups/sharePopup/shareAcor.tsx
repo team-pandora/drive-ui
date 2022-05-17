@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import {
-  Box,
-
-} from "@mui/material";
+import React, { Fragment, useState } from "react";
+import { Box, Grid } from "@mui/material";
 
 import ShareLink from "./ShareLink";
 import ShareUsers from "./ShareUsers";
+
 const SharePopup = () => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -14,10 +12,21 @@ const SharePopup = () => {
   };
 
   return (
-    <Box>
-      <ShareUsers isOpen={isOpen} handleChange={handleChange} />
-      <ShareLink isOpen={isOpen} handleChange={handleChange} />
-    </Box>
+    <Grid
+      direction="column"
+    >
+      <Grid item>
+        <ShareUsers isOpen={isOpen} handleChange={handleChange} />
+      </Grid>
+      <Box
+        style={{
+          padding: "5px",
+        }}
+      ></Box>
+      <Grid item>
+        <ShareLink isOpen={isOpen} handleChange={handleChange} />
+      </Grid>
+    </Grid>
   );
 };
 

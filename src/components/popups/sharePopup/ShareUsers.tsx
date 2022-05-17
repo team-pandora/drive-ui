@@ -34,7 +34,7 @@ const ShareUsers: React.FC<{isOpen: boolean, handleChange: () => void}> = (props
         }}
       >
         <AccordionSummaryBox>
-          <Avatar sx={{ backgroundColor: props.isOpen ? "#4285f4" : "#9aa0a6" }}><Link /></Avatar>
+          <Avatar sx={{ backgroundColor: props.isOpen ? "#4285f4" : "#9aa0a6" }}><PersonAddAlt /></Avatar>
           <Typography
             sx={{ margin: "0 10px", fontSize: "22px",}}>שיתוף עם אנשים וקבוצות
           </Typography>

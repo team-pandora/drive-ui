@@ -19,8 +19,9 @@ import Axios from "axios";
 // }
 
 export const getFile = async (parent: null | string) => {
-  const response = await Axios.get(`http://localhost:8000/api/actions/fsObjects/states?userId=123&parent=${parent}`);
+  const response = await Axios.get(`http://127.0.0.1:8000/api/users/62655a5dd681ae7e5f9eafe0/fsObjects/states?parent=${parent}`);
   const data =await response.data;
+  // console.log(data);
   return data;
 }
 

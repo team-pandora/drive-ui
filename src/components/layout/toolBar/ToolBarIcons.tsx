@@ -2,6 +2,9 @@ import React from "react";
 import UserAvatar from "../Avatar";
 import { Box, styled, IconButton } from "@mui/material";
 import { SettingsOutlined, HelpOutlineOutlined, ModeNight } from "@mui/icons-material";
+import getRandomColor from "../../../utils/randomColor";
+
+const userColor = getRandomColor();
 
 const Icons = styled(Box)(() => ({
   display: "flex",
@@ -24,7 +27,7 @@ const ToolBarIcons = () => {
       <IconButton>
         <HelpOutlineOutlined sx={{ color: "#5f6368" }} />
       </IconButton>
-      <UserAvatar name={name} />
+      <UserAvatar name={name} color={userColor}/>
     </Icons>
   );
 };
