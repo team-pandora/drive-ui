@@ -17,6 +17,7 @@ const HeaderBar = styled(Box)({
   borderBottom: "solid 1px lightgray",
   display: "flex",
   justifyContent: "space-between",
+  // backgroundColor: "pink",
 });
 
 const TableMenuHeader: React.FC<{ hierarchy: string[] }> = (props) => {

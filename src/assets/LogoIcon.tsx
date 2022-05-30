@@ -1,6 +1,6 @@
 export const LogoIcon = () => (
     <svg
-    xmlns="http://www.w3.org/2000/svg" width="100" viewBox="0 0 224.8 36.95">
+    xmlns="http://www.w3.org/2000/svg" width="140" viewBox="0 0 224.8 36.95">
     <defs>
         {/* <style>#Layer_2{fill:white;}</style> */}
     </defs>

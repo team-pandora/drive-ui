@@ -1,21 +1,19 @@
-import React, { useState, Fragment } from "react";
+import React from "react";
 import {
-  Box,
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Typography,
   Avatar,
   styled,
-  InputBase,
+  Box,
   Button,
-  Grid,
-  Stack,
 } from "@mui/material";
-import { Link, PersonAddAlt } from "@mui/icons-material";
+import { PersonAddAlt } from "@mui/icons-material";
 import SearchUsers from "./SearchUsers";
 import i18next from "i18next";
 import Owners from "./Owners";
+import { useSelector } from "react-redux";
 
 const AccordionSummaryBox = styled(AccordionSummary)({
   width: "100%",
@@ -23,10 +21,14 @@ const AccordionSummaryBox = styled(AccordionSummary)({
   alignItems: "center",
 });
 
-const ShareUsers: React.FC<{isOpen: boolean, handleChange: () => void}> = (props) => {
-    return (
-        <Accordion expanded={props.isOpen} onChange={props.handleChange} dir="rtl">
-        <AccordionSummary
+const ShareUsers: React.FC<{ isOpen: boolean; handleChange: () => void }> = (
+  props
+) => {
+  const dir = i18next.dir(i18next.language);
+  const selectedUsers = useSelector((state: any) => state.users.users);
+  return (
+    <Accordion expanded={props.isOpen} onChange={props.handleChange} dir={dir}>
+      <AccordionSummary
         aria-controls="panel1bh-content"
         id="panel1bh-header"
         sx={{
@@ -34,21 +36,43 @@ const ShareUsers: React.FC<{isOpen: boolean, handleChange: () => void}> = (props
         }}
       >
         <AccordionSummaryBox>
-          <Avatar sx={{ backgroundColor: props.isOpen ? "#4285f4" : "#9aa0a6" }}><PersonAddAlt /></Avatar>
-          <Typography
-            sx={{ margin: "0 10px", fontSize: "22px",}}>שיתוף עם אנשים וקבוצות
+          <Avatar
+            sx={{ backgroundColor: props.isOpen ? "#4285f4" : "#9aa0a6" }}
+          >
+            <PersonAddAlt />
+          </Avatar>
+          <Typography sx={{ margin: "0 10px", fontSize: "22px" }}>
+            {`${i18next.t("messages.SharePopupTitle")}`}
           </Typography>
         </AccordionSummaryBox>
       </AccordionSummary>
-        <AccordionDetails
 
-        >
-          <SearchUsers />
-          <Owners/>
-
-        </AccordionDetails>
-      </Accordion>
-    );
+      <AccordionDetails>
+        <SearchUsers />
+        {selectedUsers.length === 0 && <Owners />}
+        {selectedUsers.length > 0 && (
+          <Box
+            sx={{
+              display: "flex",
+              margin: "0 10px",
+              justifyContent: "flex-end",
+              marginTop: "40px",
+            }}
+          >
+            <Button
+              variant="text"
+              sx={{ margin: "0px 1%", textTransform: "none" }}
+            >{`${i18next.t("buttons.Cancel")}`}</Button>
+            <Button
+              // onClick={onRenameSubmit}
+              variant="contained"
+              sx={{ margin: "0px 1%", textTransform: "none" }}
+            >{`${i18next.t("buttons.Share")}`}</Button>
+          </Box>
+        )}
+      </AccordionDetails>
+    </Accordion>
+  );
 };
 
 export default ShareUsers;

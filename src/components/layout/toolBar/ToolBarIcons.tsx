@@ -2,7 +2,7 @@ import React from "react";
 import UserAvatar from "../Avatar";
 import { Box, styled, IconButton } from "@mui/material";
 import { SettingsOutlined, HelpOutlineOutlined, ModeNight } from "@mui/icons-material";
-import getRandomColor from "../../../utils/randomColor";
+import getRandomColor from "../../../utils/functions";
 
 const userColor = getRandomColor();
 

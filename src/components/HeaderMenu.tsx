@@ -8,8 +8,12 @@ import {
   PersonAddAltOutlined,
   InsertLink,
   RestoreOutlined,
+  Toc,
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import ContextMenu from "./contextMenu/ContextMenu";
+import { useDispatch } from "react-redux";
+import { uiActions } from '../store/ui';
 
 const Icons = styled(Box)(() => ({
   display: "flex",
@@ -18,31 +22,48 @@ const Icons = styled(Box)(() => ({
   alignItems: "center",
 }));
 
+const MoreVertClick = () => {
+  console.log("MoreVertClick");
+}
+
 const HeaderMenu = () => {
+  const dispatch = useDispatch();
+  const isGridView = useSelector((state: any) => state.ui.isGridView);
   const files = useSelector((state: any) => state.files.files);
-  
+
+  const isGridViewClick = () => {
+    dispatch(uiActions.toggleGridView());
+    console.log("isGridViewClick");
+  }
   return (
     <Icons>
-      {files.length > 0 && <Box>
-        <IconButton>
-          <InsertLink />
-        </IconButton>
-        <IconButton>
-          <PersonAddAltOutlined />
-        </IconButton>
-        <IconButton>
-          <RestoreOutlined />
-        </IconButton>
-        <IconButton>
-          <DeleteOutline />
-        </IconButton>
-        <IconButton>
-          <MoreVert />
-        </IconButton>
-      </Box>}
+      {files.length > 0 && (
+        <Box
+          sx={{
+            display: "flex",
+          }}
+        >
+          <IconButton>
+            <InsertLink />
+          </IconButton>
+          <IconButton>
+            <PersonAddAltOutlined />
+          </IconButton>
+          <IconButton>
+            <RestoreOutlined />
+          </IconButton>
+          <IconButton>
+            <DeleteOutline />
+          </IconButton>
+          <IconButton>
+            <MoreVert onClick={MoreVertClick} />
+          </IconButton>
+        </Box>
+      )}
       {files.length > 0 && <Divider orientation="vertical" flexItem />}
       <IconButton>
-        <CalendarViewMonth />
+        {!isGridView && <CalendarViewMonth onClick={isGridViewClick} />}
+        {isGridView && <Toc onClick={isGridViewClick} />}
       </IconButton>
       <IconButton>
         <InfoOutlined />

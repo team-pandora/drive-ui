@@ -5,7 +5,16 @@
       "Recently": "Recent",
       "Favorites": "Starred",
       "Trash": "Bin",
-      "Storage": "Storage"
+      "Storage": "Storage",
+      "ExternalTransferIncoming": "Incoming transfers",
+      "ExternalTransferOutgoing": "Outgoing transfers",
+      "IncomingFromTomcal": "Received from Tomcal",
+      "IncomingFromCargo": "Received from Cargo",
+      "StatusFilesSent": "Sent Files Status",
+      "OutgoingApprovalFromTomcal": "Tomcal Approvals",
+      "OutgoingApprovalFromCargo": "Cargo Approvals",
+      "ExternalTransferIncomingName": "Received from {{networkName}}",
+      "ExternalTransferOutgoingName": "Approvals to {{networkName}}"
     },
     "mainMenu": {
       "Folder": "Folder",
@@ -23,7 +32,12 @@
       "Type": "Type",
       "SharedBy": "Shared by",
       "ShareDate": "Share date",
-      "DateBinned": "Date binned"
+      "DateBinned": "Date binned",
+      "Classification": "Classification",
+      "Recipients": "Recipients",
+      "TransferDate": "Transfer date",
+      "Status": "Status",
+      "Target": "Target"
     },
     "pageHeader": {
       "MyDrive": "My Drive",
@@ -35,7 +49,19 @@
     },
     "buttons": {
         "New": "New",
-        "Bin": "Empty bin"
+        "Bin": "Empty bin",
+        "Owner": "Owner",
+        "CreateLink": "Create Link",
+        "CopyLink": "Copy link",
+        "Finish": "Done",
+        "Cancel": "Cancel",
+        "Share": "Share"
+    },
+    "permissions": {
+      "Read": "Viewer",
+      "Write": "Editor",
+      "Ownership": "Transfer ownership",
+      "RemoveAccess": "Remove accsess"
     },
     "contextMenu": {
       "Rename": "Rename",
@@ -51,11 +77,34 @@
       "Shortcut": "Create shortcut"
     },
     "search": {
-      "Search": "Search in Drive"
+      "Search": "Search in Drive",
+      "SearchUsers": "Add people and groups"
     },
     "messages": {
-      "BinMsg": "Items in the bin are deleted forever after 30 days"
+      "BinMsg": "Items in the bin are deleted forever after 30 days",
+      "SharePopupTitle": "Share with people and groups",
+      "ShareByLinkTitle": "Share by link",
+      "RenamePopupTitle": "Rename",
+      "ExpirationTime": "Expiration Time",
+      "Permission": "Permission"
+    },
+    "titles": {
+      "Folders": "Folders",
+      "Files": "Files",
+      "MyDrive": "My Drive",
+      "SharedWithMe": "Shared with me",
+      "Recent": "Recent",
+      "Favorites": "Starred",
+      "Trash": "Bin",
+      "Storage": "Storage",
+      "ExternalTransferIncoming": "Incoming transfers",
+      "ExternalTransferOutgoing": "Outgoing transfers",
+      "IncomingFromTomcal": "Received from Tomcal",
+      "IncomingFromCargo": "Received from Cargo",
+      "StatusFilesSent": "Sent Files Status",
+      "OutgoingApprovalFromTomcal": "Tomcal Approvals",
+      "OutgoingApprovalFromCargo": "Cargo Approvals",
+      "ExternalTransferIncomingName": "Received from {{networkName}}",
+      "ExternalTransferOutgoingName": "Approvals to {{networkName}}"
     }
-
   }
-  

@@ -29,8 +29,7 @@ const PlaceHolderAndIcon = styled(Box)(() => ({
 }));
 
 const SearchBar = () => {
-  const lang = useSelector((state: any) => state.ui.language);
-  const dir = lang === "en" ? "ltr" : "rtl";
+  const dir = i18next.dir(i18next.language);
 
   return (
     <SearchBox dir={dir}>

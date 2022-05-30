@@ -10,7 +10,7 @@ const popupSlice = createSlice({
         setLink: (state, action) => {
             state.link = !state.link;
         },
-        setRename: (state, action) => {
+        setRename: (state) => {
             state.rename = !state.rename;
         },
         setInfo: (state) => {

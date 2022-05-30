@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
 import { MenuItem, ListItemIcon, ListItemText } from "@mui/material";
-
-import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
-import i18next from "i18next";
-import SharePopup from "../../popups/share";
 import { useDispatch } from "react-redux";
 import { popupActions } from "../../../store/popups";
+import SharePopup from "../../popups/sharePopup/ShareDialog";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+import i18next from "i18next";
 
 const Share: React.FC<{ handleClose: () => void }> = (props) => {
   const dispatch = useDispatch();

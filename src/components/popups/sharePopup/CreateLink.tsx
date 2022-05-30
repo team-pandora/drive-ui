@@ -1,0 +1,63 @@
+import React from "react";
+import { Button, Box } from "@mui/material";
+import i18next from "i18next";
+import SelectMenus from "./SelectMenu";
+
+const CreateLink: React.FC<{
+  handleCreate: (event: any, time: string, permission: string) => void;
+}> = (props) => {
+  const [timeValue, setTimeValue] = React.useState("");
+  const [permission, setPermission] = React.useState("");
+
+  const timeLimit = ["15 min", "30 min", "1 hr", "12 hr", "24 hr"]; //change to number
+  const permissions = [
+    i18next.t("permissions.Read"),
+    i18next.t("permissions.Write"),
+  ];
+
+  const selectedTimeLimit = (value: string) => {
+    setTimeValue(value);
+  };
+
+  const selectedPermission = (value: string) => {
+    setPermission(value);
+  };
+
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: "40px",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box
+        sx={{
+          width: "340px",
+          height: "40px",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <SelectMenus
+          label={i18next.t("messages.ExpirationTime")}
+          menuItems={timeLimit}
+          selectClick={selectedTimeLimit}
+        />
+        <SelectMenus
+          label={i18next.t("messages.Permission")}
+          menuItems={permissions}
+          selectClick={selectedPermission}
+        />
+      </Box>
+      <Button
+        onClick={(event) => props.handleCreate(event, timeValue, permission)}
+        disabled={timeValue === "" || permission === ""}
+        sx={{ color: "#4285f4", margin: "0px 1%", textTransform: "none" }}
+      >{`${i18next.t("buttons.CreateLink")}`}</Button>
+    </Box>
+  );
+};
+
+export default CreateLink;

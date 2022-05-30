@@ -1,18 +1,22 @@
-import React, { useEffect } from "react";
-import { Box, CircularProgress, LinearProgress, Stack } from "@mui/material";
+import React from "react";
+import { Box, LinearProgress, Stack } from "@mui/material";
 import TableMenuHeader from "../components/BreadCrumbs";
-import { MyDriveData } from "../data/fakedata";
 import Table from "../components/tables/MyDrive";
-import { useQuery, useQueryClient } from "react-query";
+import Grid from "../components/grids/MyDrive";
+import { useQuery } from "react-query";
 import { getFile } from "../api/files";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import i18next from "i18next";
 
 const MyDrive = () => {
   const params: { folderId: string } = useParams();
   const folderId: string | null = params.folderId ? params.folderId : null;
   const [files, setFiles] = React.useState([]);
+  const isGridView = useSelector((state: any) => state.ui.isGridView);
+  console.log(isGridView);
 
   const { data, isLoading, isError, error, refetch, isFetching } = useQuery(
     "files",
@@ -24,8 +28,8 @@ const MyDrive = () => {
       onSuccess: (data) => {
         setFiles(data);
       },
-      refetchInterval: 1000,
-      refetchIntervalInBackground: true,
+      // refetchInterval: 1000,
+      // refetchIntervalInBackground: true,
     }
   );
 
@@ -34,16 +38,9 @@ const MyDrive = () => {
   }
 
   return (
-    <Box
-      flex={4}
-      p={2}
-      sx={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <TableMenuHeader hierarchy={["האחסון שלי", "תיקייה 1"]} />
-      <Table filesArray={files}/>
+    <Box flex={4} paddingTop={2} padding={2}>
+      <TableMenuHeader hierarchy={[i18next.t("titles.MyDrive")]} />
+      {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
       <ToastContainer position="bottom-right" />
       {isLoading && (
         <Stack

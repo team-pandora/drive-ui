@@ -15,21 +15,22 @@ import { RecentI } from "../../data/fakedata";
 import { getComparator, stableSort } from "../../utils/sortFunctions";
 import { filesActions } from "../../store/files";
 import { uiActions } from "../../store/ui";
-import ContextMenu from "../ContextMenu";
+import ContextMenu from "../contextMenu/ContextMenu";
 import FileType from '../FileType';
+import i18next from "i18next";
 
 type Order = "asc" | "desc";
 
 const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
   const dispatch = useDispatch();
-  const lang = useSelector((state: any) => state.ui.language);
-  const dir = lang === "en" ? "left" : "right";
   const selectedFiles = useSelector((state: any) => state.files.files);
+  const dir = i18next.dir(i18next.language) === "rtl" ? "right" : "left";
+  const locales = i18next.dir(i18next.language) === "ltr" ? "en-US" : "he-IL";
 
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof RecentI>("owner");
   const [page, setPage] = React.useState(0);
-  const rowsPerPage = 12;
+  const rowsPerPage = 100;
 
     const fileicon = FileType('folder');
 
@@ -91,18 +92,11 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
       return selectedFiles.indexOf(file.stateId) !== -1
 }
 
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0
-      ? Math.max(0, (1 + page) * rowsPerPage - props.filesArray.length)
-      : 0;
-
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper elevation={0} sx={{ width: "100%", mb: 2 }}>
-        <TableContainer>
-          <Table>
+    <Box>
+      <Paper elevation={0}>
+        <TableContainer sx={{ maxHeight: 800 }}>
+          <Table stickyHeader>
             <TableHeader
               order={order}
               orderBy={orderBy}
@@ -132,7 +126,6 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        {/* <FolderIcon sx={{ color: "rgb(95, 99, 104)" }} /> */}
                         {fileicon}
                       </TableCell>
                       <TableCell
@@ -153,33 +146,11 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 53 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
       <ContextMenu/>
-      <TablePagination
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-        dir={"ltr"}
-        rowsPerPageOptions={[]}
-        component="div"
-        count={props.filesArray.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-      />
     </Box>
   );
 };

@@ -328,8 +328,6 @@ export const MyDriveData = [
   },
 ];
 
-
-
 export interface SharedI {
   name: string;
   sharedBy: string;
@@ -658,7 +656,6 @@ export const SharedData = [
     fsObjectUpdatedAt: "2022-05-03T10:23:18.580Z",
   },
 ];
-
 
 export interface FavoritesI {
   name: string;
@@ -1319,7 +1316,6 @@ export const RecentData = [
   },
 ];
 
-
 export interface TrashI {
   name: string;
   owner: string;
@@ -1649,3 +1645,184 @@ export const TrashData = [
     fsObjectUpdatedAt: "2022-05-03T10:23:18.580Z",
   },
 ];
+
+export interface StatusTransferredI {
+  name: string;
+  classification: string;
+  owner: string;
+  recipients: string[];
+  createdAt: string;
+  status: string[];
+  destination: string;
+}
+
+export const StatusTransferredData = [
+  {
+    classification: "שמור",
+    createdAt: "May 3, 2022 10:23:14",
+    destination: "המרחב המבצעי",
+    fileId: "62710280d7a82acc26fdf979",
+    name: "test.docx",
+    fileOwnerId: "62655a5dd681ae7e5f9eafe0",
+    from: "62655a5dd681ae7e5f9eagf5",
+    id: "62710280d7982acc26fdf97a",
+    status: [
+      {
+        name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+        displayName: "קובץ ממתין לאישור",
+        type: "pending",
+      },
+      {
+        name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+        displayName: "קובץ עבר בהצלחה",
+        type: "in progress",
+      },
+      {
+        name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+        displayName: "הקובץ הגיע ליעד",
+        type: "success",
+      },
+    ],
+  },
+  {
+    classification: "שמור",
+    createdAt: "May 3, 2022 10:23:14",
+    destination: "המרחב המבצעי",
+    fileId: "62710280d7b82acc26fdf979",
+    name: "test22.docx",
+    fileOwnerId: "62655a5dd681ae7e5f9eafe0",
+    from: "62655a5dd681ae7e5f9eagf5",
+    id: "62710280d7982acc26fdf97a",
+    status: [
+      {
+        name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+        displayName: "קובץ ממתין לאישור",
+        type: "pending",
+      },
+      {
+        name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+        displayName: "קובץ עבר בהצלחה",
+        type: "in progress",
+      },
+      {
+        name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+        displayName: "הקובץ הגיע ליעד",
+        type: "failed",
+      },
+    ],
+  },
+  // {
+  //   classification: "שמור",
+  //   createdAt: "May 3, 2022 10:23:14",
+  //   destination: "מרחב התומכל",
+  //   fileId: "62710280d7c82acc26fdf979",
+  //   name: "test2.docx",
+  //   fileOwnerId: "62655a5dd681ae7e5f9eafe0",
+  //   from: "62655a5dd681ae7e5f9eagf5",
+  //   id: "62710280d7982acc26fdf97a",
+  //   status: [
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "קובץ ממתין לאישור",
+  //       type: "pending",
+  //     },
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "קובץ עבר בהצלחה",
+  //       type: "in progress",
+  //     },
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "הקובץ הגיע ליעד",
+  //       type: "success",
+  //     },
+  //   ],
+  // },
+  // {
+  //   classification: "שמור",
+  //   createdAt: "May 3, 2022 10:23:14",
+  //   destination: "מרחב התומכל",
+  //   fileId: "62710280d7d82acc26fdf979",
+  //   name: "test6.docx",
+  //   fileOwnerId: "62655a5dd681ae7e5f9eafe0",
+  //   from: "62655a5dd681ae7e5f9eagf5",
+  //   id: "62710280d7982acc26fdf97a",
+  //   status: [
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "קובץ ממתין לאישור",
+  //       type: "pending",
+  //     },
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "קובץ עבר בהצלחה",
+  //       type: "in progress",
+  //     },
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "הקובץ הגיע ליעד",
+  //       type: "success",
+  //     },
+  //   ],
+  // },
+  // {
+  //   classification: "שמור",
+  //   createdAt: "May 3, 2022 10:23:14",
+  //   destination: "המרחב המבצעי",
+  //   fileId: "62710280d7e82acc26fdf979",
+  //   name: "test5.docx",
+  //   fileOwnerId: "62655a5dd681ae7e5f9eafe0",
+  //   from: "62655a5dd681ae7e5f9eagf5",
+  //   id: "62710280d7982acc26fdf97a",
+  //   status: [
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "קובץ ממתין לאישור",
+  //       type: "pending",
+  //     },
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "קובץ עבר בהצלחה",
+  //       type: "in progress",
+  //     },
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "הקובץ הגיע ליעד",
+  //       type: "success",
+  //     },
+  //   ],
+  // },
+  // {
+  //   classification: "שמור",
+  //   createdAt: "May 3, 2022 10:23:14",
+  //   destination: "מרחב התומכל",
+  //   fileId: "62710280d7f82acc26fdf979",
+  //   name: "test4.docx",
+  //   fileOwnerId: "62655a5dd681ae7e5f9eafe0",
+  //   from: "62655a5dd681ae7e5f9eagf5",
+  //   id: "62710280d7982acc26fdf97a",
+  //   status: [
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "קובץ ממתין לאישור",
+  //       type: "pending",
+  //     },
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "קובץ עבר בהצלחה",
+  //       type: "in progress",
+  //     },
+  //     {
+  //       name: "STEP_REQUEST_IS_PENDDING_APPROVAL",
+  //       displayName: "הקובץ הגיע ליעד",
+  //       type: "success",
+  //     },
+  //   ],
+  // }
+];
+
+
+export interface UserI {
+  name: string,
+  hierarchy: string,
+}

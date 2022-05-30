@@ -5,8 +5,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
-import { useSelector } from "react-redux";
-import { sortableheadCells } from "../../data/myDriveTable";
+import { sortableHeadCells } from "../../data/myDriveTable";
 import { SharedI } from "../../data/fakedata";
 import i18next from "i18next";
 
@@ -16,8 +15,6 @@ interface HeadCell {
   label: string;
   numeric: boolean;
 }
-
-
 
 type Order = "asc" | "desc";
 
@@ -51,8 +48,8 @@ function TableHeader(props: EnhancedTableProps) {
       label: `${i18next.t("tableHeader.ShareDate")}`,
     },
   ];
-  const lang = useSelector((state: any) => state.ui.language);
-  const dir = lang === "en" ? false : true;
+
+  const dir = i18next.dir(i18next.language) === "rtl" ? true : false;
 
   headCells.forEach((cell) => {
     cell.numeric = dir;
@@ -64,17 +61,8 @@ function TableHeader(props: EnhancedTableProps) {
       onRequestSort(event, property);
     };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    document.addEventListener("contextmenu", (event) => {
-      event.preventDefault();
-    });
-  };
-
   return (
-    <TableHead
-      sx={{ backgroundColor: "white" }}
-      onClick={(event) => handleClick(event, "name")}
-    >
+    <TableHead>
       <TableRow>
         <TableCell padding="checkbox"></TableCell>
         {headCells.map((headCell) => (
@@ -84,7 +72,7 @@ function TableHeader(props: EnhancedTableProps) {
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            {sortableheadCells.includes(headCell.id) && (
+            {sortableHeadCells.shared.includes(headCell.id) && (
               <TableSortLabel
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : "asc"}
@@ -101,7 +89,7 @@ function TableHeader(props: EnhancedTableProps) {
                 ) : null}
               </TableSortLabel>
             )}
-            {!sortableheadCells.includes(headCell.id) && headCell.label}
+            {!sortableHeadCells.shared.includes(headCell.id) && headCell.label}
           </TableCell>
         ))}
       </TableRow>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef, useCallback } from "react";
 import {
   MenuItem,
   Menu,
@@ -6,6 +6,7 @@ import {
   ListItemText,
   Divider,
   MenuList,
+  Button,
 } from "@mui/material";
 import {
   CreateNewFolderOutlined,
@@ -15,14 +16,28 @@ import {
 } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import i18next from "i18next";
+import { useDropzone } from "react-dropzone";
+import  Dropzone from "react-dropzone";
+
+import { test } from "../api/files";
 
 const MainMenu: React.FC<{
   anchorEl: any;
   showMenu: boolean;
   handleClose: () => void;
 }> = (props) => {
-  const lang = useSelector((state: any) => state.ui.language);
-  const dir = lang === "en" ? "ltr" : "rtl";
+  const dir = i18next.dir(i18next.language);
+
+  const onDrop = useCallback((acceptedFiles: any) => {
+    console.log(acceptedFiles);
+  }, []);
+
+  const { getRootProps, getInputProps, open } = useDropzone({ onDrop, noClick: false });
+
+  const handleDialog = () => {
+    open();
+    props.handleClose();
+  };
 
   return (
     <Menu
@@ -51,13 +66,14 @@ const MainMenu: React.FC<{
 
         <Divider />
 
-        <MenuItem onClick={props.handleClose}>
+        <MenuItem {...getRootProps()} onClick={handleDialog} >
+          <input {...getInputProps()} />
           <ListItemIcon>
             <UploadFile />
           </ListItemIcon>
           <ListItemText>{`${i18next.t("mainMenu.UploadFiles")}`}</ListItemText>{" "}
         </MenuItem>
-
+      
         <MenuItem onClick={props.handleClose}>
           <ListItemIcon>
             <DriveFolderUpload />

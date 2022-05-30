@@ -1,15 +1,17 @@
-import React from 'react';
-import { Box } from '@mui/material';
-import TableMenuHeader from '../components/BreadCrumbs';
-import Table from '../components/tables/Trash1';
+import React from "react";
+import { Box } from "@mui/material";
+import { FavoritesData } from "../data/fakedata";
+import TableMenuHeader from "../components/BreadCrumbs";
+import Table from "../components/tables/Favorites";
+import i18next from "i18next";
 
 const Quota = () => {
-    return (
-        <Box flex={4} p={2} height={500}>
-          <TableMenuHeader hierarchy={["אחסון"]} />
-          <Table/>
-        </Box>
-      );
+  return (
+    <Box flex={4} paddingTop={2} padding={2}>
+            <TableMenuHeader hierarchy={[i18next.t("titles.Storage")]} />
+      <Table filesArray={FavoritesData} />
+    </Box>
+  );
 };
 
 export default Quota;

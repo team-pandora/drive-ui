@@ -17,22 +17,23 @@ import { TrashI } from "../../data/fakedata";
 import { getComparator, stableSort } from "../../utils/sortFunctions";
 import { filesActions } from "../../store/files";
 import { uiActions } from "../../store/ui";
-import ContextMenu from "../ContextMenu";
+import ContextMenu from "../contextMenu/ContextMenu";
 import FileType from "../FileType";
 import i18next from "i18next";
+import { ISOStringToDateString } from '../../utils/functions';
 
 type Order = "asc" | "desc";
 
 const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
   const dispatch = useDispatch();
-  const lang = useSelector((state: any) => state.ui.language);
-  const dir = lang === "en" ? "left" : "right";
+  const dir = i18next.dir(i18next.language) === "rtl" ? "right" : "left";
+  const locales = i18next.dir(i18next.language) === "ltr" ? "en-US" : "he-IL";
   const selectedFiles = useSelector((state: any) => state.files.files);
 
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof TrashI>("owner");
   const [page, setPage] = React.useState(0);
-  const rowsPerPage = 11;
+  const rowsPerPage = 100;
 
   const fileicon = FileType("folder");
 
@@ -108,7 +109,6 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
   return (
     <Box sx={{ width: "100%" }}>
       <Paper elevation={0} sx={{ width: "100%", mb: 2 }}>
-        <TableContainer>
           <Box
             sx={{
               display: "flex",
@@ -134,7 +134,8 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
             </Typography>
             <Button sx={{ color: "#000000", margin: "0px 1%", textTransform: "none" }}>{`${i18next.t("buttons.Bin")}`}</Button>
           </Box>
-          <Table>
+        <TableContainer sx={{ maxHeight: 800 }}>
+          <Table stickyHeader>
             <TableHeader
               order={order}
               orderBy={orderBy}
@@ -146,7 +147,7 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                 .map((row, index) => {
                   const isItemSelected = isSelected(row);
                   const labelId = `enhanced-table-checkbox-${index}`;
-
+                  const stringDate = ISOStringToDateString(row.fsObjectUpdatedAt, locales);
                   return (
                     <TableRow
                       hover
@@ -176,40 +177,18 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                       <TableCell sx={{ width: "10%" }} align={dir}>
                         {"אני"}
                       </TableCell>
-                      <TableCell align={dir}>{row.fsObjectUpdatedAt}</TableCell>
+                      <TableCell align={dir}>{stringDate}</TableCell>
                       <TableCell sx={{ width: "8%" }} align={dir}>
                         {row.size ? row.size : "-"}
                       </TableCell>
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 53 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
       <ContextMenu />
-      <TablePagination
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-        dir={"ltr"}
-        rowsPerPageOptions={[]}
-        component="div"
-        count={props.filesArray.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-      />
     </Box>
   );
 };
