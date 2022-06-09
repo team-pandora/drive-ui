@@ -3,6 +3,7 @@ import UserAvatar from "../Avatar";
 import { Box, styled, IconButton } from "@mui/material";
 import { SettingsOutlined, HelpOutlineOutlined, ModeNight } from "@mui/icons-material";
 import getRandomColor from "../../../utils/functions";
+import UserSettings from "./Settings";
 
 const userColor = getRandomColor();
 
@@ -22,7 +23,7 @@ const ToolBarIcons = () => {
         <ModeNight sx={{ color: "#5f6368" }} />
       </IconButton> */}
       <IconButton> 
-        <SettingsOutlined sx={{ color: "#5f6368" }} />
+        <UserSettings/>
       </IconButton>
       <IconButton>
         <HelpOutlineOutlined sx={{ color: "#5f6368" }} />

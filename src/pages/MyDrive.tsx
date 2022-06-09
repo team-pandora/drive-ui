@@ -37,23 +37,23 @@ const MyDrive = () => {
     console.log("loading");
   }
 
+  const stack = isLoading && <Stack
+  sx={{
+    width: "85%",
+    color: "grey.500",
+    position: "absolute",
+  }}
+  spacing={2}
+>
+  <LinearProgress color="inherit" />
+</Stack>
+
   return (
     <Box flex={4} paddingTop={2} padding={2}>
       <TableMenuHeader hierarchy={[i18next.t("titles.MyDrive")]} />
       {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
       <ToastContainer position="bottom-right" />
-      {isLoading && (
-        <Stack
-          sx={{
-            width: "85%",
-            color: "grey.500",
-            position: "absolute",
-          }}
-          spacing={2}
-        >
-          <LinearProgress color="inherit" />
-        </Stack>
-      )}
+      {stack}
     </Box>
   );
 };

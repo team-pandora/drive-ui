@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { popupActions } from "../../../store/popups";
 import { RenameFile } from "../../../api/files";
 import i18next from "i18next";
+import { uiActions } from "../../../store/ui";
 
 const RenameBodyBox = styled(Box)({
   height: "100px",
@@ -24,6 +25,12 @@ const RenameBody = () => {
 
   const onRenameSubmit = async () => {
     await RenameFile(selectedFiles[0], value);
+    dispatch(popupActions.setRename());
+  };
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  
+  const onCancel = (event: React.MouseEvent<HTMLElement>) => {
     dispatch(popupActions.setRename());
   };
 
@@ -50,6 +57,7 @@ const RenameBody = () => {
         <Button
           variant="text"
           sx={{ margin: "0px 1%", textTransform: "none" }}
+          onClick={onCancel}
         >{`${i18next.t("buttons.Cancel")}`}</Button>
         <Button
           onClick={onRenameSubmit}

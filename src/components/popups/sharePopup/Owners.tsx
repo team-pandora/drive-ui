@@ -25,7 +25,7 @@ const users = [
   // },
   // {
   //   name: "רוני גז",
-  //   email: "roni.gez@gmail.com",
+  //   email: "roni.gez@gmaOwnersil.com",
   //   permission: "write",
   //   color: getRandomColor(),
   // },

@@ -14,6 +14,8 @@ import {
 import { Link } from "@mui/icons-material";
 import i18next from "i18next";
 import CreateLink from "./CreateLink";
+import { useDispatch, useSelector } from "react-redux";
+import { popupActions } from "../../../store/popups";
 
 const AccordionSummaryBox = styled(AccordionSummary)({
   width: "100%",
@@ -24,6 +26,7 @@ const AccordionSummaryBox = styled(AccordionSummary)({
 const ShareLink: React.FC<{ isOpen: boolean; handleChange: () => void }> = (
   props
 ) => {
+  const dispatch = useDispatch();
   const dir = i18next.dir(i18next.language);
   const handleFocus = (event: any) => event.target.select();
   const [link, setLink] = React.useState("");
@@ -33,6 +36,10 @@ const ShareLink: React.FC<{ isOpen: boolean; handleChange: () => void }> = (
     setLink(
       "https://drive.google.com/drive/folders/1la4wYAwz9mtHcySorx4yMF1Zr1AqyJbd?usp=sharing"
     );
+  };
+
+  const handleFinish = () => {
+    dispatch(popupActions.setShare());
   };
   return (
     <Accordion expanded={!props.isOpen} onChange={props.handleChange} dir={dir}>
@@ -85,6 +92,7 @@ const ShareLink: React.FC<{ isOpen: boolean; handleChange: () => void }> = (
           <Stack direction="row" spacing={0} justifyContent="flex-end">
             <Button
               variant="contained"
+              onClick={handleFinish}
               sx={{ margin: "0px 1%", textTransform: "none" }}
             >{`${i18next.t("buttons.Finish")}`}</Button>
           </Stack>

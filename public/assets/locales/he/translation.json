@@ -55,7 +55,8 @@
     "CopyLink": "העתקת קישור",
     "Finish": "סיום",
     "Cancel": "ביטול",
-    "Share": "שיתוף"
+    "Share": "שיתוף",
+    "Increase": "הגדלת שטח אחסון"
   },
   "permissions": {
     "Read": "הרשאת צפייה",
@@ -86,7 +87,8 @@
     "ShareByLinkTitle": "שיתוף עם אנשים וקבוצות בעזרת קישור",
     "RenamePopupTitle": "שינוי שם",
     "ExpirationTime": "תוקף השיתוף",
-    "Permission": "סוג הרשאה"
+    "Permission": "סוג הרשאה",
+    "Quota": "נוצלו {{used}} GB מתוך {{limit}} GB"
   },
   "titles": {
     "Folders": "תיקיות",
@@ -107,5 +109,14 @@
     "OutgoingApprovalFromCargo": "אישורים למרחב המבצעי",
     "ExternalTransferIncomingName": "התקבל ממרחב {{networkName}}",
     "ExternalTransferOutgoingName": "אישורים למרחב {{networkName}}"
+  },
+  "info": {
+    "Type": "סוג",
+    "Size": "גודל",
+    "Owner": "בעלים",
+    "Modified": "שונה לאחרונה",
+    "Created": "נוצר",
+    "HaveAccess": "למי יש גישה",
+    "Deleted": "נמחק"
   }
 }

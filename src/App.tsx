@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -26,10 +26,17 @@ function App() {
   const dir = i18next.dir(i18next.language);
   console.log(dir);
   
-  
+  useEffect(() => {
+    document.addEventListener("contextmenu", handleContextMenu);
+  }, []);
 
+  const handleContextMenu = (e:any) => {
+    if(!(e.target instanceof HTMLInputElement && e.target.type === "text")) {
+      e.preventDefault();
+    }
+  }
   return (
-    <Box dir={dir}>
+    <Box dir={dir} sx={{}}>
       <Navbar />
       <Stack direction="row" justifyContent="space-evenly">
         <Sidebar />

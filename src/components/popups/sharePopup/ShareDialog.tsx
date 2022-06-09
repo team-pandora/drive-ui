@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { popupActions } from "../../../store/popups";
 import { usersActions } from "../../../store/users";
 import SharePopup from "./SharePopup";
+import { GenericDialog } from "../Dialog";
 
 const ShareDialog = () => {
   const dispatch = useDispatch();
-  const show = useSelector((state: any) => state.popups.share);
+  const selectorFunction = (state: any) => state.popups.share;
 
   const handleClose = () => {
     dispatch(popupActions.setShare());
@@ -16,16 +17,10 @@ const ShareDialog = () => {
   };
 
   return (
-    <Dialog
-      open={show}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      PaperProps={{ sx: { maxWidth: "650px", backgroundColor: "transparent" }, elevation: 0 }}
-    >
-      <SharePopup />
-    </Dialog>
+    <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
+      <SharePopup/>
+    </GenericDialog>
   );
-}
+};
 
 export default ShareDialog;

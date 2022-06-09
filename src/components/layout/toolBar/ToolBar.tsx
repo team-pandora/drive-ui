@@ -1,9 +1,8 @@
 import React from "react";
 import { AppBar, Toolbar, styled, Box, Typography } from "@mui/material";
 import SearchBar from "./Search";
-import Logo from "../Logo";
 import ToolBarIcons from "./ToolBarIcons";
-import { LogoIcon } from "../../../assets/LogoIcon";
+import { ReactComponent as LogoIcon } from "../../../assets/logoText.svg";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -26,16 +25,7 @@ const Navbar = () => {
     >
       <StyledToolbar>
         <RightSide>
-          <Box sx={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            marginTop: "10px",
-            height: "50px",
-          }}>
-            <LogoIcon />
-            <Typography marginTop={1} color={"black"} variant="caption">3.0</Typography>
-          </Box>
+          <LogoIcon style={{position: "relative", height: "40px", width:"128px"}}></LogoIcon>
           <SearchBar />
         </RightSide>
         <ToolBarIcons />
