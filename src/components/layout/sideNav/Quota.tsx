@@ -28,8 +28,9 @@ const QuotaOutlineBox = styled(Box)({
 
 const AddStorageButton = styled(Button)({
   border: "1px solid lightgray",
-  width: "60%",
+  width: "63%",
   color: "#1967d2",
+  textTransform: "none",
 });
 
 const Quota: React.FC<{ used: number; limit: number }> = (props) => {
@@ -46,9 +47,9 @@ const Quota: React.FC<{ used: number; limit: number }> = (props) => {
           <QuotaFillBox sx={{ width: quotaUsed }} />
         </QuotaOutlineBox>
         <Typography variant="caption" color={"#5f6368"}>
-          {`נוצלו ${props.used} GB מתוך ${props.limit} GB`}
+          {`${i18next.t("messages.Quota", {used: props.used, limit: props.limit})}`}
         </Typography>
-        <AddStorageButton>{`${"הגדלת שטח אחסון"}`}</AddStorageButton>
+        <AddStorageButton>{`${i18next.t("buttons.Increase")}`}</AddStorageButton>
       </Stack>
     </QuotaBox>
   );

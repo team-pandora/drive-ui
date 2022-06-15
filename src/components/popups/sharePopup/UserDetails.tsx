@@ -7,7 +7,7 @@ import PermissionMenu from "./permissions/PermissionMenu";
 const UserTab = styled(Box)({
   width: "100%",
   display: "flex",
-  alignItems: "center",
+  alignItems: "center"
 });
 
 const UserDetail: React.FC<{

@@ -72,7 +72,7 @@ const UserAutoComplete = () => {
       freeSolo
       onChange={(event: any, newValue: any) => {
         console.log("newValue", newValue);
-          dispatch(usersActions.setUsers(newValue));
+        dispatch(usersActions.setUsers(newValue));
       }}
       renderOption={(props, options, { selected }) => {
         return (

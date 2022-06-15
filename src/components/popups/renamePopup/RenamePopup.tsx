@@ -10,18 +10,19 @@ const RenamePopup = () => {
   return (
     <Box
       sx={{
-        width: "500px",
+        width: "100%",
         height: "200px",
         backgroundColor: "#fff",
         display: "flex",
         flexDirection: "column",
+        flexWrap: "nowrap",
         direction: dir,
         justifyContent: "space-evenly",
+        overflow: "hidden",
       }}
     >
       <RenameHeader />
       <RenameBody />
-
     </Box>
   );
 };

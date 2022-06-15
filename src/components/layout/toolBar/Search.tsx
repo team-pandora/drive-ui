@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled, InputBase, Box, IconButton } from "@mui/material";
 import { width } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
@@ -38,7 +38,10 @@ const SearchBar = () => {
           <SearchIcon sx={{ color: "#5f6368" }} />
         </IconButton>
         <Search sx={{ width: "100%" }}>
-          <InputBase sx={{ width: "100%" }} placeholder={`${i18next.t("search.Search")}`} />
+          <InputBase
+            sx={{ width: "100%" }}
+            placeholder={`${i18next.t("search.Search")}`}
+          />
         </Search>
       </PlaceHolderAndIcon>
     </SearchBox>
