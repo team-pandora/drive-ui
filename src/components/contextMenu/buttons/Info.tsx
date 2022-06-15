@@ -15,7 +15,6 @@ const Info: React.FC<{ handleClose: () => void }> = (props) => {
   };
 
   const selectedFiles = useSelector((state: any) => state.files.files);
-  console.log(selectedFiles);
 
   return (
     <>

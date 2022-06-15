@@ -8,8 +8,8 @@ const PropertyList = styled(List)({
   display: "flex",
   flexDirection: "column",
   gap: "3rem",
-  alignItems: "center",
-  padding: "2vw"
+  alignItems: "left",
+  padding: "1rem 2vw 1rem"
 });
 
 export const InfoProperties = (props: any) => {
@@ -20,7 +20,6 @@ export const InfoProperties = (props: any) => {
       <Typography>{`${i18next.t("info.Owner")}`}</Typography>
       <Typography>{`${i18next.t("info.Modified")}`}</Typography>
       <Typography>{`${i18next.t("info.Created")}`}</Typography>
-      <Typography>{`${i18next.t("info.HaveAccess")}`}</Typography>
       {props.isDeleted && <Typography>{`${i18next.t("info.Deleted")}`}</Typography>}
     </PropertyList>
   );

@@ -24,7 +24,6 @@ function App() {
   const { t } = useTranslation();
   dispatch(uiActions.setLanguage(currentLanguageCode));
   const dir = i18next.dir(i18next.language);
-  console.log(dir);
   
   useEffect(() => {
     document.addEventListener("contextmenu", handleContextMenu);

@@ -8,7 +8,6 @@ const RenameHeader = () => {
     <Box
       sx={{
         display: "flex",
-        alignItems: "center",
         margin: "0 15px",
       }}
     >

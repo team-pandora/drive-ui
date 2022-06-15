@@ -23,8 +23,8 @@ const AvatarIcon = styled(Avatar)({
 });
 
 const AvatarIconFull = styled(Avatar)({
-  width: "128px",
-  height: "128px",
+  width: "80px",
+  height: "80px",
   fontSize: "64px"
 });
 
@@ -62,7 +62,6 @@ const UserAvatar: React.FC<{ name: string; color: string }> = (props) => {
         id="account-menu"
         open={showAvatarMenu}
         onClose={handleClose}
-        onClick={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -86,12 +85,12 @@ const UserAvatar: React.FC<{ name: string; color: string }> = (props) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <ListItem onClick={handleClose}>
+        <ListItem>
           <AvatarIconFull {...stringAvatar(props.name, props.color)} sx={{margin: "auto", bgcolor: props.color}}/>
         </ListItem>
-        <ListItem onClick={handleClose} sx={{display: "block", textAlign: "center"}}>
-          <Typography>{props.name}</Typography>
-          <Typography sx={{fontSize:"small"}}>Example@gmagdfgdgil.com</Typography>
+        <ListItem sx={{display: "block", textAlign: "center"}}>
+          <Typography sx={{fontWeight: "500", color:"#202124"}}>{props.name}</Typography>
+          <Typography sx={{fontSize:"small", color:'#5f6368'}}>Example@gmagdfgdgil.com</Typography>
         </ListItem>
       </Menu>
     </Fragment>

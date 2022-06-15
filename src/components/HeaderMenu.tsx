@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import ContextMenu from "./contextMenu/ContextMenu";
 import { useDispatch } from "react-redux";
 import { uiActions } from '../store/ui';
+import { popupActions } from "../store/popups";
 
 const Icons = styled(Box)(() => ({
   display: "flex",
@@ -35,6 +36,15 @@ const HeaderMenu = () => {
     dispatch(uiActions.toggleGridView());
     console.log("isGridViewClick");
   }
+
+  const handleInfoOpen = () => {
+    dispatch(popupActions.setInfo());
+  }
+
+  const handleShareOpen = () => {
+    dispatch(popupActions.setShare());
+  }
+
   return (
     <Icons>
       {files.length > 0 && (
@@ -44,10 +54,10 @@ const HeaderMenu = () => {
           }}
         >
           <IconButton>
-            <InsertLink />
+            <InsertLink onClick={handleShareOpen}/>
           </IconButton>
           <IconButton>
-            <PersonAddAltOutlined />
+            <PersonAddAltOutlined onClick={handleShareOpen}/>
           </IconButton>
           <IconButton>
             <RestoreOutlined />
@@ -66,7 +76,7 @@ const HeaderMenu = () => {
         {isGridView && <Toc onClick={isGridViewClick} />}
       </IconButton>
       <IconButton>
-        <InfoOutlined />
+        <InfoOutlined onClick={handleInfoOpen}/>
       </IconButton>
     </Icons>
   );

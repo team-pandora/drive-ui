@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const popupSlice = createSlice({
     name: 'popups',
-    initialState: { share: false, link: false, rename: false, info: false, moveTo: false, copy: false, shortcut: false, externalTransfer: false },
+    initialState: { share: false, link: false, rename: false, info: false, moveTo: false, copy: false, shortcut: false, externalTransfer: false, newFolder:false, navigation:false },
     reducers: {
         setShare: (state) => {
             state.share = !state.share;
@@ -27,6 +27,12 @@ const popupSlice = createSlice({
         },
         externalTransfer: (state, action) => {
             state.externalTransfer = !state.externalTransfer;
+        },
+        setNewFolder: (state) => {
+            state.newFolder = !state.newFolder;
+        },
+        setNavigation: (state) => {
+            state.navigation = !state.navigation;
         }
     }
 })

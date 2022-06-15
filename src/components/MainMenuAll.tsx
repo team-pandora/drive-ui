@@ -14,12 +14,13 @@ import {
   UploadFile,
   DriveFolderUpload,
 } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import i18next from "i18next";
 import { useDropzone } from "react-dropzone";
-import  Dropzone from "react-dropzone";
-
+import Dropzone from "react-dropzone";
+import NewFolderPopup from "../components/popups/newFolderPopup/NewFolderDialog";
 import { test } from "../api/files";
+import { popupActions } from "../store/popups";
 
 const MainMenu: React.FC<{
   anchorEl: any;
@@ -27,19 +28,29 @@ const MainMenu: React.FC<{
   handleClose: () => void;
 }> = (props) => {
   const dir = i18next.dir(i18next.language);
+  const dispatch = useDispatch();
 
   const onDrop = useCallback((acceptedFiles: any) => {
     console.log(acceptedFiles);
   }, []);
 
-  const { getRootProps, getInputProps, open } = useDropzone({ onDrop, noClick: false });
+  const { getRootProps, getInputProps, open } = useDropzone({
+    onDrop,
+    noClick: false,
+  });
 
   const handleDialog = () => {
     open();
     props.handleClose();
   };
 
+  const handleNewFolderDialog = () => {
+    props.handleClose();
+    dispatch(popupActions.setNewFolder());
+  };
+
   return (
+    <>
     <Menu
       id="demo-positioned-menu"
       aria-labelledby="demo-positioned-button"
@@ -57,23 +68,24 @@ const MainMenu: React.FC<{
       dir={dir}
     >
       <MenuList sx={{ width: 300 }} dense>
-        <MenuItem onClick={props.handleClose}>
+        <MenuItem onClick={handleNewFolderDialog}>
           <ListItemIcon>
             <CreateNewFolderOutlined />
           </ListItemIcon>
-          <ListItemText>{`${i18next.t("mainMenu.Folder")}`}</ListItemText>
+          <ListItemText>{`${i18next.t(
+            "mainMenu.Folder"
+          )}`}</ListItemText>
         </MenuItem>
-
         <Divider />
 
-        <MenuItem {...getRootProps()} onClick={handleDialog} >
+        <MenuItem {...getRootProps()} onClick={handleDialog}>
           <input {...getInputProps()} />
           <ListItemIcon>
             <UploadFile />
           </ListItemIcon>
           <ListItemText>{`${i18next.t("mainMenu.UploadFiles")}`}</ListItemText>{" "}
         </MenuItem>
-      
+
         <MenuItem onClick={props.handleClose}>
           <ListItemIcon>
             <DriveFolderUpload />
@@ -105,6 +117,8 @@ const MainMenu: React.FC<{
         </MenuItem>
       </MenuList>
     </Menu>
+<NewFolderPopup/>
+</>
   );
 };
 

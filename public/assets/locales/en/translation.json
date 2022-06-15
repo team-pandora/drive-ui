@@ -1,6 +1,6 @@
 {
   "sideBar": {
-    "myDrive": "My drive",
+    "myDrive": "My Drive",
     "SharedWithMe": "Shared with me",
     "Recently": "Recent",
     "Favorites": "Starred",
@@ -56,7 +56,9 @@
     "Finish": "Done",
     "Cancel": "Cancel",
     "Share": "Share",
-    "Increase": "Increase storage"
+    "Access": "Manage access",
+    "Increase": "Increase storage",
+    "CreateFolder": "Create"
   },
   "permissions": {
     "Read": "Viewer",
@@ -88,7 +90,9 @@
     "RenamePopupTitle": "Rename",
     "ExpirationTime": "Expiration Time",
     "Permission": "Permission",
-    "Quota": "{{used}} GB of {{limit}} GB used"
+    "Quota": "{{used}} GB of {{limit}} GB used",
+    "Properties": "File properties",
+    "NewFolder": "New folder"
   },
   "titles": {
     "Folders": "Folders",

@@ -5,8 +5,8 @@ const ValueList = styled(List)({
   display: "flex",
   flexDirection: "column",
   gap: "3rem",
-  alignItems: "center",
-  padding: "2vw",
+  alignItems: "left",
+  padding: "1rem 2vw 1rem",
 });
 
 const UserList = styled(List)({
@@ -24,18 +24,6 @@ export const InfoValues = (props: any) => {
       <Typography>{props.owner}</Typography>
       <Typography>{props.modified}</Typography>
       <Typography>{props.created}</Typography>
-      <UserList>
-      {props.users.map((user: { name: string; color: string; }) => {
-        return (
-          <UserAvatar
-            // key={user.email}
-            name={user.name}
-            color={user.color}
-          />
-        );
-      })}
-      </UserList>
-
       {props.isDeleted && <p>12 Oct 2021</p>}
     </ValueList>
   );

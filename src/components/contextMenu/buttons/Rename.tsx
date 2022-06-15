@@ -22,7 +22,7 @@ const Rename: React.FC<{ handleClose: () => void }> = (props) => {
         </ListItemIcon>
         <ListItemText>{`${i18next.t("contextMenu.Rename")}`}</ListItemText>
       </MenuItem>
-        <RenamePopup />
+        <RenamePopup /> 
     </Fragment>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, styled, Typography, Button } from "@mui/material";
 import i18next from "i18next";
 import { InfoProperties } from "./InfoProperties";
@@ -15,6 +15,7 @@ const Info = styled(Box)({
   backgroundColor: "white",
   display: "flex",
   flexFlow: "column nowrap",
+  overflow: "hidden"
 });
 
 const InfoHeader = styled(Box)({
@@ -27,7 +28,7 @@ const InfoHeader = styled(Box)({
 const InfoBox = styled(Box)({
   display: "flex",
   flexFlow: "row nowrap",
-  gap: "6vw",
+  gap: "0vw",
 });
 
 const InfoText = styled(Typography)({
@@ -46,24 +47,38 @@ const InfoAccess = styled(Box)({
 
 const FileOwner = styled(Box)({
   "& .MuiButtonBase-root": {
-    borderRight: "1px solid rgba(0,0,0,.2)",
+    borderStyle: "solid",
+    borderColor: "rgba(0,0,0,.2)",
     borderRadius: "0",
-    paddingRight: "9px",
-    marginRight: "8px",
+    borderWidth: `${i18next.dir(i18next.language) === "ltr" ? "0 1px 0 0" : "0 0 0 1px"}`,
+    padding: `${i18next.dir(i18next.language) === "ltr" ? "0 9px 0 0" : "0 0 0 9px"}`,
+    margin: `${i18next.dir(i18next.language) === "ltr" ? "0 8px 0 0" : "0 0 0 9px"}`
   },
 });
 
 const InfoPopup = (props: any) => {
   const dir = i18next.dir(i18next.language);
-  const selectedFiles = useSelector((state: any) => state.files.files);  const dispatch = useDispatch();
+  const selectedFiles = useSelector((state: any) => state.files.files);
+  const dispatch = useDispatch();
 
+  const FileOwner = styled(Box)({
+    "& .MuiButtonBase-root": {
+      borderStyle: "solid",
+      borderColor: "rgba(0,0,0,.2)",
+      borderRadius: "0",
+      borderWidth: `${dir === "ltr" ? "0 1px 0 0" : "0 0 0 1px"}`,
+      padding: `${dir === "ltr" ? "0 9px 0 0" : "0 0 0 9px"}`,
+      margin: `${dir === "ltr" ? "0 8px 0 0" : "0 0 0 9px"}`
+    },
+  });
+  
   return (
     <Info dir={dir}>
       <InfoHeader>
-        <Typography>{selectedFiles} - Example</Typography>
+        <Typography>{selectedFiles}</Typography>
         <ImageIcon />
       </InfoHeader>
-      <InfoText>Who has access</InfoText>
+      <InfoText>{`${i18next.t("info.HaveAccess")}`}</InfoText>
       <InfoAccess>
         <FileOwner>
           <UserAvatar
@@ -74,26 +89,28 @@ const InfoPopup = (props: any) => {
         {props.users.map((user: { name: string; color: string }) => {
           return (
             <UserAvatar
-              // key={user.email}
               name={user.name}
               color={user.color}
             />
           );
         })}
       </InfoAccess>
-      <Button variant="text" sx={{
-        height: "32px",
-        width: "fit-content",
-        textTransform: "none",
-        margin: "0.5rem 2vw  2vw"
-      }}
-      onClick={() => {
-        dispatch(popupActions.setInfo());
-        dispatch(popupActions.setShare());
-      }}>
-        Manage access
+      <Button
+        variant="text"
+        sx={{
+          height: "32px",
+          width: "fit-content",
+          textTransform: "none",
+          margin: "0.5rem 2vw",
+        }}
+        onClick={() => {
+          dispatch(popupActions.setInfo());
+          dispatch(popupActions.setShare());
+        }}
+      >
+        {`${i18next.t("buttons.Access")}`}
       </Button>
-      <InfoText>File properties</InfoText>
+      <InfoText>{`${i18next.t("messages.Properties")}`}</InfoText>
       <InfoBox>
         <InfoProperties></InfoProperties>
         <InfoValues
@@ -102,10 +119,6 @@ const InfoPopup = (props: any) => {
           owner="Example"
           modified="2020-01-01"
           created="2020-01-01"
-          users={[
-            { name: "test", color: "blue" },
-            { name: "aaa", color: "gray" },
-          ]}
         ></InfoValues>
       </InfoBox>
     </Info>
@@ -118,11 +131,11 @@ InfoPopup.defaultProps = {
     color: "blue",
   },
   users: [
-    { name: "test", color: "blue" },
-    { name: "aaa", color: "red" },
-    { name: "bbb", color: "blue" },
-    { name: "ccc", color: "red" },
-    { name: "ddd", color: "cyan" },
+    { name: "test", color: "gray" },
+    { name: "aaa", color: "gray" },
+    { name: "bbb", color: "gray" },
+    { name: "ccc", color: "gray" },
+    { name: "ddd", color: "gray" },
   ],
 };
 export default InfoPopup;

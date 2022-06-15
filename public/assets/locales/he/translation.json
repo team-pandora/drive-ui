@@ -56,7 +56,9 @@
     "Finish": "סיום",
     "Cancel": "ביטול",
     "Share": "שיתוף",
-    "Increase": "הגדלת שטח אחסון"
+    "Access": "נהל גישות",
+    "Increase": "הגדלת שטח אחסון",
+    "CreateFolder": "חדש"
   },
   "permissions": {
     "Read": "הרשאת צפייה",
@@ -88,7 +90,9 @@
     "RenamePopupTitle": "שינוי שם",
     "ExpirationTime": "תוקף השיתוף",
     "Permission": "סוג הרשאה",
-    "Quota": "נוצלו {{used}} GB מתוך {{limit}} GB"
+    "Quota": "נוצלו {{used}} GB מתוך {{limit}} GB",
+    "Properties": "פרטי קובץ",
+    "NewFolder": "תיקייה חדשה"
   },
   "titles": {
     "Folders": "תיקיות",
