@@ -1,4 +1,4 @@
-import React, { createRef, useCallback } from "react";
+import React, { createRef, useCallback, useRef } from "react";
 import {
   MenuItem,
   Menu,
@@ -18,8 +18,9 @@ import { useSelector } from "react-redux";
 import i18next from "i18next";
 import { useDropzone } from "react-dropzone";
 import  Dropzone from "react-dropzone";
-
+import { uploadFile } from '../api/files';
 import { test } from "../api/files";
+import classes from "./MainMenuAll.module.css";
 
 const MainMenu: React.FC<{
   anchorEl: any;
@@ -29,7 +30,11 @@ const MainMenu: React.FC<{
   const dir = i18next.dir(i18next.language);
 
   const onDrop = useCallback((acceptedFiles: any) => {
+    
     console.log(acceptedFiles);
+    console.log('in on drop');
+    // const res = uploadFile(acceptedFiles[0]);
+    // console.log(res);
   }, []);
 
   const { getRootProps, getInputProps, open } = useDropzone({ onDrop, noClick: false });
@@ -66,8 +71,13 @@ const MainMenu: React.FC<{
 
         <Divider />
 
-        <MenuItem {...getRootProps()} onClick={handleDialog} >
-          <input {...getInputProps()} />
+        <MenuItem onClick={handleDialog} >
+          {/* <input /> */}
+          {/* <input {...getInputProps()} 
+          directory=""
+          webkitdirectory=""
+          type="file" /> */}
+          
           <ListItemIcon>
             <UploadFile />
           </ListItemIcon>
