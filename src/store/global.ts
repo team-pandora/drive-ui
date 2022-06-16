@@ -1,8 +1,16 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-const uiSlice = createSlice({
-    name: 'ui',
-    initialState: { mainMenuIsVisible: false, anchorEl: null, language: 'en', contextMenu: false, contextMenuPosition: {x: 0, y: 0} || null, isGridView: false },
+const globalSlice = createSlice({
+    name: 'global',
+    initialState: {
+        mainMenuIsVisible: false,
+        anchorEl: null,
+        language: 'en',
+        contextMenu: false,
+        contextMenuPosition: { x: 0, y: 0 } || null,
+        isGridView: false,
+    },
     reducers: {
         toggleMainMenu: (state) => {
             state.mainMenuIsVisible = !state.mainMenuIsVisible;
@@ -10,6 +18,7 @@ const uiSlice = createSlice({
         setAnchorEl: (state, action) => {
             state.anchorEl = action.payload;
         },
+        // TODO: check if necessary
         setLanguage: (state, action) => {
             state.language = action.payload;
         },
@@ -19,12 +28,13 @@ const uiSlice = createSlice({
         setContextMenuPosition: (state, action) => {
             state.contextMenuPosition = action.payload;
         },
+        // TODO: add to cookies
         toggleGridView: (state) => {
             state.isGridView = !state.isGridView;
-        }
-    }
-})
+        },
+    },
+});
 
-export const uiActions = uiSlice.actions;
+export const globalActions = globalSlice.actions;
 
-export default uiSlice.reducer;
+export default globalSlice.reducer;

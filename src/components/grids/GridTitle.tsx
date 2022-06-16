@@ -1,24 +1,24 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, styled, Typography } from '@mui/material';
 
-const GridTitle: React.FC<{ fileName: string; icon: JSX.Element | undefined }> = (
-  props
-) => {
-  return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "25%",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      {props.icon}
-      <Typography sx={{ fontSize: 12, 
-        // padding: "0px 10px",
-      }}>{props.fileName}</Typography>
-    </Box>
-  );
+const SBox = styled(Box)({
+    width: '100%',
+    height: '25%',
+    display: 'flex',
+    alignItems: 'center',
+});
+
+type props = {
+    fileName: string;
+    icon: JSX.Element | undefined;
+};
+
+const GridTitle: React.FC<props> = ({ fileName, icon }) => {
+    return (
+        <SBox>
+            {icon}
+            <Typography sx={{ fontSize: 12 }}>{fileName}</Typography>
+        </SBox>
+    );
 };
 
 export default GridTitle;

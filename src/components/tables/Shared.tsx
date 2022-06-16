@@ -1,188 +1,176 @@
-import * as React from "react";
 import {
-  Box,
-  Table,
-  Paper,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TablePagination,
-  TableRow,
-  Avatar,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import TableHeader from "../tableHeaders/SharedHeader";
-import { SharedI } from "../../data/fakedata";
-import { getComparator, stableSort } from "../../utils/sortFunctions";
-import { filesActions } from "../../store/files";
-import { uiActions } from "../../store/ui";
-import ContextMenu from "../contextMenu/ContextMenu";
-import FileType from "../FileType";
-import i18next from "i18next";
-import { ISOStringToDateString } from '../../utils/functions';
+    Avatar,
+    Box,
+    Paper,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Typography,
+} from '@mui/material';
+import i18next from 'i18next';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SharedI } from '../../data/fakedata';
+import { filesActions } from '../../store/files';
+import { globalActions } from '../../store/global';
+import { getComparator, stableSort } from '../../utils/sort';
+import { ISOStringToDateString } from '../../utils/time';
+import ContextMenu from '../contextMenu/ContextMenu';
+import FileType from '../FileType';
+import TableHeader from '../tableHeaders/SharedHeader';
 
-type Order = "asc" | "desc";
+type Order = 'asc' | 'desc';
 
 const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
-  const dispatch = useDispatch();
-  const dir = i18next.dir(i18next.language) === "rtl" ? "right" : "left";
-  const locales = i18next.dir(i18next.language) === "ltr" ? "en-US" : "he-IL";
-  const selectedFiles = useSelector((state: any) => state.files.files);
+    const dispatch = useDispatch();
+    const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
+    const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
+    const selectedFiles = useSelector((state: any) => state.files.selected);
 
-  const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof SharedI>("name");
-  const [page, setPage] = React.useState(0);
-  const rowsPerPage = 100;
+    const [order, setOrder] = React.useState<Order>('asc');
+    const [orderBy, setOrderBy] = React.useState<keyof SharedI>('name');
+    const [page, setPage] = React.useState(0);
+    const rowsPerPage = 100;
 
-  const fileicon = FileType("folder");
+    const fileicon = FileType('folder');
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: keyof SharedI
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
 
-  const handleClick = (event: React.MouseEvent<unknown>, file: any) => {
-    const selectedIndex = selectedFiles.indexOf(file.stateId);
-    let newSelected: readonly string[] = [];
+    const handleClick = (event: React.MouseEvent<unknown>, file: any) => {
+        const selectedIndex = selectedFiles.indexOf(file.stateId);
+        let newSelected: readonly string[] = [];
 
-    if (event.ctrlKey) {
-      if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selectedFiles, file.stateId);
-      } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selectedFiles.slice(1));
-      } else if (selectedIndex === selectedFiles.length - 1) {
-        newSelected = newSelected.concat(selectedFiles.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        newSelected = newSelected.concat(
-          selectedFiles.slice(0, selectedIndex),
-          selectedFiles.slice(selectedIndex + 1)
-        );
-      }
+        if (event.ctrlKey) {
+            if (selectedIndex === -1) {
+                newSelected = newSelected.concat(selectedFiles, file.stateId);
+            } else if (selectedIndex === 0) {
+                newSelected = newSelected.concat(selectedFiles.slice(1));
+            } else if (selectedIndex === selectedFiles.length - 1) {
+                newSelected = newSelected.concat(selectedFiles.slice(0, -1));
+            } else if (selectedIndex > 0) {
+                newSelected = newSelected.concat(
+                    selectedFiles.slice(0, selectedIndex),
+                    selectedFiles.slice(selectedIndex + 1),
+                );
+            }
 
-      dispatch(filesActions.setFiles(newSelected));
-    } else {
-      dispatch(filesActions.setFiles([file.stateId]));
-    }
-  };
+            dispatch(filesActions.setSelected(newSelected));
+        } else {
+            dispatch(filesActions.setSelected([file.stateId]));
+        }
+    };
 
-  const handleSelectAllClick = (event: any) => {
-    if (event.key === "a" && event.ctrlKey) {
-      event.preventDefault();
-      const allRowsNames = props.filesArray.map((n) => n.stateId);
-      dispatch(filesActions.setFiles(allRowsNames));
-    }
-  };
+    const handleSelectAllClick = (event: any) => {
+        if (event.key === 'a' && event.ctrlKey) {
+            event.preventDefault();
+            const allRowsNames = props.filesArray.map((n) => n.stateId);
+            dispatch(filesActions.setSelected(allRowsNames));
+        }
+    };
 
-  const handleContextMenuClick = (
-    event: React.MouseEvent<unknown>,
-    file: any
-  ) => {
-    event.preventDefault();
-    if (selectedFiles.length <= 1) {
-      dispatch(filesActions.setFiles([file.stateId]));
-    }
-    dispatch(uiActions.setContextMenu());
-    dispatch(
-      uiActions.setContextMenuPosition({ x: event.clientX, y: event.clientY })
+    const handleContextMenuClick = (event: React.MouseEvent<unknown>, file: any) => {
+        event.preventDefault();
+        if (selectedFiles.length <= 1) {
+            dispatch(filesActions.setSelected([file.stateId]));
+        }
+        dispatch(globalActions.setContextMenu());
+        dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
+    };
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const isSelected = (file: any) => {
+        return selectedFiles.indexOf(file.stateId) !== -1;
+    };
+
+    return (
+        <Box>
+            <Paper elevation={0}>
+                <TableContainer
+                    sx={{
+                        maxHeight: 800,
+                    }}
+                >
+                    <Table stickyHeader>
+                        <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+                        <TableBody>
+                            {stableSort(props.filesArray, getComparator(order, orderBy))
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((row, index) => {
+                                    const isItemSelected = isSelected(row);
+                                    const labelId = `enhanced-table-checkbox-${index}`;
+                                    const stringDate = ISOStringToDateString(row.stateCreatedAt, locales);
+                                    return (
+                                        <TableRow
+                                            hover
+                                            onClick={(event) => handleClick(event, row)}
+                                            onContextMenu={(event) => handleContextMenuClick(event, row)}
+                                            onKeyDown={(event) => handleSelectAllClick(event)}
+                                            role="checkbox"
+                                            aria-checked={isItemSelected}
+                                            tabIndex={-1}
+                                            key={row.name}
+                                            selected={isItemSelected}
+                                        >
+                                            <TableCell padding="checkbox">{fileicon}</TableCell>
+                                            <TableCell
+                                                component="th"
+                                                id={labelId}
+                                                scope="row"
+                                                sx={{
+                                                    width: '60%',
+                                                }}
+                                                align={dir}
+                                            >
+                                                {row.name}
+                                            </TableCell>
+
+                                            <TableCell align={dir}>
+                                                <Stack
+                                                    direction="row"
+                                                    sx={{
+                                                        justifyContent: 'space-between',
+                                                        width: '115px',
+                                                    }}
+                                                >
+                                                    <Avatar
+                                                        sx={{
+                                                            width: '23px',
+                                                            height: '23px',
+                                                        }}
+                                                    />
+
+                                                    <Typography variant="body2">{'maya fisher'}</Typography>
+                                                </Stack>
+                                            </TableCell>
+
+                                            <TableCell
+                                                sx={{
+                                                    width: '15%',
+                                                }}
+                                                align={dir}
+                                            >
+                                                {stringDate}
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Paper>
+            <ContextMenu />
+        </Box>
     );
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const isSelected = (file: any) => {
-    return selectedFiles.indexOf(file.stateId) !== -1;
-  };
-
-  return (
-    <Box>
-      <Paper elevation={0} >
-        <TableContainer sx={{
-          maxHeight: 800
-        }}>
-          <Table stickyHeader>
-            <TableHeader
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-            />
-            <TableBody>
-              {stableSort(props.filesArray, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-                  const stringDate = ISOStringToDateString(row.stateCreatedAt, locales);
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row)}
-                      onContextMenu={(event) =>
-                        handleContextMenuClick(event, row)
-                      }
-                      onKeyDown={(event) => handleSelectAllClick(event)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">{fileicon}</TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        sx={{
-                          width: "60%",
-                        }}
-                        align={dir}
-                      >
-                        {row.name}
-                      </TableCell>
-
-                      <TableCell align={dir}>
-                        <Stack direction="row" sx={{
-                          justifyContent: "space-between",
-                          width: "115px",
-                        }}>
-                          <Avatar
-                            sx={{
-                              width: "23px",
-                              height: "23px",
-                            }}
-                          />
-
-                          <Typography variant="body2">
-                            {"maya fisher"}
-                          </Typography>
-                        </Stack>
-                      </TableCell>
-
-                      <TableCell
-                        sx={{
-                          width: "15%",
-                        }}
-                        align={dir}
-                      >
-                        {stringDate}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-      <ContextMenu />
-    </Box>
-  );
 };
 
 export default MyDriveTable;

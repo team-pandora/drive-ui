@@ -1,13 +1,25 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const popupSlice = createSlice({
     name: 'popups',
-    initialState: { share: false, link: false, rename: false, info: false, moveTo: false, copy: false, shortcut: false, externalTransfer: false, newFolder:false, navigation:false },
+    initialState: {
+        share: false,
+        link: false,
+        rename: false,
+        info: false,
+        moveTo: false,
+        copy: false,
+        shortcut: false,
+        externalTransfer: false,
+        newFolder: false,
+        navigation: false,
+    },
     reducers: {
         setShare: (state) => {
             state.share = !state.share;
         },
-        setLink: (state, action) => {
+        setLink: (state) => {
             state.link = !state.link;
         },
         setRename: (state) => {
@@ -16,16 +28,16 @@ const popupSlice = createSlice({
         setInfo: (state) => {
             state.info = !state.info;
         },
-        setMoveTo: (state, action) => {
+        setMoveTo: (state) => {
             state.moveTo = !state.moveTo;
         },
-        setCopy: (state, action) => {
+        setCopy: (state) => {
             state.copy = !state.copy;
         },
-        setShortcut: (state, action) => {
+        setShortcut: (state) => {
             state.shortcut = !state.shortcut;
         },
-        externalTransfer: (state, action) => {
+        externalTransfer: (state) => {
             state.externalTransfer = !state.externalTransfer;
         },
         setNewFolder: (state) => {
@@ -33,9 +45,9 @@ const popupSlice = createSlice({
         },
         setNavigation: (state) => {
             state.navigation = !state.navigation;
-        }
-    }
-})
+        },
+    },
+});
 
 export const popupActions = popupSlice.actions;
 

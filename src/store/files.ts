@@ -1,14 +1,15 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const filesSlice = createSlice({
     name: 'files',
-    initialState: { files: [] },
+    initialState: { selected: [] },
     reducers: {
-        setFiles: (state, action) => {
-            state.files = action.payload;
-        }
-    }
-})
+        setSelected: (state, action) => {
+            state.selected = action.payload;
+        },
+    },
+});
 
 export const filesActions = filesSlice.actions;
 

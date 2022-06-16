@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import uiReducer from './ui';
+import globalReducer from './global';
 import filesReducer from './files';
 import popupsReducer from './popups';
 import usersReducer from './users';
 
 const store = configureStore({
     reducer: {
-        ui: uiReducer,
+        global: globalReducer,
         files: filesReducer,
         popups: popupsReducer,
         users: usersReducer,

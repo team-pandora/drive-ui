@@ -1,23 +1,21 @@
-import React from "react";
-import { Dialog } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { popupActions } from "../../../store/popups";
-import NavigationPopup from "./NavigationPopup";
-import { GenericDialog } from "../Dialog";
+import { useDispatch } from 'react-redux';
+import { popupActions } from '../../../store/popups';
+import { GenericDialog } from '../Dialog';
+import NavigationPopup from './NavigationPopup';
 
 const NavigationDialog = () => {
-  const dispatch = useDispatch();
-  const selectorFunction = (state: any) => state.popups.navigation;
+    const dispatch = useDispatch();
+    const selectorFunction = (state: any) => state.popups.navigation;
 
-  const handleClose = () => {
-    dispatch(popupActions.setNavigation());
-  };
+    const handleClose = () => {
+        dispatch(popupActions.setNavigation());
+    };
 
-  return (
-    <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
-      <NavigationPopup />
-    </GenericDialog>
-  );
+    return (
+        <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
+            <NavigationPopup />
+        </GenericDialog>
+    );
 };
 
 export default NavigationDialog;
