@@ -35,11 +35,21 @@ const PagesButtons = () => {
     return (
         <SBox>
             <List>
-                <NavButton path="my-drive" label={i18next.t('sideBar.myDrive')} icon={<Home />} />
-                <NavButton path="shared" label={i18next.t('sideBar.SharedWithMe')} icon={<PeopleAlt />} />
-                <NavButton path="recently" label={i18next.t('sideBar.Recently')} icon={<QueryBuilder />} />
-                <NavButton path="favorites" label={i18next.t('sideBar.Favorites')} icon={<StarBorder />} />
-                <NavButton path="trash" label={i18next.t('sideBar.Trash')} icon={<Delete />} />
+                <NavButton path="my-drive" label={i18next.t('sideBar.myDrive')}>
+                    <Home />
+                </NavButton>
+                <NavButton path="shared" label={i18next.t('sideBar.SharedWithMe')}>
+                    {<PeopleAlt />}
+                </NavButton>
+                <NavButton path="recently" label={i18next.t('sideBar.Recently')}>
+                    {<QueryBuilder />}
+                </NavButton>
+                <NavButton path="favorites" label={i18next.t('sideBar.Favorites')}>
+                    {<StarBorder />}
+                </NavButton>
+                <NavButton path="trash" label={i18next.t('sideBar.Trash')}>
+                    {<Delete />}
+                </NavButton>
                 {/* <IncomingFilesButton
                     path="external-transferred"
                     label={i18next.t('sideBar.ExternalTransferIncoming')}

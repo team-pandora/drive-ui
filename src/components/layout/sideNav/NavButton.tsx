@@ -15,11 +15,11 @@ const ActiveTypography = styled(Typography)({
 type props = {
     path: string;
     label: string;
-    icon: JSX.Element | null;
+    children: React.ReactNode;
 };
 
 // TODO: pass icon as children instead of prop.
-const NavButton: React.FC<props> = ({ path, label, icon }) => {
+const NavButton: React.FC<props> = ({ path, label, children }) => {
     const dir = i18next.dir(i18next.language) === 'rtl' ? '25px 0 0 25px' : '0 25px 25px 0';
     const ActiveListItem = styled(ListItem)({
         backgroundColor: '#e8f0fe',
@@ -32,7 +32,7 @@ const NavButton: React.FC<props> = ({ path, label, icon }) => {
     const TypographyComponent = isActive ? ActiveTypography : Typography;
 
     const iconButtonStyle = {
-        backgroundColor: `${icon === null ? '#f4f2ed' : 'none'}`,
+        backgroundColor: `${children === null ? '#f4f2ed' : 'none'}`,
         borderRadius: `${dir}`,
     };
 
@@ -40,7 +40,7 @@ const NavButton: React.FC<props> = ({ path, label, icon }) => {
         <NavLinkStyle activeStyle={{ color: '#1967d2' }} to={path}>
             <ListItemComponent sx={{ marginTop: '5px' }} disablePadding>
                 <ListItemButton sx={iconButtonStyle}>
-                    <ListItemIcon sx={{ minWidth: '36px', marginX: '10px' }}>{icon}</ListItemIcon>
+                    <ListItemIcon sx={{ minWidth: '36px', marginX: '10px' }}>{children}</ListItemIcon>
                     <TypographyComponent>{label}</TypographyComponent>
                 </ListItemButton>
             </ListItemComponent>

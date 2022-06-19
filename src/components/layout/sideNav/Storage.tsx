@@ -40,7 +40,9 @@ const Storage: React.FC<props> = ({ used, limit }) => {
     const quotaUsed = Math.round((100 * used) / limit);
     return (
         <SBox>
-            <NavButton path="quota" label={i18next.t('sideBar.Storage')} icon={<CloudQueue />} />
+            <NavButton path="quota" label={i18next.t('sideBar.Storage')}>
+                <CloudQueue />
+            </NavButton>
             <Stack alignItems={'center'} spacing={1}>
                 <QuotaOutlineBox>
                     <QuotaFillBox sx={{ width: quotaUsed }} />

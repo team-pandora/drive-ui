@@ -26,13 +26,9 @@ const MyDrive = () => {
     const [files, setFiles] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
 
-    const [fetchedFiles, isLoading] = useFiles(folderId);
+    const isLoading = useFiles(folderId, setFiles);
 
-    if (!isLoading && fetchedFiles) {
-        setFiles(fetchedFiles);
-    }
-
-    const stack = true && (
+    const stack = isLoading && (
         <Stack
             sx={{
                 width: '85%',
