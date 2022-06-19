@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import i18next from 'i18next';
 import TableMenuHeader from '../components/BreadCrumbs';
-import Table from '../components/tables/IncomingTomcal';
+import Table from '../components/fileView/tables/IncomingTomcal';
 import { FavoritesData } from '../data/fakedata';
 
 const IncomingTomcal = () => {

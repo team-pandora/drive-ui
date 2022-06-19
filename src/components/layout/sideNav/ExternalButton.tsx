@@ -13,13 +13,15 @@ const ActiveTypography = styled(Typography)({
     fontWeight: 'bold',
 });
 
-const ExternalButton: React.FC<{
+type props = {
     path: string;
     label: string;
     icon: JSX.Element;
     isOpen: boolean;
     onArrowClick: () => void;
-}> = (props) => {
+};
+
+const ExternalButton: React.FC<props> = ({ path, label, icon, isOpen, onArrowClick }) => {
     const dir = i18next.dir(i18next.language) === 'rtl' ? '25px 0 0 25px' : '0 25px 25px 0';
     const ActiveListItem = styled(ListItem)({
         backgroundColor: '#e8f0fe',
@@ -28,14 +30,14 @@ const ExternalButton: React.FC<{
 
     // TODO:
     // eslint-disable-next-line no-nested-ternary
-    const ArrowIcon = props.isOpen ? ArrowDropDown : i18next.dir(i18next.language) === 'rtl' ? ArrowLeft : ArrowRight;
+    const ArrowIcon = isOpen ? ArrowDropDown : i18next.dir(i18next.language) === 'rtl' ? ArrowLeft : ArrowRight;
     const location = useLocation();
-    const isActive = location.pathname === `/${props.path}`;
+    const isActive = location.pathname === `/${path}`;
     const ListItemComponent = isActive ? ActiveListItem : ListItem;
     const TypographyComponent = isActive ? ActiveTypography : Typography;
 
     return (
-        <NavLinkStyle activeStyle={{ color: '#1967d2' }} to={props.path}>
+        <NavLinkStyle activeStyle={{ color: '#1967d2' }} to={path}>
             <ListItemComponent
                 sx={{
                     marginTop: '5px',
@@ -49,16 +51,16 @@ const ExternalButton: React.FC<{
                 >
                     <ListItemIcon sx={{ minWidth: '36px', marginX: '10px' }}>
                         <ArrowIcon
-                            onClick={props.onArrowClick}
+                            onClick={onArrowClick}
                             sx={{
                                 marginX: '-25px',
                                 position: 'absolute',
                                 color: '#5f6368',
                             }}
                         />
-                        {props.icon}
+                        {icon}
                     </ListItemIcon>
-                    <TypographyComponent>{props.label}</TypographyComponent>
+                    <TypographyComponent>{label}</TypographyComponent>
                 </ListItemButton>
             </ListItemComponent>
         </NavLinkStyle>

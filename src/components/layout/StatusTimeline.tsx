@@ -25,21 +25,24 @@ const StatusBox = styled(Box)({
     alignItems: 'center',
 });
 
-const StatusTimeline: React.FC<{ statusArray: any }> = (props) => {
-    console.log('statusArray', props.statusArray);
+type props = {
+    statusArray: any;
+};
+
+const StatusTimeline: React.FC<props> = ({ statusArray }) => {
     let color: string = '#E8E8E8';
 
-    if (props.statusArray.some((item: any) => item.type === 'success')) {
+    if (statusArray.some((item: any) => item.type === 'success')) {
         console.log('transfer success');
         color = '#00cc00';
     }
-    if (props.statusArray.some((item: any) => item.type === 'failed')) {
+    if (statusArray.some((item: any) => item.type === 'failed')) {
         console.log('transfer failed');
         color = '#ee6055';
     }
     return (
         <StatusBox>
-            {props.statusArray.map((status: any) => {
+            {statusArray.map((status: any) => {
                 return (
                     <Tooltip title={status.displayName} placement="top">
                         <QuotaOutlineBox>

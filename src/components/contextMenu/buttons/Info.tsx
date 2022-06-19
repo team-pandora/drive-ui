@@ -13,8 +13,6 @@ const Info: React.FC<{ handleClose: () => void }> = (props) => {
         props.handleClose();
     };
 
-    const selectedFiles = useSelector((state: any) => state.files.selected);
-
     return (
         <>
             <MenuItem onClick={handleOpen} disabled={false}>

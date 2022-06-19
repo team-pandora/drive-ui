@@ -8,8 +8,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getFile } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
-import Grid from '../components/grids/MyDrive';
-import Table from '../components/tables/MyDrive';
+import Grid from '../components/fileView/grids/MyDrive';
+import Table from '../components/fileView/tables/MyDrive';
 import { IServerError } from '../utils/types';
 
 // TODO:
@@ -53,7 +53,7 @@ const MyDrive = () => {
     return (
         <Box flex={4} paddingTop={2} padding={2}>
             {/* TODO: */}
-            <TableMenuHeader hierarchy={[i18next.t('titles.MyDrive')]} />
+            <TableMenuHeader hierarchy={[i18next.t('titles.MyDrive'), 'maya']} />
             {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
             <ToastContainer position="bottom-right" />
             {stack}

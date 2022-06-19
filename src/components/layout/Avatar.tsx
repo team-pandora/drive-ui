@@ -21,7 +21,12 @@ function stringAvatar(name: string, color: string) {
     };
 }
 
-const UserAvatar: React.FC<{ name: string; color: string }> = (props) => {
+type props = {
+    name: string;
+    color: string;
+};
+
+const UserAvatar: React.FC<props> = ({ name, color }) => {
     const [showAvatarMenu, setShowAvatarMenu] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -38,7 +43,7 @@ const UserAvatar: React.FC<{ name: string; color: string }> = (props) => {
     return (
         <Fragment>
             <IconButton onClick={handleClick}>
-                <AvatarIcon {...stringAvatar(props.name, props.color)} />
+                <AvatarIcon {...stringAvatar(name, color)} />
             </IconButton>
             <Menu
                 anchorEl={anchorEl}
@@ -48,34 +53,18 @@ const UserAvatar: React.FC<{ name: string; color: string }> = (props) => {
                 PaperProps={{
                     elevation: 0,
                     sx: {
-                        overflow: 'visible',
                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                         mt: 1.5,
-                        '&:before': {
-                            content: '""',
-                            display: 'block',
-                            position: 'absolute',
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: 'background.paper',
-                            transform: 'translateY(-50%) rotate(45deg)',
-                            zIndex: 0,
-                        },
                     },
                 }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 <ListItem>
-                    <AvatarIconFull
-                        {...stringAvatar(props.name, props.color)}
-                        sx={{ margin: 'auto', bgcolor: props.color }}
-                    />
+                    <AvatarIconFull {...stringAvatar(name, color)} sx={{ margin: 'auto', bgcolor: color }} />
                 </ListItem>
                 <ListItem sx={{ display: 'block', textAlign: 'center' }}>
-                    <Typography sx={{ fontWeight: '500', color: '#202124' }}>{props.name}</Typography>
+                    <Typography sx={{ fontWeight: '500', color: '#202124' }}>{name}</Typography>
                     <Typography sx={{ fontSize: 'small', color: '#5f6368' }}>Example@gmagdfgdgil.com</Typography>
                 </ListItem>
             </Menu>

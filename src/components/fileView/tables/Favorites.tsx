@@ -1,19 +1,20 @@
+import { Star } from '@mui/icons-material';
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FavoritesI } from '../../data/fakedata';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import { getComparator, stableSort } from '../../utils/sort';
-import { ISOStringToDateString } from '../../utils/time';
-import ContextMenu from '../contextMenu/ContextMenu';
-import FileType from '../FileType';
+import { FavoritesI } from '../../../data/fakedata';
+import { filesActions } from '../../../store/files';
+import { globalActions } from '../../../store/global';
+import { getComparator, stableSort } from '../../../utils/sort';
+import { ISOStringToDateString } from '../../../utils/time';
+import ContextMenu from '../../contextMenu/ContextMenu';
+import FileType from '../../FileType';
 import TableHeader from '../tableHeaders/FavoritesHeader';
 
 type Order = 'asc' | 'desc';
 
-const IncomingCargoTable: React.FC<{ filesArray: any[] }> = (props) => {
+const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
@@ -116,7 +117,25 @@ const IncomingCargoTable: React.FC<{ filesArray: any[] }> = (props) => {
                                                 }}
                                                 align={dir}
                                             >
-                                                {row.name}
+                                                <Box
+                                                    sx={{
+                                                        width: '100px',
+                                                        height: '20px',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        flexWrap: 'wrap',
+                                                    }}
+                                                >
+                                                    {row.name}
+                                                    <Star
+                                                        sx={{
+                                                            color: '#fdd85d',
+                                                            margin: '5px',
+                                                            width: '15px',
+                                                            height: '15px',
+                                                        }}
+                                                    />
+                                                </Box>
                                             </TableCell>
                                             <TableCell sx={{ width: '20%' }} align={dir}>
                                                 {row.owner}
@@ -137,4 +156,4 @@ const IncomingCargoTable: React.FC<{ filesArray: any[] }> = (props) => {
     );
 };
 
-export default IncomingCargoTable;
+export default MyDriveTable;

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import i18next from 'i18next';
 import TableMenuHeader from '../components/BreadCrumbs';
-import Table from '../components/tables/Shared';
+import Table from '../components/fileView/tables/Shared';
 import { SharedData } from '../data/fakedata';
 
 const Shared = () => {

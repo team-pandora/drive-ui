@@ -19,11 +19,15 @@ const HeaderBar = styled(Box)({
     justifyContent: 'space-between',
 });
 
+type props = {
+    hierarchy: string[];
+};
+
 // TODO: take hierarchy from store
-const TableMenuHeader: React.FC<{ hierarchy: string[] }> = (props) => {
+const TableMenuHeader: React.FC<props> = ({ hierarchy }) => {
     const breadcrumbs: any = [];
 
-    props.hierarchy.forEach((item, index) => {
+    hierarchy.forEach((item, index) => {
         breadcrumbs.push(
             <StyledBreadcrumb key={index} href={`/`} underline="hover" color="inherit">
                 {item}

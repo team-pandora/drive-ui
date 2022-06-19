@@ -5,12 +5,12 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import i18next from 'i18next';
-import { StatusTransferredI } from '../../data/fakedata';
-import { sortableMyDriveCells } from '../../data/myDriveTable';
+import { FavoritesI } from '../../../data/fakedata';
+import { sortableHeadCells } from '../../../data/myDriveTable';
 
 interface HeadCell {
     disablePadding: boolean;
-    id: keyof StatusTransferredI;
+    id: keyof FavoritesI;
     label: string;
     numeric: boolean;
 }
@@ -18,7 +18,7 @@ interface HeadCell {
 type Order = 'asc' | 'desc';
 
 interface EnhancedTableProps {
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof StatusTransferredI) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof FavoritesI) => void;
     order: Order;
     orderBy: string;
 }
@@ -32,40 +32,22 @@ function TableHeader(props: EnhancedTableProps) {
             label: `${i18next.t('tableHeader.Name')}`,
         },
         {
-            id: 'classification',
-            numeric: false,
-            disablePadding: false,
-            label: `${i18next.t('tableHeader.Classification')}`,
-        },
-        {
             id: 'owner',
             numeric: false,
             disablePadding: false,
             label: `${i18next.t('tableHeader.Owner')}`,
         },
         {
-            id: 'recipients',
+            id: 'fsObjectUpdatedAt',
             numeric: false,
             disablePadding: false,
-            label: `${i18next.t('tableHeader.Recipients')}`,
+            label: `${i18next.t('tableHeader.LastModified')}`,
         },
         {
-            id: 'createdAt',
+            id: 'size',
             numeric: false,
             disablePadding: false,
-            label: `${i18next.t('tableHeader.TransferDate')}`,
-        },
-        {
-            id: 'status',
-            numeric: false,
-            disablePadding: false,
-            label: `${i18next.t('tableHeader.Status')}`,
-        },
-        {
-            id: 'destination',
-            numeric: false,
-            disablePadding: false,
-            label: `${i18next.t('tableHeader.Target')}`,
+            label: `${i18next.t('tableHeader.Size')}`,
         },
     ];
 
@@ -77,7 +59,7 @@ function TableHeader(props: EnhancedTableProps) {
     });
 
     const { order, orderBy, onRequestSort } = props;
-    const createSortHandler = (property: keyof StatusTransferredI) => (event: React.MouseEvent<unknown>) => {
+    const createSortHandler = (property: keyof FavoritesI) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
 
@@ -93,7 +75,7 @@ function TableHeader(props: EnhancedTableProps) {
                             padding={headCell.disablePadding ? 'none' : 'normal'}
                             sortDirection={orderBy === headCell.id ? order : false}
                         >
-                            {sortableMyDriveCells.includes(headCell.id) && (
+                            {sortableHeadCells.starred.includes(headCell.id) && (
                                 <TableSortLabel
                                     active={orderBy === headCell.id}
                                     direction={orderBy === headCell.id ? order : 'asc'}
@@ -108,7 +90,7 @@ function TableHeader(props: EnhancedTableProps) {
                                     ) : null}
                                 </TableSortLabel>
                             )}
-                            {!sortableMyDriveCells.includes(headCell.id) && headCell.label}
+                            {!sortableHeadCells.starred.includes(headCell.id) && headCell.label}
                         </TableCell>
                     );
                 })}

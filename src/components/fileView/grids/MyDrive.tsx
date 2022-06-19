@@ -1,9 +1,9 @@
 import { Box, Grid, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import ContextMenu from '../contextMenu/ContextMenu';
+import { filesActions } from '../../../store/files';
+import { globalActions } from '../../../store/global';
+import ContextMenu from '../../contextMenu/ContextMenu';
 import GridHeader from './GridHeader';
 import GridObject from './GridObject';
 
@@ -16,7 +16,11 @@ const SBox = styled(Box)(() => ({
     overflowX: 'hidden',
 }));
 
-const MyDriveGrid: React.FC<{ filesArray: any[] }> = (props) => {
+type props = {
+    filesArray: any[];
+};
+
+const MyDriveGrid: React.FC<props> = ({ filesArray }) => {
     const dispatch = useDispatch();
     const selectedFiles = useSelector((state: any) => state.files.selected);
 
@@ -56,7 +60,7 @@ const MyDriveGrid: React.FC<{ filesArray: any[] }> = (props) => {
         return selectedFiles.indexOf(file.stateId) !== -1;
     };
 
-    const folders = props.filesArray.map((file, index) => {
+    const folders = filesArray.map((file, index) => {
         const isItemSelected = isSelected(file);
         if (file.type === 'folder')
             return (
@@ -71,7 +75,7 @@ const MyDriveGrid: React.FC<{ filesArray: any[] }> = (props) => {
         return <></>;
     });
 
-    const files = props.filesArray.map((file, index) => {
+    const files = filesArray.map((file, index) => {
         const isItemSelected = isSelected(file);
         if (file.type === 'file')
             return (

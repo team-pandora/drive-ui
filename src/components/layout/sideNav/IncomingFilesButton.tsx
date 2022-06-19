@@ -9,26 +9,28 @@ const NavLinkStyle = styled(NavLink)({
     borderRadius: '25px 0 0 25px',
 });
 
-const IncomingFilesButton: React.FC<{
+type props = {
     path: string;
     label: string;
     icon: JSX.Element;
     isOpen: boolean;
     onArrowClick: () => void;
-}> = (props) => {
+};
+
+const IncomingFilesButton: React.FC<props> = ({ path, label, icon, isOpen, onArrowClick }) => {
     const dir = i18next.dir(i18next.language) === 'rtl' ? '25px 0 0 25px' : '0 25px 25px 0';
 
     // TODO:
     // eslint-disable-next-line no-nested-ternary
-    const ArrowIcon = props.isOpen ? ArrowDropDown : i18next.dir(i18next.language) === 'rtl' ? ArrowLeft : ArrowRight;
+    const ArrowIcon = isOpen ? ArrowDropDown : i18next.dir(i18next.language) === 'rtl' ? ArrowLeft : ArrowRight;
 
     const handleClick = (event: any) => {
         event.preventDefault();
-        props.onArrowClick();
+        onArrowClick();
     };
 
     return (
-        <NavLinkStyle activeStyle={{ color: '#1967d2' }} onClick={handleClick} to={props.path}>
+        <NavLinkStyle activeStyle={{ color: '#1967d2' }} onClick={handleClick} to={path}>
             <ListItem
                 sx={{
                     marginTop: '5px',
@@ -42,16 +44,16 @@ const IncomingFilesButton: React.FC<{
                 >
                     <ListItemIcon sx={{ minWidth: '36px', marginX: '10px' }}>
                         <ArrowIcon
-                            onClick={props.onArrowClick}
+                            onClick={onArrowClick}
                             sx={{
                                 marginX: '-25px',
                                 position: 'absolute',
                                 color: '#5f6368',
                             }}
                         />
-                        {props.icon}
+                        {icon}
                     </ListItemIcon>
-                    <Typography>{props.label}</Typography>
+                    <Typography>{label}</Typography>
                 </ListItemButton>
             </ListItem>
         </NavLinkStyle>

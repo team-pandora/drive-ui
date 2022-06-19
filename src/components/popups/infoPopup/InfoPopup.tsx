@@ -68,6 +68,7 @@ const InfoPopup = (props: any) => {
             </InfoHeader>
             <InfoText>{`${i18next.t('info.HaveAccess')}`}</InfoText>
             <InfoAccess>
+                {/* TODO: yonatan */}
                 <FileOwner>
                     <UserAvatar name={props.owner.name} color={props.owner.color}></UserAvatar>
                 </FileOwner>

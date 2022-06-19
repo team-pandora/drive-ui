@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import i18next from 'i18next';
 import TableMenuHeader from '../components/BreadCrumbs';
-import Table from '../components/tables/Recent';
+import Table from '../components/fileView/tables/Recent';
 import { RecentData } from '../data/fakedata';
 
 const Recently = () => {

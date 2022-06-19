@@ -1,53 +1,43 @@
-import { Avatar, Box, Paper, styled, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StatusTransferredI } from '../../data/fakedata';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import { getComparator, stableSort } from '../../utils/sort';
-import { ISOStringToDateString } from '../../utils/time';
-import ContextMenu from '../contextMenu/ContextMenu';
-import FileType from '../FileType';
-import StatusTimeline from '../layout/StatusTimeline';
-import TableHeader from '../tableHeaders/StatusTransferredHeader';
+import { RecentI } from '../../../data/fakedata';
+import { filesActions } from '../../../store/files';
+import { globalActions } from '../../../store/global';
+import { getComparator, stableSort } from '../../../utils/sort';
+import ContextMenu from '../../contextMenu/ContextMenu';
+import FileType from '../../FileType';
+import TableHeader from '../tableHeaders/RecentlyHeader';
 
 type Order = 'asc' | 'desc';
 
-const StatusBox = styled(Box)({
-    width: '100%',
-    height: '30px',
-    //   backgroundColor: "pink",
-    display: 'flex',
-    alignItems: 'center',
-});
-
-const StatusTransferredTable: React.FC<{ filesArray: any[] }> = (props) => {
+const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     const dispatch = useDispatch();
+    const selectedFiles = useSelector((state: any) => state.files.selected);
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
-    const selectedFiles = useSelector((state: any) => state.files.selected);
 
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof StatusTransferredI>('owner');
+    const [orderBy, setOrderBy] = React.useState<keyof RecentI>('owner');
     const [page, setPage] = React.useState(0);
     const rowsPerPage = 100;
 
-    const fileIcon = FileType('file');
+    const fileicon = FileType('folder');
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof StatusTransferredI) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof RecentI) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
 
     const handleClick = (event: React.MouseEvent<unknown>, file: any) => {
-        const selectedIndex = selectedFiles.indexOf(file.fileId);
+        const selectedIndex = selectedFiles.indexOf(file.stateId);
         let newSelected: readonly string[] = [];
 
         if (event.ctrlKey) {
             if (selectedIndex === -1) {
-                newSelected = newSelected.concat(selectedFiles, file.fileId);
+                newSelected = newSelected.concat(selectedFiles, file.stateId);
             } else if (selectedIndex === 0) {
                 newSelected = newSelected.concat(selectedFiles.slice(1));
             } else if (selectedIndex === selectedFiles.length - 1) {
@@ -61,7 +51,7 @@ const StatusTransferredTable: React.FC<{ filesArray: any[] }> = (props) => {
 
             dispatch(filesActions.setSelected(newSelected));
         } else {
-            dispatch(filesActions.setSelected([file.fileId]));
+            dispatch(filesActions.setSelected([file.stateId]));
         }
     };
 
@@ -76,7 +66,7 @@ const StatusTransferredTable: React.FC<{ filesArray: any[] }> = (props) => {
     const handleContextMenuClick = (event: React.MouseEvent<unknown>, file: any) => {
         event.preventDefault();
         if (selectedFiles.length <= 1) {
-            dispatch(filesActions.setSelected([file.fileId]));
+            dispatch(filesActions.setSelected([file.stateId]));
         }
         dispatch(globalActions.setContextMenu());
         dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
@@ -87,17 +77,13 @@ const StatusTransferredTable: React.FC<{ filesArray: any[] }> = (props) => {
     };
 
     const isSelected = (file: any) => {
-        return selectedFiles.indexOf(file.fileId) !== -1;
+        return selectedFiles.indexOf(file.stateId) !== -1;
     };
 
     return (
         <Box>
             <Paper elevation={0}>
-                <TableContainer
-                    sx={{
-                        maxHeight: 800,
-                    }}
-                >
+                <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
                         <TableBody>
@@ -106,7 +92,7 @@ const StatusTransferredTable: React.FC<{ filesArray: any[] }> = (props) => {
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row);
                                     const labelId = `enhanced-table-checkbox-${index}`;
-                                    const stringDate = ISOStringToDateString(row.createdAt, locales);
+
                                     return (
                                         <TableRow
                                             hover
@@ -119,40 +105,25 @@ const StatusTransferredTable: React.FC<{ filesArray: any[] }> = (props) => {
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">{fileIcon}</TableCell>
+                                            <TableCell padding="checkbox">{fileicon}</TableCell>
+                                            <TableCell component="th" id={labelId} scope="row" align={dir}>
+                                                {row.name}
+                                            </TableCell>
                                             <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
                                                 sx={{
-                                                    width: '18%',
+                                                    width: '20%',
                                                 }}
                                                 align={dir}
                                             >
-                                                {row.name}
+                                                {row.owner}
                                             </TableCell>
-                                            <TableCell sx={{ width: '8%' }} align={dir}>
-                                                {row.classification}
-                                            </TableCell>
-                                            <TableCell align={dir} sx={{ width: '10%' }}>
-                                                {'מישהו'}
-                                            </TableCell>
-                                            <TableCell sx={{ width: '15%' }} align={dir}>
-                                                <Avatar
-                                                    sx={{
-                                                        width: '23px',
-                                                        height: '23px',
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell sx={{ width: '15%' }} align={dir}>
-                                                {stringDate}
-                                            </TableCell>
-                                            <TableCell sx={{ width: '25%' }} align={dir}>
-                                                <StatusTimeline statusArray={row.status} />
-                                            </TableCell>
-                                            <TableCell sx={{ width: '10%' }} align={dir}>
-                                                {row.destination}
+                                            <TableCell
+                                                sx={{
+                                                    width: '8%',
+                                                }}
+                                                align={dir}
+                                            >
+                                                {row.size ? row.size : '-'}
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -166,4 +137,4 @@ const StatusTransferredTable: React.FC<{ filesArray: any[] }> = (props) => {
     );
 };
 
-export default StatusTransferredTable;
+export default MyDriveTable;

@@ -5,19 +5,20 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import i18next from 'i18next';
-import { TrashI } from '../../data/fakedata';
-import { sortableHeadCells } from '../../data/myDriveTable';
+import { SharedI } from '../../../data/fakedata';
+import { sortableHeadCells } from '../../../data/myDriveTable';
 
 interface HeadCell {
     disablePadding: boolean;
-    id: keyof TrashI;
+    id: keyof SharedI;
     label: string;
     numeric: boolean;
 }
 
 type Order = 'asc' | 'desc';
+
 interface EnhancedTableProps {
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TrashI) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof SharedI) => void;
     order: Order;
     orderBy: string;
 }
@@ -27,26 +28,20 @@ function TableHeader(props: EnhancedTableProps) {
         {
             id: 'name',
             numeric: false,
-            disablePadding: false,
+            disablePadding: true,
             label: `${i18next.t('tableHeader.Name')}`,
         },
         {
-            id: 'owner',
+            id: 'sharedBy',
             numeric: false,
             disablePadding: false,
-            label: `${i18next.t('tableHeader.Owner')}`,
+            label: `${i18next.t('tableHeader.SharedBy')}`,
         },
         {
-            id: 'fsObjectUpdatedAt',
+            id: 'stateCreatedAt',
             numeric: false,
             disablePadding: false,
-            label: `${i18next.t('tableHeader.DateBinned')}`,
-        },
-        {
-            id: 'size',
-            numeric: false,
-            disablePadding: false,
-            label: `${i18next.t('tableHeader.Size')}`,
+            label: `${i18next.t('tableHeader.ShareDate')}`,
         },
     ];
 
@@ -58,7 +53,7 @@ function TableHeader(props: EnhancedTableProps) {
     });
 
     const { order, orderBy, onRequestSort } = props;
-    const createSortHandler = (property: keyof TrashI) => (event: React.MouseEvent<unknown>) => {
+    const createSortHandler = (property: keyof SharedI) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
 
@@ -73,7 +68,7 @@ function TableHeader(props: EnhancedTableProps) {
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
-                        {sortableHeadCells.trash.includes(headCell.id) && (
+                        {sortableHeadCells.shared.includes(headCell.id) && (
                             <TableSortLabel
                                 active={orderBy === headCell.id}
                                 direction={orderBy === headCell.id ? order : 'asc'}
@@ -88,7 +83,7 @@ function TableHeader(props: EnhancedTableProps) {
                                 ) : null}
                             </TableSortLabel>
                         )}
-                        {!sortableHeadCells.trash.includes(headCell.id) && headCell.label}
+                        {!sortableHeadCells.shared.includes(headCell.id) && headCell.label}
                     </TableCell>
                 ))}
             </TableRow>

@@ -2,13 +2,13 @@ import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableR
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TrashI } from '../../data/fakedata';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import { getComparator, stableSort } from '../../utils/sort';
-import { ISOStringToDateString } from '../../utils/time';
-import ContextMenu from '../contextMenu/ContextMenu';
-import FileType from '../FileType';
+import { TrashI } from '../../../data/fakedata';
+import { filesActions } from '../../../store/files';
+import { globalActions } from '../../../store/global';
+import { getComparator, stableSort } from '../../../utils/sort';
+import { ISOStringToDateString } from '../../../utils/time';
+import ContextMenu from '../../contextMenu/ContextMenu';
+import FileType from '../../FileType';
 import TableHeader from '../tableHeaders/TrashHeader';
 
 type Order = 'asc' | 'desc';

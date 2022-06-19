@@ -2,7 +2,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import i18next from 'i18next';
-import { RecentI } from '../../data/fakedata';
+import { RecentI } from '../../../data/fakedata';
 
 interface HeadCell {
     disablePadding: boolean;

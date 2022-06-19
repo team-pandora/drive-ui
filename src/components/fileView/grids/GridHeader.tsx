@@ -1,10 +1,14 @@
 import { Box, Typography } from '@mui/material';
 
-const GridHeader: React.FC<{ label: string }> = (props) => {
+type props = {
+    label: string;
+};
+
+const GridHeader: React.FC<props> = ({ label }) => {
     return (
         <Box sx={{ width: '100%', height: '40px' }}>
             <Typography color={'gray'} variant="body1">
-                {props.label}
+                {label}
             </Typography>
         </Box>
     );

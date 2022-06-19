@@ -2,9 +2,13 @@ import ShortcutIcon from '@mui/icons-material/Shortcut';
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
 
-const ExternalTransfer: React.FC<{ handleClose: () => void }> = (props) => {
+type props = {
+    handleClose: () => void;
+};
+
+const ExternalTransfer: React.FC<props> = ({ handleClose }) => {
     return (
-        <MenuItem onClick={props.handleClose}>
+        <MenuItem onClick={handleClose}>
             <ListItemIcon>
                 <ShortcutIcon />
             </ListItemIcon>

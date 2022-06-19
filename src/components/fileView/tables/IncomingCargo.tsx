@@ -2,30 +2,31 @@ import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } fro
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RecentI } from '../../data/fakedata';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import { getComparator, stableSort } from '../../utils/sort';
-import ContextMenu from '../contextMenu/ContextMenu';
-import FileType from '../FileType';
-import TableHeader from '../tableHeaders/RecentlyHeader';
+import { FavoritesI } from '../../../data/fakedata';
+import { filesActions } from '../../../store/files';
+import { globalActions } from '../../../store/global';
+import { getComparator, stableSort } from '../../../utils/sort';
+import { ISOStringToDateString } from '../../../utils/time';
+import ContextMenu from '../../contextMenu/ContextMenu';
+import FileType from '../../FileType';
+import TableHeader from '../tableHeaders/FavoritesHeader';
 
 type Order = 'asc' | 'desc';
 
-const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
+const IncomingCargoTable: React.FC<{ filesArray: any[] }> = (props) => {
     const dispatch = useDispatch();
-    const selectedFiles = useSelector((state: any) => state.files.selected);
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
+    const selectedFiles = useSelector((state: any) => state.files.selected);
 
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof RecentI>('owner');
+    const [orderBy, setOrderBy] = React.useState<keyof FavoritesI>('owner');
     const [page, setPage] = React.useState(0);
     const rowsPerPage = 100;
 
-    const fileicon = FileType('folder');
+    const fileIcon = FileType('folder');
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof RecentI) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof FavoritesI) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
@@ -72,10 +73,6 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
         dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
     };
 
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
     const isSelected = (file: any) => {
         return selectedFiles.indexOf(file.stateId) !== -1;
     };
@@ -83,7 +80,11 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     return (
         <Box>
             <Paper elevation={0}>
-                <TableContainer sx={{ maxHeight: 800 }}>
+                <TableContainer
+                    sx={{
+                        maxHeight: 800,
+                    }}
+                >
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
                         <TableBody>
@@ -92,7 +93,7 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row);
                                     const labelId = `enhanced-table-checkbox-${index}`;
-
+                                    const stringDate = ISOStringToDateString(row.fsObjectUpdatedAt, locales);
                                     return (
                                         <TableRow
                                             hover
@@ -105,24 +106,23 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">{fileicon}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" align={dir}>
+                                            <TableCell padding="checkbox">{FileType('folder')}</TableCell>
+                                            <TableCell
+                                                component="th"
+                                                id={labelId}
+                                                scope="row"
+                                                sx={{
+                                                    width: '45%',
+                                                }}
+                                                align={dir}
+                                            >
                                                 {row.name}
                                             </TableCell>
-                                            <TableCell
-                                                sx={{
-                                                    width: '20%',
-                                                }}
-                                                align={dir}
-                                            >
+                                            <TableCell sx={{ width: '20%' }} align={dir}>
                                                 {row.owner}
                                             </TableCell>
-                                            <TableCell
-                                                sx={{
-                                                    width: '8%',
-                                                }}
-                                                align={dir}
-                                            >
+                                            <TableCell align={dir}>{stringDate}</TableCell>
+                                            <TableCell sx={{ width: '8%' }} align={dir}>
                                                 {row.size ? row.size : '-'}
                                             </TableCell>
                                         </TableRow>
@@ -137,4 +137,4 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     );
 };
 
-export default MyDriveTable;
+export default IncomingCargoTable;

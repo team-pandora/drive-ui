@@ -1,16 +1,26 @@
-import { Star } from '@mui/icons-material';
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import {
+    Avatar,
+    Box,
+    Paper,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Typography,
+} from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FavoritesI } from '../../data/fakedata';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import { getComparator, stableSort } from '../../utils/sort';
-import { ISOStringToDateString } from '../../utils/time';
-import ContextMenu from '../contextMenu/ContextMenu';
-import FileType from '../FileType';
-import TableHeader from '../tableHeaders/FavoritesHeader';
+import { SharedI } from '../../../data/fakedata';
+import { filesActions } from '../../../store/files';
+import { globalActions } from '../../../store/global';
+import { getComparator, stableSort } from '../../../utils/sort';
+import { ISOStringToDateString } from '../../../utils/time';
+import ContextMenu from '../../contextMenu/ContextMenu';
+import FileType from '../../FileType';
+import TableHeader from '../tableHeaders/SharedHeader';
 
 type Order = 'asc' | 'desc';
 
@@ -21,13 +31,13 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     const selectedFiles = useSelector((state: any) => state.files.selected);
 
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof FavoritesI>('owner');
+    const [orderBy, setOrderBy] = React.useState<keyof SharedI>('name');
     const [page, setPage] = React.useState(0);
     const rowsPerPage = 100;
 
-    const fileIcon = FileType('folder');
+    const fileicon = FileType('folder');
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof FavoritesI) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
@@ -74,6 +84,10 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
         dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
     };
 
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
     const isSelected = (file: any) => {
         return selectedFiles.indexOf(file.stateId) !== -1;
     };
@@ -94,7 +108,7 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row);
                                     const labelId = `enhanced-table-checkbox-${index}`;
-                                    const stringDate = ISOStringToDateString(row.fsObjectUpdatedAt, locales);
+                                    const stringDate = ISOStringToDateString(row.stateCreatedAt, locales);
                                     return (
                                         <TableRow
                                             hover
@@ -107,42 +121,45 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">{FileType('folder')}</TableCell>
+                                            <TableCell padding="checkbox">{fileicon}</TableCell>
                                             <TableCell
                                                 component="th"
                                                 id={labelId}
                                                 scope="row"
                                                 sx={{
-                                                    width: '45%',
+                                                    width: '60%',
                                                 }}
                                                 align={dir}
                                             >
-                                                <Box
+                                                {row.name}
+                                            </TableCell>
+
+                                            <TableCell align={dir}>
+                                                <Stack
+                                                    direction="row"
                                                     sx={{
-                                                        width: '100px',
-                                                        height: '20px',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        flexWrap: 'wrap',
+                                                        justifyContent: 'space-between',
+                                                        width: '115px',
                                                     }}
                                                 >
-                                                    {row.name}
-                                                    <Star
+                                                    <Avatar
                                                         sx={{
-                                                            color: '#fdd85d',
-                                                            margin: '5px',
-                                                            width: '15px',
-                                                            height: '15px',
+                                                            width: '23px',
+                                                            height: '23px',
                                                         }}
                                                     />
-                                                </Box>
+
+                                                    <Typography variant="body2">{'maya fisher'}</Typography>
+                                                </Stack>
                                             </TableCell>
-                                            <TableCell sx={{ width: '20%' }} align={dir}>
-                                                {row.owner}
-                                            </TableCell>
-                                            <TableCell align={dir}>{stringDate}</TableCell>
-                                            <TableCell sx={{ width: '8%' }} align={dir}>
-                                                {row.size ? row.size : '-'}
+
+                                            <TableCell
+                                                sx={{
+                                                    width: '15%',
+                                                }}
+                                                align={dir}
+                                            >
+                                                {stringDate}
                                             </TableCell>
                                         </TableRow>
                                     );

@@ -1,43 +1,32 @@
-import {
-    Avatar,
-    Box,
-    Paper,
-    Stack,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableRow,
-    Typography,
-} from '@mui/material';
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SharedI } from '../../data/fakedata';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import { getComparator, stableSort } from '../../utils/sort';
-import { ISOStringToDateString } from '../../utils/time';
-import ContextMenu from '../contextMenu/ContextMenu';
-import FileType from '../FileType';
-import TableHeader from '../tableHeaders/SharedHeader';
+import { FavoritesI } from '../../../data/fakedata';
+import { filesActions } from '../../../store/files';
+import { globalActions } from '../../../store/global';
+import { getComparator, stableSort } from '../../../utils/sort';
+import { ISOStringToDateString } from '../../../utils/time';
+import ContextMenu from '../../contextMenu/ContextMenu';
+import FileType from '../../FileType';
+import TableHeader from '../tableHeaders/FavoritesHeader';
 
 type Order = 'asc' | 'desc';
 
-const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
+const IncomingTomcalTable: React.FC<{ filesArray: any[] }> = (props) => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
     const selectedFiles = useSelector((state: any) => state.files.selected);
 
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof SharedI>('name');
+    const [orderBy, setOrderBy] = React.useState<keyof FavoritesI>('owner');
     const [page, setPage] = React.useState(0);
     const rowsPerPage = 100;
 
-    const fileicon = FileType('folder');
+    const fileIcon = FileType('folder');
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof FavoritesI) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
@@ -84,10 +73,6 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
         dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
     };
 
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
     const isSelected = (file: any) => {
         return selectedFiles.indexOf(file.stateId) !== -1;
     };
@@ -108,7 +93,7 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row);
                                     const labelId = `enhanced-table-checkbox-${index}`;
-                                    const stringDate = ISOStringToDateString(row.stateCreatedAt, locales);
+                                    const stringDate = ISOStringToDateString(row.fsObjectUpdatedAt, locales);
                                     return (
                                         <TableRow
                                             hover
@@ -121,45 +106,24 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">{fileicon}</TableCell>
+                                            <TableCell padding="checkbox">{FileType('folder')}</TableCell>
                                             <TableCell
                                                 component="th"
                                                 id={labelId}
                                                 scope="row"
                                                 sx={{
-                                                    width: '60%',
+                                                    width: '45%',
                                                 }}
                                                 align={dir}
                                             >
                                                 {row.name}
                                             </TableCell>
-
-                                            <TableCell align={dir}>
-                                                <Stack
-                                                    direction="row"
-                                                    sx={{
-                                                        justifyContent: 'space-between',
-                                                        width: '115px',
-                                                    }}
-                                                >
-                                                    <Avatar
-                                                        sx={{
-                                                            width: '23px',
-                                                            height: '23px',
-                                                        }}
-                                                    />
-
-                                                    <Typography variant="body2">{'maya fisher'}</Typography>
-                                                </Stack>
+                                            <TableCell sx={{ width: '20%' }} align={dir}>
+                                                {row.owner}
                                             </TableCell>
-
-                                            <TableCell
-                                                sx={{
-                                                    width: '15%',
-                                                }}
-                                                align={dir}
-                                            >
-                                                {stringDate}
+                                            <TableCell align={dir}>{stringDate}</TableCell>
+                                            <TableCell sx={{ width: '8%' }} align={dir}>
+                                                {row.size ? row.size : '-'}
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -173,4 +137,4 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     );
 };
 
-export default MyDriveTable;
+export default IncomingTomcalTable;

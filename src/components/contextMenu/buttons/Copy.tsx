@@ -2,9 +2,13 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
 
-const Copy: React.FC<{ handleClose: () => void }> = (props) => {
+type props = {
+    handleClose: () => void;
+};
+
+const Copy: React.FC<props> = ({ handleClose }) => {
     return (
-        <MenuItem onClick={props.handleClose}>
+        <MenuItem onClick={handleClose}>
             <ListItemIcon>
                 <ContentCopyIcon />
             </ListItemIcon>

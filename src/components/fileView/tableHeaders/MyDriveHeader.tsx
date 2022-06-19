@@ -3,8 +3,8 @@ import TableHead from '@mui/material/TableHead';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import i18next from 'i18next';
-import { MyDriveI } from '../../data/fakedata';
-import { sortableHeadCells } from '../../data/myDriveTable';
+import { MyDriveI } from '../../../data/fakedata';
+import { sortableHeadCells } from '../../../data/myDriveTable';
 
 interface HeadCell {
     disablePadding: boolean;

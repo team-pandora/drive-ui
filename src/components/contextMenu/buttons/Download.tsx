@@ -2,10 +2,14 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
 
-const Download: React.FC<{ handleClose: () => void }> = (props) => {
+type props = {
+    handleClose: () => void;
+};
+
+const Download: React.FC<props> = ({ handleClose }) => {
     const onDownload = () => {
         console.log('Download');
-        props.handleClose();
+        handleClose();
         fetch(`http://localhost:7000/api/storage/bucket/62655a5dd681ae7e5f9eafe0/key/62655a5dd681ae7e5f9eafe2`)
             .then((res) => {
                 res.blob().then((blob) => {
