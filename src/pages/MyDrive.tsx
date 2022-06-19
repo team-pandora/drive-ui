@@ -1,6 +1,6 @@
 import { Box, LinearProgress, Stack, styled } from '@mui/material';
 import i18next from 'i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { getFile } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids/MyDrive';
 import Table from '../components/fileView/tables/MyDrive';
+import { useFiles } from '../hooks/useFiles';
 import { IServerError } from '../utils/types';
 
 // TODO:
@@ -22,22 +23,16 @@ const SBox = styled(Box)({
 const MyDrive = () => {
     const params: { folderId: string } = useParams();
     const folderId: string | null = params.folderId ? params.folderId : null;
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
 
-    // TODO:
-    const { isLoading } = useQuery('files', () => getFile(folderId), {
-        onError: (error: IServerError) => {
-            toast.error('Failed loading files');
-        },
-        onSuccess: (data) => {
-            setFiles(data);
-        },
-        // refetchInterval: 1000,
-        // refetchIntervalInBackground: true,
-    });
+    const [fetchedFiles, isLoading] = useFiles(folderId);
 
-    const stack = isLoading && (
+    if (!isLoading && fetchedFiles) {
+        setFiles(fetchedFiles);
+    }
+
+    const stack = true && (
         <Stack
             sx={{
                 width: '85%',
