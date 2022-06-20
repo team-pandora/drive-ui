@@ -6,7 +6,6 @@ const globalSlice = createSlice({
     initialState: {
         mainMenuIsVisible: false,
         anchorEl: null,
-        language: 'en',
         contextMenu: false,
         contextMenuPosition: { x: 0, y: 0 } || null,
         isGridView: false,
@@ -17,10 +16,6 @@ const globalSlice = createSlice({
         },
         setAnchorEl: (state, action) => {
             state.anchorEl = action.payload;
-        },
-        // TODO: check if necessary
-        setLanguage: (state, action) => {
-            state.language = action.payload;
         },
         setContextMenu: (state) => {
             state.contextMenu = !state.contextMenu;
