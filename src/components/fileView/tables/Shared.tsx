@@ -20,6 +20,7 @@ import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../../FileType';
+import { handleClick, handleContextMenuClick, handleSelectAllClick, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/SharedHeader';
 
 type Order = 'asc' | 'desc';
@@ -43,54 +44,67 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
         setOrderBy(property);
     };
 
-    const handleClick = (event: React.MouseEvent<unknown>, file: any) => {
-        const selectedIndex = selectedFiles.indexOf(file.stateId);
-        let newSelected: readonly string[] = [];
+    const rowFiles = stableSort(props.filesArray, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((file, index) => {
+            const isItemSelected = isSelected(file, selectedFiles);
+            const labelId = `enhanced-table-checkbox-${index}`;
+            const stringDate = ISOStringToDateString(file.stateCreatedAt, locales);
+            return (
+                <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
+                    onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
+                    onKeyDown={(event) => handleSelectAllClick(event, props.filesArray, dispatch)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={file.name}
+                    selected={isItemSelected}
+                >
+                    <TableCell padding="checkbox">{fileicon}</TableCell>
+                    <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        sx={{
+                            width: '60%',
+                        }}
+                        align={dir}
+                    >
+                        {file.name}
+                    </TableCell>
 
-        if (event.ctrlKey) {
-            if (selectedIndex === -1) {
-                newSelected = newSelected.concat(selectedFiles, file.stateId);
-            } else if (selectedIndex === 0) {
-                newSelected = newSelected.concat(selectedFiles.slice(1));
-            } else if (selectedIndex === selectedFiles.length - 1) {
-                newSelected = newSelected.concat(selectedFiles.slice(0, -1));
-            } else if (selectedIndex > 0) {
-                newSelected = newSelected.concat(
-                    selectedFiles.slice(0, selectedIndex),
-                    selectedFiles.slice(selectedIndex + 1),
-                );
-            }
+                    <TableCell align={dir}>
+                        <Stack
+                            direction="row"
+                            sx={{
+                                justifyContent: 'space-between',
+                                width: '115px',
+                            }}
+                        >
+                            <Avatar
+                                sx={{
+                                    width: '23px',
+                                    height: '23px',
+                                }}
+                            />
 
-            dispatch(filesActions.setSelected(newSelected));
-        } else {
-            dispatch(filesActions.setSelected([file.stateId]));
-        }
-    };
+                            <Typography variant="body2">{'maya fisher'}</Typography>
+                        </Stack>
+                    </TableCell>
 
-    const handleSelectAllClick = (event: any) => {
-        if (event.key === 'a' && event.ctrlKey) {
-            event.preventDefault();
-            const allRowsNames = props.filesArray.map((n) => n.stateId);
-            dispatch(filesActions.setSelected(allRowsNames));
-        }
-    };
-
-    const handleContextMenuClick = (event: React.MouseEvent<unknown>, file: any) => {
-        event.preventDefault();
-        if (selectedFiles.length <= 1) {
-            dispatch(filesActions.setSelected([file.stateId]));
-        }
-        dispatch(globalActions.setContextMenu());
-        dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
-    };
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const isSelected = (file: any) => {
-        return selectedFiles.indexOf(file.stateId) !== -1;
-    };
+                    <TableCell
+                        sx={{
+                            width: '15%',
+                        }}
+                        align={dir}
+                    >
+                        {stringDate}
+                    </TableCell>
+                </TableRow>
+            );
+        });
 
     return (
         <Box>
@@ -102,69 +116,7 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                 >
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-                        <TableBody>
-                            {stableSort(props.filesArray, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-                                    const stringDate = ISOStringToDateString(row.stateCreatedAt, locales);
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row)}
-                                            onContextMenu={(event) => handleContextMenuClick(event, row)}
-                                            onKeyDown={(event) => handleSelectAllClick(event)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox">{fileicon}</TableCell>
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                sx={{
-                                                    width: '60%',
-                                                }}
-                                                align={dir}
-                                            >
-                                                {row.name}
-                                            </TableCell>
-
-                                            <TableCell align={dir}>
-                                                <Stack
-                                                    direction="row"
-                                                    sx={{
-                                                        justifyContent: 'space-between',
-                                                        width: '115px',
-                                                    }}
-                                                >
-                                                    <Avatar
-                                                        sx={{
-                                                            width: '23px',
-                                                            height: '23px',
-                                                        }}
-                                                    />
-
-                                                    <Typography variant="body2">{'maya fisher'}</Typography>
-                                                </Stack>
-                                            </TableCell>
-
-                                            <TableCell
-                                                sx={{
-                                                    width: '15%',
-                                                }}
-                                                align={dir}
-                                            >
-                                                {stringDate}
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                        </TableBody>
+                        <TableBody>{rowFiles}</TableBody>
                     </Table>
                 </TableContainer>
             </Paper>

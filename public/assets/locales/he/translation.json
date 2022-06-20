@@ -77,7 +77,8 @@
     "ExternalTransfer": "העברה למרחב חיצוני",
     "Favorite": "הוספה לפריטים המסמונים בכוכב",
     "Unfavorite": "הסרה מהפריטים המסומנים בכוכב",
-    "Shortcut": "צור קיצור דרך"
+    "Shortcut": "צור קיצור דרך",
+    "Restore": "שחזור"
   },
   "search": {
     "Search": "חיפוש ב-Drive",

@@ -34,6 +34,8 @@ module.exports = {
                 tsx: 'never',
             },
         ],
+        'no-use-before-define': 'off',
+        '@typescript-eslint/no-use-before-define': ['error'],
         'no-unused-vars': 'off', // Checked by typescript
         'no-undef': 'off', // Checked by typescript
         'no-default-export': 'off',

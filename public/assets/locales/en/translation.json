@@ -77,7 +77,8 @@
     "ExternalTransfer": "Move to external",
     "Favorite": "Add to favorites",
     "Unfavorite": "Remove from favorites",
-    "Shortcut": "Create shortcut"
+    "Shortcut": "Create shortcut",
+    "Restore": "Restore"
   },
   "search": {
     "Search": "Search in Drive",

@@ -8,6 +8,7 @@ import { globalActions } from '../../../store/global';
 import { getComparator, stableSort } from '../../../utils/sort';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../../FileType';
+import { isSelected, handleClick, handleContextMenuClick, handleSelectAllClick } from '../functions';
 import TableHeader from '../tableHeaders/RecentlyHeader';
 
 type Order = 'asc' | 'desc';
@@ -31,54 +32,47 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
         setOrderBy(property);
     };
 
-    const handleClick = (event: React.MouseEvent<unknown>, file: any) => {
-        const selectedIndex = selectedFiles.indexOf(file.stateId);
-        let newSelected: readonly string[] = [];
+    const rowFiles = stableSort(props.filesArray, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((file, index) => {
+            const isItemSelected = isSelected(file, selectedFiles);
+            const labelId = `enhanced-table-checkbox-${index}`;
 
-        if (event.ctrlKey) {
-            if (selectedIndex === -1) {
-                newSelected = newSelected.concat(selectedFiles, file.stateId);
-            } else if (selectedIndex === 0) {
-                newSelected = newSelected.concat(selectedFiles.slice(1));
-            } else if (selectedIndex === selectedFiles.length - 1) {
-                newSelected = newSelected.concat(selectedFiles.slice(0, -1));
-            } else if (selectedIndex > 0) {
-                newSelected = newSelected.concat(
-                    selectedFiles.slice(0, selectedIndex),
-                    selectedFiles.slice(selectedIndex + 1),
-                );
-            }
-
-            dispatch(filesActions.setSelected(newSelected));
-        } else {
-            dispatch(filesActions.setSelected([file.stateId]));
-        }
-    };
-
-    const handleSelectAllClick = (event: any) => {
-        if (event.key === 'a' && event.ctrlKey) {
-            event.preventDefault();
-            const allRowsNames = props.filesArray.map((n) => n.stateId);
-            dispatch(filesActions.setSelected(allRowsNames));
-        }
-    };
-
-    const handleContextMenuClick = (event: React.MouseEvent<unknown>, file: any) => {
-        event.preventDefault();
-        if (selectedFiles.length <= 1) {
-            dispatch(filesActions.setSelected([file.stateId]));
-        }
-        dispatch(globalActions.setContextMenu());
-        dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
-    };
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const isSelected = (file: any) => {
-        return selectedFiles.indexOf(file.stateId) !== -1;
-    };
+            return (
+                <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
+                    onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
+                    onKeyDown={(event) => handleSelectAllClick(event, props.filesArray, dispatch)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={file.name}
+                    selected={isItemSelected}
+                >
+                    <TableCell padding="checkbox">{fileicon}</TableCell>
+                    <TableCell component="th" id={labelId} scope="row" align={dir}>
+                        {file.name}
+                    </TableCell>
+                    <TableCell
+                        sx={{
+                            width: '20%',
+                        }}
+                        align={dir}
+                    >
+                        {file.owner}
+                    </TableCell>
+                    <TableCell
+                        sx={{
+                            width: '8%',
+                        }}
+                        align={dir}
+                    >
+                        {file.size ? file.size : '-'}
+                    </TableCell>
+                </TableRow>
+            );
+        });
 
     return (
         <Box>
@@ -86,49 +80,7 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                 <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-                        <TableBody>
-                            {stableSort(props.filesArray, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row)}
-                                            onContextMenu={(event) => handleContextMenuClick(event, row)}
-                                            onKeyDown={(event) => handleSelectAllClick(event)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox">{fileicon}</TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" align={dir}>
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell
-                                                sx={{
-                                                    width: '20%',
-                                                }}
-                                                align={dir}
-                                            >
-                                                {row.owner}
-                                            </TableCell>
-                                            <TableCell
-                                                sx={{
-                                                    width: '8%',
-                                                }}
-                                                align={dir}
-                                            >
-                                                {row.size ? row.size : '-'}
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                        </TableBody>
+                        <TableBody>{rowFiles}</TableBody>
                     </Table>
                 </TableContainer>
             </Paper>

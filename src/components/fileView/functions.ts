@@ -8,6 +8,7 @@ import { globalActions } from '../../store/global';
 export const handleClick = (event: React.MouseEvent<unknown>, file: any, selectedFiles: any, dispatch: any) => {
     const selectedIndex = selectedFiles.indexOf(file.stateId);
     let newSelected: readonly string[] = [];
+
     if (event.ctrlKey) {
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selectedFiles, file.stateId);
@@ -21,9 +22,11 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
                 selectedFiles.slice(selectedIndex + 1),
             );
         }
+
         dispatch(filesActions.setSelected(newSelected));
+    } else {
+        dispatch(filesActions.setSelected([file.stateId]));
     }
-    dispatch(filesActions.setSelected([file.stateId]));
 };
 
 export const handleSelectAllClick = (event: any, files: any, dispatch: any) => {

@@ -1,17 +1,40 @@
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
-import i18next from 'i18next';
 import * as React from 'react';
+import {
+    Box,
+    Button,
+    Paper,
+    styled,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Typography,
+} from '@mui/material';
+import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { TrashI } from '../../../data/fakedata';
 import { filesActions } from '../../../store/files';
 import { globalActions } from '../../../store/global';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
-import ContextMenu from '../../contextMenu/ContextMenu';
+import TrashContextMenu from '../../contextMenu/TrashContextMenu';
 import FileType from '../../FileType';
 import TableHeader from '../tableHeaders/TrashHeader';
+import { handleClick, handleContextMenuClick, handleSelectAllClick, isSelected } from '../functions';
 
 type Order = 'asc' | 'desc';
+
+const SBox = styled(Box)(() => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 1,
+    width: '100%',
+    height: '50px',
+    backgroundColor: '#F1F3F4',
+    borderRadius: '4px',
+}));
 
 const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     const dispatch = useDispatch();
@@ -32,73 +55,54 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
         setOrderBy(property);
     };
 
-    const handleClick = (event: React.MouseEvent<unknown>, file: any) => {
-        const selectedIndex = selectedFiles.indexOf(file.stateId);
-        let newSelected: readonly string[] = [];
-
-        if (event.ctrlKey) {
-            if (selectedIndex === -1) {
-                newSelected = newSelected.concat(selectedFiles, file.stateId);
-            } else if (selectedIndex === 0) {
-                newSelected = newSelected.concat(selectedFiles.slice(1));
-            } else if (selectedIndex === selectedFiles.length - 1) {
-                newSelected = newSelected.concat(selectedFiles.slice(0, -1));
-            } else if (selectedIndex > 0) {
-                newSelected = newSelected.concat(
-                    selectedFiles.slice(0, selectedIndex),
-                    selectedFiles.slice(selectedIndex + 1),
-                );
-            }
-
-            dispatch(filesActions.setSelected(newSelected));
-        } else {
-            dispatch(filesActions.setSelected([file.stateId]));
-        }
-    };
-
-    const handleSelectAllClick = (event: any) => {
-        if (event.key === 'a' && event.ctrlKey) {
-            event.preventDefault();
-            const allRowsNames = props.filesArray.map((n) => n.stateId);
-            dispatch(filesActions.setSelected(allRowsNames));
-        }
-    };
-
-    const handleContextMenuClick = (event: React.MouseEvent<unknown>, file: any) => {
-        event.preventDefault();
-        if (selectedFiles.length <= 1) {
-            dispatch(filesActions.setSelected([file.stateId]));
-        }
-        dispatch(globalActions.setContextMenu());
-        dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
-    };
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const isSelected = (file: any) => {
-        return selectedFiles.indexOf(file.stateId) !== -1;
-    };
-
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.filesArray.length) : 0;
+
+    const rowFiles = stableSort(props.filesArray, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((file, index) => {
+            const isItemSelected = isSelected(file, selectedFiles);
+            const labelId = `enhanced-table-checkbox-${index}`;
+            const stringDate = ISOStringToDateString(file.fsObjectUpdatedAt, locales);
+            return (
+                <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
+                    onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
+                    onKeyDown={(event) => handleSelectAllClick(event, props.filesArray, dispatch)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={file.name}
+                    selected={isItemSelected}
+                >
+                    <TableCell padding="checkbox">{fileicon}</TableCell>
+                    <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        sx={{
+                            width: '60%',
+                        }}
+                        align={dir}
+                    >
+                        {file.name}
+                    </TableCell>
+                    <TableCell sx={{ width: '10%' }} align={dir}>
+                        {'אני'}
+                    </TableCell>
+                    <TableCell align={dir}>{stringDate}</TableCell>
+                    <TableCell sx={{ width: '8%' }} align={dir}>
+                        {file.size ? file.size : '-'}
+                    </TableCell>
+                </TableRow>
+            );
+        });
 
     return (
         <Box sx={{ width: '100%' }}>
             <Paper elevation={0} sx={{ width: '100%', mb: 2 }}>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginTop: 1,
-                        width: '100%',
-                        height: '50px',
-                        backgroundColor: '#F1F3F4',
-                        borderRadius: '4px',
-                    }}
-                >
+                <SBox>
                     <Typography
                         sx={{
                             fontSize: '14px',
@@ -113,56 +117,15 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                     <Button sx={{ color: '#000000', margin: '0px 1%', textTransform: 'none' }}>{`${i18next.t(
                         'buttons.Bin',
                     )}`}</Button>
-                </Box>
+                </SBox>
                 <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
-                        <TableBody>
-                            {stableSort(props.filesArray, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
-                                    const stringDate = ISOStringToDateString(row.fsObjectUpdatedAt, locales);
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={(event) => handleClick(event, row)}
-                                            onContextMenu={(event) => handleContextMenuClick(event, row)}
-                                            onKeyDown={(event) => handleSelectAllClick(event)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
-                                        >
-                                            <TableCell padding="checkbox">{fileicon}</TableCell>
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                sx={{
-                                                    width: '60%',
-                                                }}
-                                                align={dir}
-                                            >
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell sx={{ width: '10%' }} align={dir}>
-                                                {'אני'}
-                                            </TableCell>
-                                            <TableCell align={dir}>{stringDate}</TableCell>
-                                            <TableCell sx={{ width: '8%' }} align={dir}>
-                                                {row.size ? row.size : '-'}
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                        </TableBody>
+                        <TableBody>{rowFiles}</TableBody>
                     </Table>
                 </TableContainer>
             </Paper>
-            <ContextMenu />
+            <TrashContextMenu />
         </Box>
     );
 };
