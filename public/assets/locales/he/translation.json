@@ -58,7 +58,8 @@
     "Share": "שיתוף",
     "Access": "נהל גישות",
     "Increase": "הגדלת שטח אחסון",
-    "CreateFolder": "חדש"
+    "CreateFolder": "חדש",
+    "Delete": "מחק"
   },
   "permissions": {
     "Read": "הרשאת צפייה",
@@ -93,7 +94,10 @@
     "Permission": "סוג הרשאה",
     "Quota": "נוצלו {{used}} GB מתוך {{limit}} GB",
     "Properties": "פרטי קובץ",
-    "NewFolder": "תיקייה חדשה"
+    "NewFolder": "תיקייה חדשה",
+    "DeletePermanently": "למחוק באופן סופי",
+    "DeleteMsgSingle": "הפריט {{name}} יימחק באופן סופי ולא תוכל לשחזר אותו. האם אתה בטוח?",
+    "DeleteMsgMultiple": "{{count}} פריטים יימחקו באופן סופי ולא תוכל לשחזר אותם. האם אתה בטוח?"
   },
   "titles": {
     "Folders": "תיקיות",

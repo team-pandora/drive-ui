@@ -58,7 +58,8 @@
     "Share": "Share",
     "Access": "Manage access",
     "Increase": "Increase storage",
-    "CreateFolder": "Create"
+    "CreateFolder": "Create",
+    "Delete": "Delete"
   },
   "permissions": {
     "Read": "Viewer",
@@ -93,7 +94,10 @@
     "Permission": "Permission",
     "Quota": "{{used}} GB of {{limit}} GB used",
     "Properties": "File properties",
-    "NewFolder": "New folder"
+    "NewFolder": "New folder",
+    "DeletePermanently": "Delete permanently?",
+    "DeleteMsgSingle": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+    "DeleteMsgMultiple": "{{count}} items are about to be deleted. Are you sure?"
   },
   "titles": {
     "Folders": "Folders",

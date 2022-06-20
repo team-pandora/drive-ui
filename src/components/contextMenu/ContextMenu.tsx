@@ -52,7 +52,7 @@ const ContextMenu = () => {
                 <Info handleClose={handleClose} />
                 <Download handleClose={handleClose} />
                 <Divider />
-                <Remove handleClose={handleClose} />
+                <Remove handleClick={handleClose} />
             </MenuList>
         </Menu>
     );

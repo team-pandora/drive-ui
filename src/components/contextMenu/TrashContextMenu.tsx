@@ -1,7 +1,8 @@
-import { Divider, Menu, MenuList } from '@mui/material';
+import { Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { globalActions } from '../../store/global';
+import { popupActions } from '../../store/popups';
 import Remove from './buttons/Remove';
 import Restore from './buttons/Restore';
 
@@ -17,8 +18,13 @@ const TrashContextMenu = () => {
     };
 
     const handleClickRestore = () => {
-        dispatch(globalActions.setContextMenu());
+        handleClose();
         alert(selectedFiles);
+    };
+
+    const handleClickRemove = () => {
+        handleClose();
+        dispatch(popupActions.setRemove());
     };
 
     return (
@@ -38,7 +44,7 @@ const TrashContextMenu = () => {
         >
             <MenuList sx={{ width: 300 }} dense>
                 <Restore handleClick={handleClickRestore} />
-                <Remove handleClose={handleClose} />
+                <Remove handleClick={handleClickRemove} />
             </MenuList>
         </Menu>
     );
