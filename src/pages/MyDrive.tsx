@@ -14,13 +14,6 @@ import { useFiles } from '../hooks/useFiles';
 import { getCookieValue } from '../utils/cookies';
 import { IServerError } from '../utils/types';
 
-// TODO:
-const SBox = styled(Box)({
-    flex: '4px',
-    paddingTop: '2px',
-    padding: '2px',
-});
-
 const MyDrive = () => {
     const params: { folderId: string } = useParams();
     const folderId: string | null = params.folderId ? params.folderId : null;
