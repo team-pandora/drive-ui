@@ -12,8 +12,6 @@ const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-// TODO:
-// document.body.style.height = '100%';
 document.body.style.overflowY = 'hidden';
 
 root.render(
