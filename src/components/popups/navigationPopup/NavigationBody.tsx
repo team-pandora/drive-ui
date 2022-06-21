@@ -18,7 +18,6 @@ const NavigationBody = () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const handleListItemClick = (event: React.MouseEvent, index: number) => {
-        console.log(index);
         setSelectedIndex(index);
     };
 

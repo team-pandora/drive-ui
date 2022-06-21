@@ -1,20 +1,31 @@
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
+import { useDispatch } from 'react-redux';
+import { popupActions } from '../../../store/popups';
+import CopyPopup from '../../popups/navigationPopup/NavigationDialog';
 
 type props = {
     handleClose: () => void;
 };
 
-const Copy: React.FC<props> = ({ handleClose }) => {
+export const Copy: React.FC<props> = ({ handleClose }) => {
+    const dispatch = useDispatch();
+
+    const handleCopyDialog = () => {
+        handleClose();
+        dispatch(popupActions.setNavigation());
+    };
+
     return (
-        <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-                <ContentCopyIcon />
-            </ListItemIcon>
-            <ListItemText>{`${i18next.t('contextMenu.Copy')}`}</ListItemText>
-        </MenuItem>
+        <>
+            <MenuItem onClick={handleCopyDialog}>
+                <ListItemIcon>
+                    <ContentCopyIcon />
+                </ListItemIcon>
+                <ListItemText>{`${i18next.t('contextMenu.Copy')}`}</ListItemText>
+            </MenuItem>
+            <CopyPopup></CopyPopup>
+        </>
     );
 };
-
-export default Copy;

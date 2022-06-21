@@ -2,7 +2,7 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { globalActions } from '../../store/global';
-import Copy from './buttons/Copy';
+import { Copy } from './buttons/Copy';
 import Download from './buttons/Download';
 import ExternalTransfer from './buttons/ExternalTransfer';
 import Favorite from './buttons/Favorite';

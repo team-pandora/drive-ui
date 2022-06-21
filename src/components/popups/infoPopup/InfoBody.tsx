@@ -1,5 +1,6 @@
+import React from 'react';
 import ImageIcon from '@mui/icons-material/Image';
-import { Box, Button, styled, Typography } from '@mui/material';
+import { Box, Button, Divider, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { popupActions } from '../../../store/popups';
@@ -44,18 +45,18 @@ const InfoAccess = styled(Box)({
     },
 });
 
-const FileOwner = styled(Box)({
-    '& .MuiButtonBase-root': {
-        borderStyle: 'solid',
-        borderColor: 'rgba(0,0,0,.2)',
-        borderRadius: '0',
-        borderWidth: `${i18next.dir(i18next.language) === 'ltr' ? '0 1px 0 0' : '0 0 0 1px'}`,
-        padding: `${i18next.dir(i18next.language) === 'ltr' ? '0 9px 0 0' : '0 0 0 9px'}`,
-        margin: `${i18next.dir(i18next.language) === 'ltr' ? '0 8px 0 0' : '0 0 0 9px'}`,
-    },
-});
+type props = {
+    owner: {
+        name: string;
+        color: string;
+    };
+    users: {
+        name: string;
+        color: string;
+    }[];
+};
 
-const InfoPopup = (props: any) => {
+const InfoPopup: React.FC<props> = ({ owner, users }) => {
     const dir = i18next.dir(i18next.language);
     const selectedFiles = useSelector((state: any) => state.files.selected);
     const dispatch = useDispatch();
@@ -68,11 +69,9 @@ const InfoPopup = (props: any) => {
             </InfoHeader>
             <InfoText>{`${i18next.t('info.HaveAccess')}`}</InfoText>
             <InfoAccess>
-                {/* TODO: yonatan */}
-                <FileOwner>
-                    <UserAvatar name={props.owner.name} color={props.owner.color}></UserAvatar>
-                </FileOwner>
-                {props.users.map((user: { name: string; color: string }) => {
+                <UserAvatar name={owner.name} color={owner.color}></UserAvatar>
+                <Divider orientation="vertical" flexItem sx={{ borderRightWidth: 1, marginRight: '5px' }} />
+                {users.map((user: { name: string; color: string }) => {
                     return <UserAvatar name={user.name} color={user.color} />;
                 })}
             </InfoAccess>
@@ -106,17 +105,4 @@ const InfoPopup = (props: any) => {
     );
 };
 
-InfoPopup.defaultProps = {
-    owner: {
-        name: 'Example owner',
-        color: 'blue',
-    },
-    users: [
-        { name: 'test', color: 'gray' },
-        { name: 'aaa', color: 'gray' },
-        { name: 'bbb', color: 'gray' },
-        { name: 'ccc', color: 'gray' },
-        { name: 'ddd', color: 'gray' },
-    ],
-};
 export default InfoPopup;

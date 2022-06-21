@@ -8,7 +8,6 @@ const globalSlice = createSlice({
         anchorEl: null,
         contextMenu: false,
         contextMenuPosition: { x: 0, y: 0 } || null,
-        isGridView: false,
     },
     reducers: {
         toggleMainMenu: (state) => {
@@ -24,9 +23,6 @@ const globalSlice = createSlice({
             state.contextMenuPosition = action.payload;
         },
         // TODO: add to cookies
-        toggleGridView: (state) => {
-            state.isGridView = !state.isGridView;
-        },
     },
 });
 

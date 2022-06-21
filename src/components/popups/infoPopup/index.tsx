@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
 import { GenericDialog } from '../Dialog';
-import InfoPopup from './InfoPopup';
+import InfoBody from './InfoBody';
 
 const InfoDialog = () => {
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const InfoDialog = () => {
 
     return (
         <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
-            <InfoPopup />
+            <InfoBody owner={{ name: 'Test', color: 'turquoise' }} users={[]} />
         </GenericDialog>
     );
 };

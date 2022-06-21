@@ -12,6 +12,7 @@ import { Box, Divider, IconButton, styled } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { globalActions } from '../store/global';
 import { popupActions } from '../store/popups';
+import { getCookieValue } from '../utils/cookies';
 
 const Icons = styled(Box)(() => ({
     display: 'flex',
@@ -26,12 +27,12 @@ const MoreVertClick = () => {
 
 const HeaderMenu = () => {
     const dispatch = useDispatch();
-    const isGridView = useSelector((state: any) => state.global.isGridView);
+
+    const isGridView = getCookieValue('isGridView') === 'true';
     const files = useSelector((state: any) => state.files.selected);
 
     const isGridViewClick = () => {
-        dispatch(globalActions.toggleGridView());
-        console.log('isGridViewClick');
+        document.cookie = `isGridView=${!isGridView}`;
     };
 
     const handleInfoOpen = () => {

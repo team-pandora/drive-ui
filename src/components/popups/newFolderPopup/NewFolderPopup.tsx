@@ -14,6 +14,7 @@ const NewFolder = styled(Box)({
     flexWrap: 'nowrap',
     justifyContent: 'space-evenly',
     overflow: 'hidden',
+    userSelect: 'none',
 });
 
 const NewFolderBody = styled(Box)({

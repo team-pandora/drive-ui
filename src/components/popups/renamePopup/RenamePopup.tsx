@@ -1,28 +1,26 @@
-import { Box } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import i18next from 'i18next';
 import RenameBody from './RenameBody';
 import RenameHeader from './RenameHeader';
 
-const RenamePopup = () => {
-    const dir = i18next.dir(i18next.language);
+const SBox = styled(Box)({
+    width: '100%',
+    height: '200px',
+    backgroundColor: '#fff',
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-evenly',
+    overflow: 'hidden',
+    userSelect: 'none',
+});
 
+const RenamePopup = () => {
     return (
-        <Box
-            sx={{
-                width: '100%',
-                height: '200px',
-                backgroundColor: '#fff',
-                display: 'flex',
-                flexDirection: 'column',
-                flexWrap: 'nowrap',
-                direction: dir,
-                justifyContent: 'space-evenly',
-                overflow: 'hidden',
-            }}
-        >
+        <SBox>
             <RenameHeader />
             <RenameBody />
-        </Box>
+        </SBox>
     );
 };
 

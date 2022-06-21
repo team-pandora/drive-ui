@@ -11,6 +11,7 @@ import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids/MyDrive';
 import Table from '../components/fileView/tables/MyDrive';
 import { useFiles } from '../hooks/useFiles';
+import { getCookieValue } from '../utils/cookies';
 import { IServerError } from '../utils/types';
 
 // TODO:
@@ -23,8 +24,8 @@ const SBox = styled(Box)({
 const MyDrive = () => {
     const params: { folderId: string } = useParams();
     const folderId: string | null = params.folderId ? params.folderId : null;
-    const [files, setFiles] = useState<any[]>([]);
-    const isGridView = useSelector((state: any) => state.global.isGridView);
+    const [files, setFiles] = useState([]);
+    const isGridView = getCookieValue('isGridView') === 'true';
 
     const isLoading = useFiles(folderId, setFiles);
 
