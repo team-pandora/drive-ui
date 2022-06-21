@@ -24,7 +24,7 @@ const SBox = styled(Box)({
 const MyDrive = () => {
     const params: { folderId: string } = useParams();
     const folderId: string | null = params.folderId ? params.folderId : null;
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState<any>([]);
     const isGridView = getCookieValue('isGridView') === 'true';
 
     const isLoading = useFiles(folderId, setFiles);
