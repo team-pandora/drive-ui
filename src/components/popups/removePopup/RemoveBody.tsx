@@ -12,6 +12,7 @@ const SBox = styled(Box)({
     flexWrap: 'nowrap',
     justifyContent: 'space-evenly',
     overflow: 'hidden',
+    userSelect: 'none',
 });
 
 const BodyBox = styled(Box)({

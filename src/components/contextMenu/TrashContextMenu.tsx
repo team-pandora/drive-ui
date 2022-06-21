@@ -29,6 +29,12 @@ const TrashContextMenu = () => {
 
     return (
         <Menu
+            sx={{
+                '& .MuiPaper-root': {
+                    padding: 0,
+                    borderRadius: '8px',
+                },
+            }}
             id="demo-positioned-menu"
             aria-labelledby="demo-positioned-button"
             open={contextMenu}

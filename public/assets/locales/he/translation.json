@@ -20,9 +20,9 @@
     "Folder": "תיקייה",
     "UploadFiles": "העלאת קבצים",
     "UploadFolder": "העלאת תיקייה",
-    "PDFfile": "קובץ PDF",
-    "ExcelFile": "קובץ Excel",
-    "GoogleDocs": "גוגל Docs"
+    "Powerpoint": "קובץ PowerPoint",
+    "Excel": "קובץ Excel",
+    "Word": "קובץ Word"
   },
   "tableHeader": {
     "Name": "שם",

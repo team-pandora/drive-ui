@@ -1,11 +1,14 @@
-import { Article, CreateNewFolderOutlined, DriveFolderUpload, UploadFile } from '@mui/icons-material';
-import { Divider, ListItemIcon, ListItemText, Menu, MenuItem, MenuList } from '@mui/material';
+import { CreateNewFolderOutlined, DriveFolderUpload, Image, UploadFile } from '@mui/icons-material';
+import { Divider, Icon, ListItemIcon, ListItemText, Menu, MenuItem, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch } from 'react-redux';
 import { popupActions } from '../store/popups';
 import NewFolderPopup from './popups/newFolderPopup/NewFolderDialog';
+import PowerPoint from '../assets/PowerPoint.png';
+import Word from '../assets/Word.png';
+import Excel from '../assets/Excel.png';
 
 type props = {
     handleClose: () => void;
@@ -83,23 +86,29 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
 
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
-                            <Article sx={{ color: 'blue' }} />
+                            <Icon>
+                                <img src={Word} height={25} width={25} />
+                            </Icon>
                         </ListItemIcon>
-                        <ListItemText>{`${i18next.t('mainMenu.GoogleDocs')}`}</ListItemText>
+                        <ListItemText>{`${i18next.t('mainMenu.Word')}`}</ListItemText>
                     </MenuItem>
 
                     <MenuItem>
                         <ListItemIcon onClick={handleClose}>
-                            <Article sx={{ color: 'orange' }} />
+                            <Icon>
+                                <img src={PowerPoint} height={25} width={25} />
+                            </Icon>
                         </ListItemIcon>
-                        <ListItemText>{`${i18next.t('mainMenu.PDFfile')}`}</ListItemText>
+                        <ListItemText>{`${i18next.t('mainMenu.Powerpoint')}`}</ListItemText>
                     </MenuItem>
 
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
-                            <Article sx={{ color: 'green' }} />
+                            <Icon>
+                                <img src={Excel} height={25} width={25} />
+                            </Icon>
                         </ListItemIcon>
-                        <ListItemText>{`${i18next.t('mainMenu.ExcelFile')}`}</ListItemText>
+                        <ListItemText>{`${i18next.t('mainMenu.Excel')}`}</ListItemText>
                     </MenuItem>
                 </MenuList>
             </Menu>

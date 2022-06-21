@@ -20,9 +20,9 @@
     "Folder": "Folder",
     "UploadFiles": "Upload file",
     "UploadFolder": "Upload folder",
-    "PDFfile": "PDF file",
-    "ExcelFile": "Excel file",
-    "GoogleDocs": "Google Docs"
+    "Powerpoint": "Powerpoint File",
+    "Excel": "Excel File",
+    "Word": "Word File"
   },
   "tableHeader": {
     "Name": "Name",
