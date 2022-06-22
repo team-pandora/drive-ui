@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TableMenuHeader from '../components/BreadCrumbs';
-import Grid from '../components/fileView/grids/MyDrive';
+import Grid from '../components/fileView/grids';
 import Table from '../components/fileView/tables/MyDrive';
 import { useFiles } from '../hooks/useFiles';
 import { getCookieValue } from '../utils/cookies';

@@ -2,7 +2,7 @@ import { Box, Stack } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Sidebar from './components/layout/sideNav/Sidebar';
+import Sidebar from './components/layout/sideNav';
 import Topbar from './components/layout/Topbar';
 import { Router } from './router';
 
