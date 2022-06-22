@@ -126,5 +126,31 @@
     "Created": "Created",
     "HaveAccess": "Who has access",
     "Deleted": "Date deleted"
+  },
+  "Help": {
+    "Questions": {
+      "Question1": "How do i upload files?",
+      "Question2": "How do i create a folder?",
+      "Question3": "How do i share files with people?",
+      "Question4": "How do i share folders with people?",
+      "Question5": "How do i move files to another folder?",
+      "Question6": "How do i move folders to another folder?",
+      "Question7": "How do i copy files to another folder?",
+      "Question8": "How do i copy folders to another folder?",
+      "Question9": "How do i rename files and folders?",
+      "Question10": "How do i delete files and folders?"
+    },
+    "Answers": {
+      "Answer1": "Click on the Upload file button and select the file you want to upload. You can upload files in different formats",
+      "Answer2": "Click on the New folder button and enter the name of the folder you want to create. You can create folders in different formats",
+      "Answer3": "Click on the Share button and select the people and groups you want to share the file with. You can share files with different people and groups",
+      "Answer4": "Click on the Share button and select the people and groups you want to share the folder with. You can share folders with different people and groups",
+      "Answer5": "Click on the Move button and select the folder you want to move the file to. You can move files to different folders",
+      "Answer6": "Click on the Move button and select the folder you want to move the folder to. You can move folders to different folders",
+      "Answer7": "Click on the Copy button and select the folder you want to copy the file to. You can copy files to different folders",
+      "Answer8": "Click on the Copy button and select the folder you want to copy the folder to. You can copy folders to different folders",
+      "Answer9": "Click on the Rename button and enter the new name for the file or folder. You can rename files and folders",
+      "Answer10": "Click on the Delete button and confirm the deletion of the file or folder. You can delete files and folders"
+    }
   }
 }

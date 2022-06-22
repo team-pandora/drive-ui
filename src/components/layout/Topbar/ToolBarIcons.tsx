@@ -1,7 +1,7 @@
-import { HelpOutlineOutlined } from '@mui/icons-material';
-import { Box, IconButton, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import getRandomColor from '../../../utils/time';
 import UserAvatar from '../Avatar';
+import Help from './Help';
 import Settings from './Settings';
 
 const userColor = getRandomColor();
@@ -20,10 +20,7 @@ const ToolBarIcons = () => {
     return (
         <Icons>
             <Settings />
-            {/* TODO: Help icon is going to change also */}
-            <IconButton>
-                <HelpOutlineOutlined sx={{ color: '#5f6368' }} />
-            </IconButton>
+            <Help />
             <UserAvatar name={name} color={userColor} />
         </Icons>
     );

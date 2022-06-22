@@ -24,7 +24,7 @@ const TrashContextMenu = () => {
 
     const handleClickRemove = () => {
         handleClose();
-        dispatch(popupActions.setRemove());
+        dispatch(popupActions.setHelp());
     };
 
     return (

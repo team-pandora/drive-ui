@@ -29,11 +29,11 @@ const RemoveBody: React.FC = () => {
     const selectedFiles = useSelector((state: any) => state.files.selected);
 
     const onSubmit = async () => {
-        dispatch(popupActions.setRemove());
+        dispatch(popupActions.setHelp());
     };
 
     const onCancel = (event: React.MouseEvent<HTMLElement>) => {
-        dispatch(popupActions.setRemove());
+        dispatch(popupActions.setHelp());
     };
 
     const content =
