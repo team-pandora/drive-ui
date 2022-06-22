@@ -1,4 +1,7 @@
 import { Box, Breadcrumbs, Link, styled } from '@mui/material';
+import i18next from 'i18next';
+import { Key } from 'react';
+import { useSelector } from 'react-redux';
 import HeaderMenu from './HeaderMenu';
 
 const StyledBreadcrumb = styled(Link)({
@@ -20,14 +23,17 @@ const HeaderBar = styled(Box)({
 });
 
 type props = {
-    hierarchy: string[];
+    title: string;
 };
 
-// TODO: take hierarchy from store
-const TableMenuHeader: React.FC<props> = ({ hierarchy }) => {
+const TableMenuHeader: React.FC<props> = ({ title }) => {
     const breadcrumbs: any = [];
 
-    hierarchy.forEach((item, index) => {
+    const hierarchy = useSelector((state: any) => state.files.hierarchy);
+
+    const breadcrumbsContent = hierarchy.length ? hierarchy : [title];
+
+    breadcrumbsContent.forEach((item: any, index: number) => {
         breadcrumbs.push(
             <StyledBreadcrumb key={index} href={`/`} underline="hover" color="inherit">
                 {item}

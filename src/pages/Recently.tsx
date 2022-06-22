@@ -7,7 +7,7 @@ import { RecentData } from '../data/fakedata';
 const Recently = () => {
     return (
         <Box flex={4} paddingTop={2} padding={2}>
-            <TableMenuHeader hierarchy={[i18next.t('titles.Recent')]} />
+            <TableMenuHeader title={i18next.t('titles.Recent')} />
             <Table filesArray={RecentData} />
         </Box>
     );

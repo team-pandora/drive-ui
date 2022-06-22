@@ -5,11 +5,12 @@ import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MyDriveI } from '../../../data/fakedata';
+import { filesActions } from '../../../store/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../../FileType';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleSelectAllClick, isSelected } from '../functions';
+import { handleClick, handleContextMenuClick, handleSelectAllClick, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/MyDriveHeader';
 
 type Order = 'asc' | 'desc';
@@ -46,6 +47,12 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
         setOrderBy(property);
     };
 
+    const handleDoubleClick = (event: any, file: any) => {
+        history.push(`/folder/${file.fsObjectId}`);
+        dispatch(filesActions.setHierarchy(file));
+        dispatch(filesActions.setSelected([]));
+    };
+
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file, index) => {
@@ -61,7 +68,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
                     onKeyDown={(event) => handleSelectAllClick(event, filesArray, dispatch)}
-                    onDoubleClick={(event) => handleDoubleClick(event, file, dispatch)}
+                    onDoubleClick={(event) => handleDoubleClick(event, file)}
                     // role="checkbox"
                     // aria-checked={isItemSelected}
                     // tabIndex={-1}

@@ -13,9 +13,9 @@ import {
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { SharedI } from '../../../data/fakedata';
 import { filesActions } from '../../../store/files';
-import { globalActions } from '../../../store/global';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
@@ -25,7 +25,7 @@ import TableHeader from '../tableHeaders/SharedHeader';
 
 type Order = 'asc' | 'desc';
 
-const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
+const SharedTable: React.FC<{ filesArray: any[] }> = (props) => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
@@ -44,6 +44,14 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
         setOrderBy(property);
     };
 
+    const history = useHistory();
+
+    const handleDoubleClick = (event: any, file: any) => {
+        history.push(`/folder/${file.fsObjectId}`);
+        dispatch(filesActions.setHierarchy(file));
+        dispatch(filesActions.setSelected([]));
+    };
+
     const rowFiles = stableSort(props.filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file, index) => {
@@ -56,6 +64,7 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
                     onKeyDown={(event) => handleSelectAllClick(event, props.filesArray, dispatch)}
+                    onDoubleClick={(event) => handleDoubleClick(event, file)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -125,4 +134,4 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     );
 };
 
-export default MyDriveTable;
+export default SharedTable;

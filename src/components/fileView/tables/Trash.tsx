@@ -36,7 +36,7 @@ const SBox = styled(Box)(() => ({
     borderRadius: '4px',
 }));
 
-const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
+const TrashTable: React.FC<{ filesArray: any[] }> = (props) => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
@@ -130,4 +130,4 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     );
 };
 
-export default MyDriveTable;
+export default TrashTable;

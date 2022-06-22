@@ -55,6 +55,7 @@ export const handleDoubleClick = (event: any, file: any, dispatch: any) => {
     const history = useHistory();
     // TODO:
     history.push(`/folder/${file.fsObjectId}`);
+    dispatch(filesActions.setHierarchy(file));
     dispatch(filesActions.setSelected([]));
 };
 

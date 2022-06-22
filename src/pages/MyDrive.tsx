@@ -1,18 +1,14 @@
-import { Box, LinearProgress, Stack, styled } from '@mui/material';
+import { Box, LinearProgress, Stack } from '@mui/material';
 import i18next from 'i18next';
-import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getFile } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids/MyDrive';
 import Table from '../components/fileView/tables/MyDrive';
 import { useFiles } from '../hooks/useFiles';
 import { getCookieValue } from '../utils/cookies';
-import { IServerError } from '../utils/types';
 
 const MyDrive = () => {
     const params: { folderId: string } = useParams();
@@ -38,7 +34,7 @@ const MyDrive = () => {
     return (
         <Box flex={4} paddingTop={2} padding={2}>
             {/* TODO: */}
-            <TableMenuHeader hierarchy={[i18next.t('titles.MyDrive'), 'maya']} />
+            <TableMenuHeader title={i18next.t('titles.MyDrive')} />
             {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
             <ToastContainer position="bottom-right" />
             {stack}

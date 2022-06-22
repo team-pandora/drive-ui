@@ -7,7 +7,7 @@ import { FavoritesData } from '../data/fakedata';
 const Quota = () => {
     return (
         <Box flex={4} paddingTop={2} padding={2}>
-            <TableMenuHeader hierarchy={[i18next.t('titles.Storage')]} />
+            <TableMenuHeader title={i18next.t('titles.Storage')} />
             <Table filesArray={FavoritesData} />
         </Box>
     );

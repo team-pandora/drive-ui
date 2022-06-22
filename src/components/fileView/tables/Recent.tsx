@@ -13,7 +13,7 @@ import TableHeader from '../tableHeaders/RecentlyHeader';
 
 type Order = 'asc' | 'desc';
 
-const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
+const RecentsTable: React.FC<{ filesArray: any[] }> = (props) => {
     const dispatch = useDispatch();
     const selectedFiles = useSelector((state: any) => state.files.selected);
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
@@ -89,4 +89,4 @@ const MyDriveTable: React.FC<{ filesArray: any[] }> = (props) => {
     );
 };
 
-export default MyDriveTable;
+export default RecentsTable;

@@ -7,7 +7,7 @@ import { StatusTransferredData } from '../data/fakedata';
 const StatusTransferred = () => {
     return (
         <Box flex={4} paddingTop={2} padding={2}>
-            <TableMenuHeader hierarchy={[i18next.t('titles.StatusFilesSent')]} />
+            <TableMenuHeader title={i18next.t('titles.StatusFilesSent')} />
             <Table filesArray={StatusTransferredData} />
         </Box>
     );

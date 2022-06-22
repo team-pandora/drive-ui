@@ -7,7 +7,7 @@ import { TrashData } from '../data/fakedata';
 const Trash = () => {
     return (
         <Box flex={4} paddingTop={2} padding={2}>
-            <TableMenuHeader hierarchy={[i18next.t('titles.Trash')]} />
+            <TableMenuHeader title={i18next.t('titles.Trash')} />
             <Table filesArray={TrashData} />
         </Box>
     );

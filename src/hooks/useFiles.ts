@@ -7,6 +7,25 @@ export const useFiles = (folderId: string | null, setFiles: (files: any[]) => vo
     const { isLoading } = useQuery('files', () => getFile(folderId), {
         onError: (error: IServerError) => {
             toast.error('Failed loading files');
+            setFiles([
+                {
+                    stateId: '62710296d7982acc26fdf98h',
+                    userId: '62655a5dd681ae7e5f9eafe0',
+                    fsObjectId: '62710296d7982acc26fdf983',
+                    favorite: false,
+                    trash: false,
+                    trashRoot: false,
+                    root: true,
+                    permission: 'write',
+                    stateCreatedAt: '2022-05-03T10:23:18.582Z',
+                    stateUpdatedAt: '2022-05-03T10:23:18.582Z',
+                    name: 'folder-test3',
+                    parent: null,
+                    type: 'folder',
+                    fsObjectCreatedAt: '2022-05-03T10:23:18.580Z',
+                    fsObjectUpdatedAt: '2022-05-03T10:23:18.580Z',
+                },
+            ]);
         },
         onSuccess: (data) => {
             setFiles(data);
