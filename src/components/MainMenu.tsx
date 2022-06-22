@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch } from 'react-redux';
 import { popupActions } from '../store/popups';
-import NewFolderPopup from './popups/newFolderPopup/NewFolderDialog';
+import NewFolderPopup from './popups/newFolderPopup';
 import PowerPoint from '../assets/PowerPoint.png';
 import Word from '../assets/Word.png';
 import Excel from '../assets/Excel.png';

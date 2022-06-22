@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import globalReducer from './global';
 import filesReducer from './files';
+import globalReducer from './global';
 import popupsReducer from './popups';
 import usersReducer from './users';
 

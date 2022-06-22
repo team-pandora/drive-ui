@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import i18next from 'i18next';
 import { useState } from 'react';
-import PermissionButton from './PermissionsButton';
-import PermissionType from './PermissionType';
+import { PermissionButton } from './PermissionsButton';
+import { PermissionType } from './PermissionType';
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu

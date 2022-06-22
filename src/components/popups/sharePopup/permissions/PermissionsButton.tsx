@@ -1,23 +1,23 @@
 import { ArrowDropDown } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 
-const PermissionButton: React.FC<{
+type props = {
     userPermission: string;
     handleClick: any;
-}> = (props) => {
+};
+
+export const PermissionButton: React.FC<props> = ({ userPermission, handleClick }) => {
     return (
         <Button
-            onClick={props.handleClick}
+            onClick={handleClick}
             sx={{
                 width: '130px',
                 color: 'gray',
                 textTransform: 'none',
             }}
         >
-            {props.userPermission}
+            {userPermission}
             <ArrowDropDown />
         </Button>
     );
 };
-
-export default PermissionButton;

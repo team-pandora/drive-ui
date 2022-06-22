@@ -23,7 +23,7 @@ const NavigationPopup = () => {
             <NavigationHeader />
             <NavigationBody />
             <Divider />
-            <NavigationFooter isRoot={false} />
+            <NavigationFooter isRoot={false} action={'Add shortcut'} />
         </Box>
     );
 };

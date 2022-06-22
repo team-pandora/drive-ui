@@ -92,7 +92,7 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
             </Button>
             <InfoText>{`${i18next.t('messages.Properties')}`}</InfoText>
             <InfoBox>
-                <InfoProperties></InfoProperties>
+                <InfoProperties isDeleted={false}></InfoProperties>
                 <InfoValues
                     type="PNG"
                     size="1.5MB"

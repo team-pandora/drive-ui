@@ -2,11 +2,13 @@ import { Check } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 
-const PermissionItem: React.FC<{
+type props = {
     label: string;
     checked: boolean;
     onClick: () => void;
-}> = (props) => {
+};
+
+export const PermissionType: React.FC<props> = ({ label, checked, onClick }) => {
     return (
         <MenuItem
             sx={{
@@ -15,7 +17,7 @@ const PermissionItem: React.FC<{
                 display: 'flex',
                 alignItems: 'center',
             }}
-            onClick={props.onClick}
+            onClick={onClick}
             disableRipple
         >
             <Box
@@ -25,13 +27,11 @@ const PermissionItem: React.FC<{
                     alignItems: 'center',
                 }}
             >
-                {props.checked && <Check />}
+                {checked && <Check />}
             </Box>
             <Box margin={1}>
-                <Typography>{`${props.label}`}</Typography>
+                <Typography>{`${label}`}</Typography>
             </Box>
         </MenuItem>
     );
 };
-
-export default PermissionItem;

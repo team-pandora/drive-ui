@@ -25,7 +25,7 @@ const NewFolderBody = styled(Box)({
     margin: '0 15px',
 });
 
-const NewFolderPopup = (props: any) => {
+const NewFolderPopup: React.FC = () => {
     const dir = i18next.dir(i18next.language);
     const [value, setValue] = useState('Untitled folder');
     const dispatch = useDispatch();

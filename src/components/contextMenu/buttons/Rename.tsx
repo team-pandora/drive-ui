@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import { Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
-import RenamePopup from '../../popups/renamePopup/RenameDialog';
+import RenamePopup from '../../popups/renamePopup';
 
 const Rename: React.FC<{ handleClose: () => void }> = (props) => {
     const dispatch = useDispatch();

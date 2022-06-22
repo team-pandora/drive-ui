@@ -1,4 +1,4 @@
-import { Box, LinearProgress, Stack } from '@mui/material';
+import { Box, LinearProgress, Stack, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -10,10 +10,17 @@ import Table from '../components/fileView/tables/MyDrive';
 import { useFiles } from '../hooks/useFiles';
 import { getCookieValue } from '../utils/cookies';
 
+// TODO:
+const SBox = styled(Box)({
+    flex: '4px',
+    paddingTop: '2px',
+    padding: '2px',
+});
+
 const MyDrive = () => {
     const params: { folderId: string } = useParams();
     const folderId: string | null = params.folderId ? params.folderId : null;
-    const [files, setFiles] = useState<any>([]);
+    const [files, setFiles] = useState<any[]>([]);
     const isGridView = getCookieValue('isGridView') === 'true';
 
     const isLoading = useFiles(folderId, setFiles);

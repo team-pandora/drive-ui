@@ -10,7 +10,11 @@ const PropertyList = styled(List)({
     padding: '1rem 2vw 1rem',
 });
 
-export const InfoProperties = (props: any) => {
+type props = {
+    isDeleted: boolean;
+};
+
+export const InfoProperties: React.FC<props> = ({ isDeleted }) => {
     return (
         <PropertyList>
             <Typography>{`${i18next.t('info.Type')}`}</Typography>
@@ -18,7 +22,7 @@ export const InfoProperties = (props: any) => {
             <Typography>{`${i18next.t('info.Owner')}`}</Typography>
             <Typography>{`${i18next.t('info.Modified')}`}</Typography>
             <Typography>{`${i18next.t('info.Created')}`}</Typography>
-            {props.isDeleted && <Typography>{`${i18next.t('info.Deleted')}`}</Typography>}
+            {isDeleted && <Typography>{`${i18next.t('info.Deleted')}`}</Typography>}
         </PropertyList>
     );
 };

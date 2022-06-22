@@ -3,7 +3,7 @@ import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
-import CopyPopup from '../../popups/navigationPopup/NavigationDialog';
+import CopyPopup from '../../popups/navigationPopup';
 
 type props = {
     handleClose: () => void;

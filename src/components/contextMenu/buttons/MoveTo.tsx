@@ -3,7 +3,7 @@ import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
-import MovePopup from '../../popups/navigationPopup/NavigationDialog';
+import MovePopup from '../../popups/navigationPopup';
 
 const MoveTo: React.FC<{ handleClose: () => void }> = (props) => {
     const dispatch = useDispatch();

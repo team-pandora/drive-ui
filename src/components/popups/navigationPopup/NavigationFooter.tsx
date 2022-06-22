@@ -27,7 +27,12 @@ const NewFolderButton = styled(CreateNewFolderIcon)({
     cursor: 'pointer',
 });
 
-const NavigationFooter = (props: any) => {
+type props = {
+    isRoot: boolean;
+    action: string;
+};
+
+const NavigationFooter: React.FC<props> = ({ isRoot, action }) => {
     const dispatch = useDispatch();
 
     const handleNavigationClose = () => {
@@ -48,8 +53,8 @@ const NavigationFooter = (props: any) => {
             }}
         >
             <FooterContent>
-                {!props.isRoot && <NewFolderButton onClick={handleNewFolderClick} />}
-                <FooterButton onClick={handleNavigationClose}>{props.action}</FooterButton>
+                {!isRoot && <NewFolderButton onClick={handleNewFolderClick} />}
+                <FooterButton onClick={handleNavigationClose}>{action}</FooterButton>
             </FooterContent>
         </Box>
     );
