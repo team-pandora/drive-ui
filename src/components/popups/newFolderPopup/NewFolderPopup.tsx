@@ -39,6 +39,12 @@ const NewFolderPopup: React.FC = () => {
         dispatch(popupActions.setNewFolder());
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onNewFolderSubmit();
+        }
+    };
+
     const onCancel = (event: React.MouseEvent<HTMLElement>) => {
         dispatch(popupActions.setNewFolder());
     };
@@ -70,7 +76,6 @@ const NewFolderPopup: React.FC = () => {
             <NewFolderBody>
                 <TextField
                     id="outlined-multiline-flexible"
-                    multiline
                     maxRows={1}
                     value={value}
                     onChange={handleChange}
@@ -79,6 +84,7 @@ const NewFolderPopup: React.FC = () => {
                     sx={{
                         width: '460px',
                     }}
+                    onKeyDown={handleKeyDown}
                 />
                 <Box
                     sx={{

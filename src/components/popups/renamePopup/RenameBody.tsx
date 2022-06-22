@@ -23,8 +23,14 @@ const RenameBody = () => {
     };
 
     const onRenameSubmit = async () => {
-        await RenameFile(selectedFiles[0], value);
+        // await RenameFile(selectedFiles[0], value);
         dispatch(popupActions.setRename());
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onRenameSubmit();
+        }
     };
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -44,7 +50,6 @@ const RenameBody = () => {
         <RenameBodyBox>
             <TextField
                 id="outlined-multiline-flexible"
-                multiline
                 maxRows={1}
                 value={value}
                 onChange={handleChange}
@@ -53,6 +58,7 @@ const RenameBody = () => {
                 sx={{
                     width: '460px',
                 }}
+                onKeyDown={handleKeyDown}
             />
             <Box
                 sx={{
