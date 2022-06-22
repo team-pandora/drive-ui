@@ -20,7 +20,7 @@ import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../../FileType';
-import { handleClick, handleContextMenuClick, handleSelectAllClick, isSelected } from '../functions';
+import { handleClick, handleContextMenuClick, handleDoubleClick, handleSelectAllClick, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/SharedHeader';
 
 type Order = 'asc' | 'desc';
@@ -46,12 +46,6 @@ const SharedTable: React.FC<{ filesArray: any[] }> = (props) => {
 
     const history = useHistory();
 
-    const handleDoubleClick = (event: any, file: any) => {
-        history.push(`/folder/${file.fsObjectId}`);
-        dispatch(filesActions.setHierarchy(file));
-        dispatch(filesActions.setSelected([]));
-    };
-
     const rowFiles = stableSort(props.filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file, index) => {
@@ -64,7 +58,7 @@ const SharedTable: React.FC<{ filesArray: any[] }> = (props) => {
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
                     onKeyDown={(event) => handleSelectAllClick(event, props.filesArray, dispatch)}
-                    onDoubleClick={(event) => handleDoubleClick(event, file)}
+                    onDoubleClick={(event) => handleDoubleClick(event, file, history, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
