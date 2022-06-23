@@ -53,7 +53,7 @@ const Storage: React.FC<props> = ({ used, limit }) => {
     return (
         <>
             <SBox>
-                <NavButton path="quota" label={i18next.t('sideBar.Storage')}>
+                <NavButton path="storage" label={i18next.t('sideBar.Storage')}>
                     <CloudQueue />
                 </NavButton>
                 <Stack alignItems={'center'} spacing={1} onClick={handleClick}>
@@ -66,7 +66,7 @@ const Storage: React.FC<props> = ({ used, limit }) => {
                     <IncreaseQuotaButton>{`${i18next.t('buttons.Increase')}`}</IncreaseQuotaButton>
                 </Stack>
             </SBox>
-            <StoragePopup></StoragePopup>
+            <StoragePopup />
         </>
     );
 };

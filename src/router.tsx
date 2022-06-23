@@ -47,6 +47,9 @@ export const Router: React.FC = () => {
             <Route path="/statusTransferred">
                 <StatusTransferred />
             </Route>
+            <Route path="*">
+                <Redirect to="/my-drive" />
+            </Route>
         </Switch>
     );
 };
