@@ -47,6 +47,18 @@ const Help = () => {
                 onClose={handleClose}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                PaperProps={{
+                    style: {
+                        width: 400,
+                        maxHeight: '550px',
+                    },
+                }}
+                sx={{
+                    '& .MuiMenu-list': {
+                        paddingTop: '0px',
+                        paddingBottom: '0px',
+                    },
+                }}
             >
                 {arr}
             </Menu>
