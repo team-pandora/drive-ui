@@ -2,9 +2,9 @@ import { CloudQueue } from '@mui/icons-material';
 import { Box, Button, Stack, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch } from 'react-redux';
-import NavButton from './NavButton';
-import StoragePopup from '../../popups/storagePopup';
 import { popupActions } from '../../../store/popups';
+import StoragePopup from '../../popups/storagePopup';
+import NavButton from './NavButton';
 
 const SBox = styled(Box)({
     height: '130px',
@@ -42,6 +42,8 @@ type props = {
 const Storage: React.FC<props> = ({ used, limit }) => {
     const quotaUsed = Math.round((100 * used) / limit);
 
+    console.log(quotaUsed);
+
     const dispatch = useDispatch();
 
     const handleClick = () => {
@@ -56,7 +58,7 @@ const Storage: React.FC<props> = ({ used, limit }) => {
                 </NavButton>
                 <Stack alignItems={'center'} spacing={1} onClick={handleClick}>
                     <QuotaOutlineBox>
-                        <QuotaFillBox sx={{ width: quotaUsed }} />
+                        <QuotaFillBox sx={{ width: `${quotaUsed}%` }} />
                     </QuotaOutlineBox>
                     <Typography variant="caption" color={'#5f6368'}>
                         {`${i18next.t('messages.Quota', { used, limit })}`}
