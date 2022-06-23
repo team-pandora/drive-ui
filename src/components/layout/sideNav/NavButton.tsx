@@ -38,7 +38,9 @@ const NavButton: React.FC<props> = ({ path, label, children }) => {
         <NavLinkStyle activeStyle={{ color: '#1967d2' }} to={path}>
             <SListItem sx={{ marginTop: '5px' }} disablePadding>
                 <ListItemButton sx={iconButtonStyle}>
-                    <ListItemIcon sx={{ minWidth: '36px', marginX: '10px' }}>{children}</ListItemIcon>
+                    <ListItemIcon sx={{ minWidth: '36px', marginX: '10px', color: `${isActive ? '#1967D2' : 'none'}` }}>
+                        {children}
+                    </ListItemIcon>
                     <STypography>{label}</STypography>
                 </ListItemButton>
             </SListItem>
