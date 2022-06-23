@@ -4,7 +4,7 @@ import i18next from 'i18next';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { globalActions } from '../../../store/global';
-import MainMenu from '../../MainMenu';
+import MainMenu from '../mainMenu/MainMenu';
 
 const SBox = styled(Box)(() => ({
     display: 'flex',
@@ -17,6 +17,7 @@ const SButton = styled(Button)({
     height: '45px',
     marginLeft: '10px',
     marginRight: '10px',
+    marginTop: '10px',
     color: 'black',
     backgroundColor: 'white',
     borderRadius: '20px',
