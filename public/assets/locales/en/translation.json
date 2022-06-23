@@ -59,7 +59,8 @@
     "Access": "Manage access",
     "Increase": "Increase storage",
     "CreateFolder": "Create",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "Submit": "Submit"
   },
   "permissions": {
     "Read": "Viewer",
@@ -97,7 +98,9 @@
     "NewFolder": "New folder",
     "DeletePermanently": "Delete permanently?",
     "DeleteMsgSingle": "Are you sure you want to delete {{name}}? This action cannot be undone.",
-    "DeleteMsgMultiple": "{{count}} items are about to be deleted. Are you sure?"
+    "DeleteMsgMultiple": "{{count}} items are about to be deleted. Are you sure?",
+    "RequestStorage": "Request storage",
+    "RequestStorageLabel": "Why you need more space..."
   },
   "titles": {
     "Folders": "Folders",

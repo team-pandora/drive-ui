@@ -13,7 +13,13 @@ export const GenericDialog = (props: any) => {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             PaperProps={{
-                sx: { minWidth: '400px', maxWidth: '650px', backgroundColor: 'transparent', borderRadius: '8px' },
+                sx: {
+                    minWidth: '400px',
+                    maxWidth: '650px',
+                    backgroundColor: 'transparent',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                },
                 elevation: 0,
             }}
         >

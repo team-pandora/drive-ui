@@ -59,7 +59,8 @@
     "Access": "נהל גישות",
     "Increase": "הגדלת שטח אחסון",
     "CreateFolder": "חדש",
-    "Delete": "מחק"
+    "Delete": "מחק",
+    "Submit": "שלח"
   },
   "permissions": {
     "Read": "הרשאת צפייה",
@@ -97,7 +98,9 @@
     "NewFolder": "תיקייה חדשה",
     "DeletePermanently": "למחוק באופן סופי",
     "DeleteMsgSingle": "הפריט {{name}} יימחק באופן סופי ולא תוכל לשחזר אותו. האם אתה בטוח?",
-    "DeleteMsgMultiple": "{{count}} פריטים יימחקו באופן סופי ולא תוכל לשחזר אותם. האם אתה בטוח?"
+    "DeleteMsgMultiple": "{{count}} פריטים יימחקו באופן סופי ולא תוכל לשחזר אותם. האם אתה בטוח?",
+    "RequestStorage": "בקשת שטח אחסון",
+    "RequestStorageLabel": "סיבה להגדלת שטח..."
   },
   "titles": {
     "Folders": "תיקיות",
