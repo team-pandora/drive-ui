@@ -15,12 +15,11 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { SharedI } from '../../../data/fakedata';
-import { filesActions } from '../../../store/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../../FileType';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleSelectAllClick, isSelected } from '../functions';
+import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/SharedHeader';
 
 type Order = 'asc' | 'desc';
@@ -57,7 +56,7 @@ const SharedTable: React.FC<{ filesArray: any[] }> = (props) => {
                     hover
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
-                    onKeyDown={(event) => handleSelectAllClick(event, props.filesArray, dispatch)}
+                    onKeyDown={(event) => handleKeyDown(event, props.filesArray, dispatch)}
                     onDoubleClick={(event) => handleDoubleClick(event, file, history, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}

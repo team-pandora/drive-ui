@@ -5,12 +5,11 @@ import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MyDriveI } from '../../../data/fakedata';
-import { filesActions } from '../../../store/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../../FileType';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleSelectAllClick, isSelected } from '../functions';
+import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/MyDriveHeader';
 
 type Order = 'asc' | 'desc';
@@ -61,7 +60,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
                     hover
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
-                    onKeyDown={(event) => handleSelectAllClick(event, filesArray, dispatch)}
+                    onKeyDown={(event) => handleKeyDown(event, filesArray, dispatch)}
                     onDoubleClick={(event) => handleDoubleClick(event, file, history, dispatch)}
                     // role="checkbox"
                     // aria-checked={isItemSelected}

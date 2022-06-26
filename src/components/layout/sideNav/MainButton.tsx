@@ -13,14 +13,14 @@ const SBox = styled(Box)(() => ({
 }));
 
 const SButton = styled(Button)({
-    width: '120px',
+    width: '140px',
     height: '45px',
     marginLeft: '10px',
     marginRight: '10px',
     marginTop: '10px',
     color: 'black',
     backgroundColor: 'white',
-    borderRadius: '20px',
+    borderRadius: '24px',
     textTransform: 'none',
     ':hover': { backgroundColor: 'rgba(0,0,0,.04)' },
     display: 'flex',
@@ -31,6 +31,8 @@ const MainButton = () => {
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const showMenu = useSelector((state: any) => state.global.mainMenuIsVisible);
+    const dir = i18next.dir(i18next.language);
+    const marginSide = dir === 'rtl' ? 'marginRight' : 'marginLeft';
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         dispatch(globalActions.toggleMainMenu());
@@ -44,7 +46,7 @@ const MainButton = () => {
 
     return (
         <SBox>
-            <SButton onClick={handleClick} variant="contained" size="large">
+            <SButton sx={{ [marginSide]: '20px' }} onClick={handleClick} variant="contained" size="large">
                 {`${i18next.t('buttons.New')}`}
                 <Add sx={{ color: '#f77f00', fontSize: 35 }} />
             </SButton>

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
     Box,
     Button,
@@ -12,16 +11,15 @@ import {
     Typography,
 } from '@mui/material';
 import i18next from 'i18next';
+import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TrashI } from '../../../data/fakedata';
-import { filesActions } from '../../../store/files';
-import { globalActions } from '../../../store/global';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import TrashContextMenu from '../../contextMenu/TrashContextMenu';
 import FileType from '../../FileType';
+import { handleClick, handleContextMenuClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/TrashHeader';
-import { handleClick, handleContextMenuClick, handleSelectAllClick, isSelected } from '../functions';
 
 type Order = 'asc' | 'desc';
 
@@ -69,7 +67,7 @@ const TrashTable: React.FC<{ filesArray: any[] }> = (props) => {
                     hover
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
-                    onKeyDown={(event) => handleSelectAllClick(event, props.filesArray, dispatch)}
+                    onKeyDown={(event) => handleKeyDown(event, props.filesArray, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}

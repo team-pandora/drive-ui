@@ -4,13 +4,11 @@ import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FavoritesI } from '../../../data/fakedata';
-import { filesActions } from '../../../store/files';
-import { globalActions } from '../../../store/global';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../../FileType';
-import { handleClick, isSelected, handleContextMenuClick, handleSelectAllClick } from '../functions';
+import { handleClick, handleContextMenuClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/FavoritesHeader';
 
 type Order = 'asc' | 'desc';
@@ -45,7 +43,7 @@ const FavoritesTable: React.FC<{ filesArray: any[] }> = (props) => {
                     hover
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
-                    onKeyDown={(event) => handleSelectAllClick(event, props.filesArray, dispatch)}
+                    onKeyDown={(event) => handleKeyDown(event, props.filesArray, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}

@@ -1,5 +1,4 @@
 // import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 
@@ -29,8 +28,12 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
     }
 };
 
-export const handleSelectAllClick = (event: any, files: any, dispatch: any) => {
-    if (event.key === 'a' && event.ctrlKey) {
+export const handleKeyDown = (event: any, files: any, dispatch: any) => {
+    if (event.key === 'Delete') {
+        alert('Delete');
+    } else if (event.key === 'Escape') {
+        dispatch(filesActions.setSelected([]));
+    } else if (event.key === 'a' && event.ctrlKey) {
         event.preventDefault();
         const allRowsNames = files.map((file: any) => file.stateId);
         dispatch(filesActions.setSelected(allRowsNames));
