@@ -2,7 +2,7 @@ import { Box, Button, styled, TextField } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RenameFile } from '../../../api/files';
+import { notificationsActions } from '../../../store/notifications';
 import { popupActions } from '../../../store/popups';
 
 const RenameBodyBox = styled(Box)({
@@ -15,6 +15,7 @@ const RenameBodyBox = styled(Box)({
 
 const RenameBody = () => {
     const dispatch = useDispatch();
+    const dir = i18next.dir(i18next.language);
     const [value, setValue] = useState('file name');
     const selectedFiles = useSelector((state: any) => state.files.selected);
     const textRef = useRef<HTMLInputElement>(null);
@@ -25,6 +26,8 @@ const RenameBody = () => {
     const onRenameSubmit = async () => {
         // await RenameFile(selectedFiles[0], value);
         dispatch(popupActions.setRename());
+        dispatch(notificationsActions.setContent(`${i18next.t('messages.FileRenamedSuccessfully')}`));
+        dispatch(notificationsActions.setOpen());
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -59,6 +62,7 @@ const RenameBody = () => {
                     width: '460px',
                 }}
                 onKeyDown={handleKeyDown}
+                dir={dir}
             />
             <Box
                 sx={{
@@ -66,6 +70,7 @@ const RenameBody = () => {
                     margin: '0 10px',
                     justifyContent: 'flex-end',
                 }}
+                dir={dir}
             >
                 <Button
                     variant="text"

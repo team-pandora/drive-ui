@@ -100,7 +100,9 @@
     "DeleteMsgSingle": "Are you sure you want to delete {{name}}? This action cannot be undone.",
     "DeleteMsgMultiple": "{{count}} items are about to be deleted. Are you sure?",
     "RequestStorage": "Request storage",
-    "RequestStorageLabel": "Why you need more space..."
+    "RequestStorageLabel": "Why you need more space...",
+    "FileDeletedSuccessfully": "File deleted successfully",
+    "FileRenamedSuccessfully": "File renamed successfully"
   },
   "titles": {
     "Folders": "Folders",

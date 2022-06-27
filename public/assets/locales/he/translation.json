@@ -100,7 +100,9 @@
     "DeleteMsgSingle": "הפריט {{name}} יימחק באופן סופי ולא תוכל לשחזר אותו. האם אתה בטוח?",
     "DeleteMsgMultiple": "{{count}} פריטים יימחקו באופן סופי ולא תוכל לשחזר אותם. האם אתה בטוח?",
     "RequestStorage": "בקשת שטח אחסון",
-    "RequestStorageLabel": "סיבה להגדלת שטח..."
+    "RequestStorageLabel": "סיבה להגדלת שטח...",
+    "FileDeletedSuccessfully": "הקובץ נמחק בהצלחה",
+    "FileRenamedSuccessfully": "שם הקובץ שונה בהצלחה"
   },
   "titles": {
     "Folders": "תיקיות",

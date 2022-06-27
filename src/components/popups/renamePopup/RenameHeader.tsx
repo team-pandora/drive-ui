@@ -3,12 +3,15 @@ import { Avatar, Box, Typography } from '@mui/material';
 import i18next from 'i18next';
 
 const RenameHeader = () => {
+    const dir = i18next.dir(i18next.language);
+
     return (
         <Box
             sx={{
                 display: 'flex',
                 margin: '0 15px',
             }}
+            dir={dir}
         >
             <Avatar sx={{ backgroundColor: '#4285f4', width: '32px', height: '32px' }}>
                 <DriveFileRenameOutline />

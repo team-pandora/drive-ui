@@ -1,29 +1,21 @@
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
-import { Fragment } from 'react';
-import { useDispatch } from 'react-redux';
-import { popupActions } from '../../../store/popups';
 import RenamePopup from '../../popups/renamePopup';
 
-const Rename: React.FC<{ handleClose: () => void }> = (props) => {
-    const dispatch = useDispatch();
+type props = { handleClick: () => void };
 
-    const handleOpen = () => {
-        dispatch(popupActions.setRename());
-        props.handleClose();
-    };
-
+const Rename: React.FC<props> = ({ handleClick }) => {
     return (
-        <Fragment>
-            <MenuItem onClick={handleOpen} disabled={false}>
+        <>
+            <MenuItem onClick={handleClick} disabled={false}>
                 <ListItemIcon>
                     <BorderColorOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText>{`${i18next.t('contextMenu.Rename')}`}</ListItemText>
             </MenuItem>
             <RenamePopup />
-        </Fragment>
+        </>
     );
 };
 

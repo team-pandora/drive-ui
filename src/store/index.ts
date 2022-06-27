@@ -3,6 +3,7 @@ import filesReducer from './files';
 import globalReducer from './global';
 import popupsReducer from './popups';
 import usersReducer from './users';
+import notificationsReducer from './notifications';
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         files: filesReducer,
         popups: popupsReducer,
         users: usersReducer,
+        notifications: notificationsReducer,
     },
 });
 

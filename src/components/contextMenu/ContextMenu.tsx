@@ -2,6 +2,8 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { globalActions } from '../../store/global';
+import { notificationsActions } from '../../store/notifications';
+import { popupActions } from '../../store/popups';
 import { Copy } from './buttons/Copy';
 import Download from './buttons/Download';
 import ExternalTransfer from './buttons/ExternalTransfer';
@@ -22,6 +24,17 @@ const ContextMenu = () => {
 
     const handleClose = () => {
         dispatch(globalActions.setContextMenu());
+    };
+
+    const handleRemove = () => {
+        dispatch(notificationsActions.setContent(`${i18next.t('messages.FileDeletedSuccessfully')}`));
+        dispatch(notificationsActions.setOpen());
+        handleClose();
+    };
+
+    const handleRename = () => {
+        dispatch(popupActions.setRename());
+        handleClose();
     };
 
     return (
@@ -50,7 +63,7 @@ const ContextMenu = () => {
                 <Shortcut handleClose={handleClose} />
                 <MoveTo handleClose={handleClose} />
                 <Favorite handleClose={handleClose} />
-                <Rename handleClose={handleClose} />
+                <Rename handleClick={handleRename} />
                 <Divider />
                 <Copy handleClose={handleClose} />
                 <ExternalTransfer handleClose={handleClose} />
@@ -58,7 +71,7 @@ const ContextMenu = () => {
                 <Info handleClose={handleClose} />
                 <Download handleClose={handleClose} />
                 <Divider />
-                <Remove handleClick={handleClose} />
+                <Remove handleClick={handleRemove} />
             </MenuList>
         </Menu>
     );
