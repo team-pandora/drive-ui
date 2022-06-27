@@ -17,7 +17,7 @@ import { TrashI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import TrashContextMenu from '../../contextMenu/TrashContextMenu';
-import FileType from '../../FileType';
+import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/TrashHeader';
 

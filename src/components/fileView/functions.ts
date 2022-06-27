@@ -1,4 +1,5 @@
 // import { useDispatch } from 'react-redux';
+import i18next from 'i18next';
 import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
@@ -31,7 +32,9 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
 
 export const handleKeyDown = (event: any, files: any, dispatch: any) => {
     if (event.key === 'Delete') {
-        alert('Delete');
+        // await delete files
+        dispatch(notificationsActions.setContent(`${i18next.t('messages.FileDeletedSuccessfully')}`));
+        dispatch(notificationsActions.setOpen());
     } else if (event.key === 'Escape') {
         dispatch(filesActions.setSelected([]));
     } else if (event.key === 'a' && event.ctrlKey) {

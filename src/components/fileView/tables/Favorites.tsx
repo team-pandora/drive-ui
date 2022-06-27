@@ -7,7 +7,7 @@ import { FavoritesI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
-import FileType from '../../FileType';
+import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/FavoritesHeader';
 
