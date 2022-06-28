@@ -27,7 +27,11 @@ const ContextMenu = () => {
     };
 
     const handleRemove = () => {
-        dispatch(notificationsActions.setContent(`${i18next.t('messages.FileDeletedSuccessfully')}`));
+        const message =
+            selectedFiles.length === 1
+                ? `${i18next.t('messages.FileDeletedSuccessfully')}`
+                : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
+        dispatch(notificationsActions.setContent(message));
         dispatch(notificationsActions.setSimpleOpen());
         handleClose();
     };

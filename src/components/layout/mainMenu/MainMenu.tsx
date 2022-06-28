@@ -24,8 +24,20 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dir = i18next.dir(i18next.language);
 
     const onDrop = useCallback((acceptedFiles: any) => {
-        dispatch(filesActions.setUploaded(acceptedFiles));
+        const filesWithStatus = acceptedFiles.map((file: any) => {
+            return { name: file.name, status: 'uploading' };
+        });
+        dispatch(filesActions.setUploaded(filesWithStatus));
         dispatch(notificationsActions.setUploadOpen());
+        setTimeout(() => {
+            dispatch(
+                filesActions.setUploaded(
+                    acceptedFiles.map((file: any) => {
+                        return { name: file.name, status: 'done' };
+                    }),
+                ),
+            );
+        }, 2000);
     }, []);
 
     const { getRootProps, getInputProps, open } = useDropzone({

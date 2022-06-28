@@ -102,6 +102,7 @@
     "RequestStorage": "בקשת שטח אחסון",
     "RequestStorageLabel": "סיבה להגדלת שטח...",
     "FileDeletedSuccessfully": "הקובץ נמחק בהצלחה",
+    "FilesDeletedSuccessfully": "הקבצים נמחקו בהצלחה",
     "FileRenamedSuccessfully": "שם הקובץ שונה בהצלחה"
   },
   "titles": {
