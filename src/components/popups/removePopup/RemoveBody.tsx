@@ -39,7 +39,7 @@ const RemoveBody: React.FC = () => {
     const content =
         selectedFiles.length > 1
             ? `${i18next.t('messages.DeleteMsgMultiple', { count: selectedFiles.length })}`
-            : `${i18next.t('messages.DeleteMsgSingle', { name: selectedFiles[0] })}`;
+            : `${i18next.t('messages.DeleteMsgSingle', { name: selectedFiles[0].name })}`;
 
     return (
         <SBox>

@@ -3,13 +3,16 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const notificationsSlice = createSlice({
     name: 'notifications',
-    initialState: { open: false, content: '' },
+    initialState: { simpleOpen: false, content: '', uploadOpen: false },
     reducers: {
-        setOpen: (state) => {
-            state.open = !state.open;
+        setSimpleOpen: (state) => {
+            state.simpleOpen = !state.simpleOpen;
         },
         setContent: (state, action) => {
             state.content = action.payload;
+        },
+        setUploadOpen: (state) => {
+            state.uploadOpen = !state.uploadOpen;
         },
     },
 });

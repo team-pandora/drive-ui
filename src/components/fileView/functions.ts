@@ -7,12 +7,12 @@ import { notificationsActions } from '../../store/notifications';
 // const dispatch = useDispatch();
 
 export const handleClick = (event: React.MouseEvent<unknown>, file: any, selectedFiles: any, dispatch: any) => {
-    const selectedIndex = selectedFiles.indexOf(file.stateId);
+    const selectedIndex = selectedFiles.indexOf(file);
     let newSelected: readonly string[] = [];
 
     if (event.ctrlKey) {
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selectedFiles, file.stateId);
+            newSelected = newSelected.concat(selectedFiles, file);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selectedFiles.slice(1));
         } else if (selectedIndex === selectedFiles.length - 1) {
@@ -26,7 +26,7 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
 
         dispatch(filesActions.setSelected(newSelected));
     } else {
-        dispatch(filesActions.setSelected([file.stateId]));
+        dispatch(filesActions.setSelected([file]));
     }
 };
 
@@ -34,12 +34,12 @@ export const handleKeyDown = (event: any, files: any, dispatch: any) => {
     if (event.key === 'Delete') {
         // await delete files
         dispatch(notificationsActions.setContent(`${i18next.t('messages.FileDeletedSuccessfully')}`));
-        dispatch(notificationsActions.setOpen());
+        dispatch(notificationsActions.setSimpleOpen());
     } else if (event.key === 'Escape') {
         dispatch(filesActions.setSelected([]));
     } else if (event.key === 'a' && event.ctrlKey) {
         event.preventDefault();
-        const allRowsNames = files.map((file: any) => file.stateId);
+        const allRowsNames = files.map((file: any) => file);
         dispatch(filesActions.setSelected(allRowsNames));
     }
 };
@@ -52,7 +52,7 @@ export const handleContextMenuClick = (
 ) => {
     event.preventDefault();
     if (selectedFiles.length <= 1) {
-        dispatch(filesActions.setSelected([file.stateId]));
+        dispatch(filesActions.setSelected([file]));
     }
     dispatch(globalActions.setContextMenu());
     dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
@@ -65,5 +65,5 @@ export const handleDoubleClick = (event: any, file: any, history: any, dispatch:
 };
 
 export const isSelected = (file: any, selectedFiles: any) => {
-    return selectedFiles.some((fileObject: any) => fileObject === file.stateId);
+    return selectedFiles.some((fileObject: any) => fileObject === file);
 };

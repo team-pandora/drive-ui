@@ -20,11 +20,11 @@ const SContent = styled(SnackbarContent)({
 const SimpleSnackbar: React.FC = () => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language);
-    const open = useSelector((state: any) => state.notifications.open);
+    const open = useSelector((state: any) => state.notifications.simpleOpen);
     const content = useSelector((state: any) => state.notifications.content);
 
     const handleClose = (event: React.SyntheticEvent | Event) => {
-        dispatch(notificationsActions.setOpen());
+        dispatch(notificationsActions.setSimpleOpen());
     };
 
     const action = (

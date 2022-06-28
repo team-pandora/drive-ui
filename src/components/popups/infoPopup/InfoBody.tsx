@@ -64,7 +64,7 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
     return (
         <Info dir={dir}>
             <InfoHeader>
-                <Typography>{selectedFiles}</Typography>
+                <Typography>{selectedFiles[0].stateId}</Typography>
                 <ImageIcon />
             </InfoHeader>
             <InfoText>{`${i18next.t('info.HaveAccess')}`}</InfoText>

@@ -28,12 +28,17 @@ const ContextMenu = () => {
 
     const handleRemove = () => {
         dispatch(notificationsActions.setContent(`${i18next.t('messages.FileDeletedSuccessfully')}`));
-        dispatch(notificationsActions.setOpen());
+        dispatch(notificationsActions.setSimpleOpen());
         handleClose();
     };
 
     const handleRename = () => {
         dispatch(popupActions.setRename());
+        handleClose();
+    };
+
+    const handleDownload = () => {
+        dispatch(notificationsActions.setSimpleOpen());
         handleClose();
     };
 
@@ -69,7 +74,7 @@ const ContextMenu = () => {
                 <ExternalTransfer handleClose={handleClose} />
                 <Divider />
                 <Info handleClose={handleClose} />
-                <Download handleClose={handleClose} />
+                <Download handleClose={handleDownload} />
                 <Divider />
                 <Remove handleClick={handleRemove} />
             </MenuList>

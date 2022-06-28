@@ -27,7 +27,7 @@ const RenameBody = () => {
         // await RenameFile(selectedFiles[0], value);
         dispatch(popupActions.setRename());
         dispatch(notificationsActions.setContent(`${i18next.t('messages.FileRenamedSuccessfully')}`));
-        dispatch(notificationsActions.setOpen());
+        dispatch(notificationsActions.setSimpleOpen());
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

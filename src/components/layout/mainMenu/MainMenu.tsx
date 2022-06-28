@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
 import Word from '../../../assets/Word.png';
+import { filesActions } from '../../../store/files';
+import { notificationsActions } from '../../../store/notifications';
 import { popupActions } from '../../../store/popups';
 import NewFolderPopup from '../../popups/newFolderPopup';
 import Button from './Button';
@@ -18,13 +20,12 @@ type props = {
 };
 
 const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
-    const dir = i18next.dir(i18next.language);
     const dispatch = useDispatch();
+    const dir = i18next.dir(i18next.language);
 
     const onDrop = useCallback((acceptedFiles: any) => {
-        console.log(acceptedFiles);
-        // const res = uploadFile(acceptedFiles[0]);
-        // console.log(res);
+        dispatch(filesActions.setUploaded(acceptedFiles));
+        dispatch(notificationsActions.setUploadOpen());
     }, []);
 
     const { getRootProps, getInputProps, open } = useDropzone({
