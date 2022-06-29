@@ -30,10 +30,14 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
     }
 };
 
-export const handleKeyDown = (event: any, files: any, dispatch: any) => {
+export const handleKeyDown = (event: any, files: any, selectedFiles: any, dispatch: any) => {
     if (event.key === 'Delete') {
         // await delete files
-        dispatch(notificationsActions.setContent(`${i18next.t('messages.FileDeletedSuccessfully')}`));
+        const message =
+            selectedFiles.length === 1
+                ? `${i18next.t('messages.FileDeletedSuccessfully')}`
+                : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
+        dispatch(notificationsActions.setContent(message));
         dispatch(notificationsActions.setSimpleOpen());
     } else if (event.key === 'Escape') {
         dispatch(filesActions.setSelected([]));

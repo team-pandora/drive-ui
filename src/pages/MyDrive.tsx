@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
 import Table from '../components/fileView/tables/MyDrive';
+import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
 import { getCookieValue } from '../utils/cookies';
 
@@ -39,13 +40,16 @@ const MyDrive = () => {
     );
 
     return (
-        <Box flex={4} paddingTop={2} padding={2}>
-            {/* TODO: */}
-            <TableMenuHeader title={i18next.t('titles.MyDrive')} />
-            {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
-            <ToastContainer position="bottom-right" />
-            {stack}
-        </Box>
+        <>
+            <Box flex={4} paddingTop={2} padding={2}>
+                {/* TODO: */}
+                <TableMenuHeader title={i18next.t('titles.MyDrive')} />
+                {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                <ToastContainer position="bottom-right" />
+                {stack}
+            </Box>
+            <StatusSnackbar />
+        </>
     );
 };
 

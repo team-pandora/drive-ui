@@ -1,16 +1,20 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
 import InfoPopup from '../../popups/infoPopup';
 
-const Info: React.FC<{ handleClose: () => void }> = (props) => {
+type props = {
+    handleClose: () => void;
+};
+
+const Info: React.FC<props> = ({ handleClose }) => {
     const dispatch = useDispatch();
 
     const handleOpen = () => {
         dispatch(popupActions.setInfo());
-        props.handleClose();
+        handleClose();
     };
 
     return (

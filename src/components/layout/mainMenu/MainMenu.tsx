@@ -29,15 +29,14 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
         });
         dispatch(filesActions.setUploaded(filesWithStatus));
         dispatch(notificationsActions.setUploadOpen());
-        setTimeout(() => {
-            dispatch(
-                filesActions.setUploaded(
-                    acceptedFiles.map((file: any) => {
-                        return { name: file.name, status: 'done' };
-                    }),
-                ),
-            );
-        }, 2000);
+
+        console.log('ugunkkn');
+        acceptedFiles.forEach((file: any) => {
+            setTimeout(() => {
+                console.log({ file });
+                dispatch(filesActions.setUploadedDone(file));
+            }, Math.floor(Math.random() * 6000) + 1000);
+        });
     }, []);
 
     const { getRootProps, getInputProps, open } = useDropzone({

@@ -5,11 +5,15 @@ import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
 import MovePopup from '../../popups/navigationPopup';
 
-const MoveTo: React.FC<{ handleClose: () => void }> = (props) => {
+type props = {
+    handleClose: () => void;
+};
+
+const MoveTo: React.FC<props> = ({ handleClose }) => {
     const dispatch = useDispatch();
 
     const handleShortcutDialog = () => {
-        props.handleClose();
+        handleClose();
         dispatch(popupActions.setNavigation());
     };
 

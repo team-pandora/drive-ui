@@ -20,6 +20,16 @@ const filesSlice = createSlice({
         setUploaded: (state, action) => {
             state.uploaded = action.payload;
         },
+        setUploadedDone: (state, action) => {
+            let index = 0;
+            state.uploaded.forEach((item: any, i: any) => {
+                if (item.name === action.payload.name) {
+                    index = i;
+                }
+            });
+
+            state.uploaded[index].status = 'done';
+        },
     },
 });
 

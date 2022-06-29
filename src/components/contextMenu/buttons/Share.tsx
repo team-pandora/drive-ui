@@ -6,12 +6,14 @@ import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
 import SharePopup from '../../popups/sharePopup';
 
-const Share: React.FC<{ handleClose: () => void }> = (props) => {
+type props = { handleClose: () => void };
+
+const Share: React.FC<props> = ({ handleClose }) => {
     const dispatch = useDispatch();
 
     const handleOpen = () => {
         dispatch(popupActions.setShare());
-        props.handleClose();
+        handleClose();
     };
 
     return (

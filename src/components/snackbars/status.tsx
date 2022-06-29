@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { CircularProgress, IconButton, List, SnackbarContent } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import i18next from 'i18next';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { notificationsActions } from '../../store/notifications';
 
@@ -35,26 +35,18 @@ const StatusSnackbar: React.FC = () => {
     const dir = i18next.dir(i18next.language);
     const open = useSelector((state: any) => state.notifications.uploadOpen);
     const files = useSelector((state: any) => state.files.uploaded);
-    const [content, setContent] = useState('');
-    const [status, setStatus] = useState('uploading');
 
     const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
         dispatch(notificationsActions.setUploadOpen());
     };
 
-    useEffect(() => {
-        if (files.length > 0) {
-            setContent(files[0].name);
-            setStatus(files[0].status);
-        }
-    }, [files]);
-
-    const statusAction =
-        status === 'uploading' ? (
+    const statusAction = (fileStatus: string) => {
+        return fileStatus === 'uploading' ? (
             <CircularProgress size={20} sx={{ marginX: '5px' }} />
         ) : (
             <CheckCircleIcon sx={{ color: 'green' }} />
         );
+    };
 
     const closeAction = (
         <>
@@ -63,28 +55,28 @@ const StatusSnackbar: React.FC = () => {
             </IconButton>
         </>
     );
+
+    const content = files.map((file: any) => {
+        return (
+            <SContent
+                message={file.name}
+                action={statusAction(file.status)}
+                dir="ltr"
+                sx={{ backgroundColor: 'white', color: '#222', borderRadius: '0 0 0 0' }}
+            />
+        );
+    });
+
     return (
         <div>
             <Snackbar
                 open={open}
-                autoHideDuration={400000}
                 anchorOrigin={{ vertical: 'bottom', horizontal: dir === 'rtl' ? 'left' : 'right' }}
                 onClose={handleClose}
             >
                 <List>
                     <SHeader message="Uploads" action={closeAction} />
-                    <SContent
-                        message={content}
-                        action={statusAction}
-                        dir="ltr"
-                        sx={{ backgroundColor: 'white', color: '#222', borderRadius: '0 0 0 0' }}
-                    />
-                    <SContent
-                        message={content}
-                        action={statusAction}
-                        dir="ltr"
-                        sx={{ backgroundColor: 'white', color: '#222', borderRadius: '0 0 0 0' }}
-                    />
+                    {content}
                 </List>
             </Snackbar>
         </div>

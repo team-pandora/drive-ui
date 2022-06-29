@@ -67,7 +67,7 @@ const TrashTable: React.FC<{ filesArray: any[] }> = (props) => {
                     hover
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
-                    onKeyDown={(event) => handleKeyDown(event, props.filesArray, dispatch)}
+                    onKeyDown={(event) => handleKeyDown(event, props.filesArray, selectedFiles, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
