@@ -1,6 +1,7 @@
 import { Box, LinearProgress, Stack, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,7 +23,7 @@ const MyDrive = () => {
     const params: { folderId: string } = useParams();
     const folderId: string | null = params.folderId ? params.folderId : null;
     const [files, setFiles] = useState<any[]>([]);
-    const isGridView = getCookieValue('isGridView') === 'true';
+    const isGridView = useSelector((state: any) => state.global.isGridView);
 
     const isLoading = useFiles(folderId, setFiles);
 

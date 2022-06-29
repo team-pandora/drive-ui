@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
+import { getCookieValue } from '../utils/cookies';
 
 const globalSlice = createSlice({
     name: 'global',
@@ -8,6 +9,7 @@ const globalSlice = createSlice({
         anchorEl: null,
         contextMenu: false,
         contextMenuPosition: { x: 0, y: 0 } || null,
+        isGridView: getCookieValue('isGridView') === 'true',
     },
     reducers: {
         toggleMainMenu: (state) => {
@@ -22,7 +24,10 @@ const globalSlice = createSlice({
         setContextMenuPosition: (state, action) => {
             state.contextMenuPosition = action.payload;
         },
-        // TODO: add to cookies
+        setIsGridView: (state) => {
+            state.isGridView = !state.isGridView;
+            document.cookie = `isGridView=${state.isGridView}`;
+        },
     },
 });
 

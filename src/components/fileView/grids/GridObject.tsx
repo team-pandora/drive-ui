@@ -60,21 +60,34 @@ type props = {
     file: any;
     isSelected: boolean;
     index: number;
-    handleClick: (event: any, file: any) => void;
-    handleContextMenu: (event: any, file: any) => void;
+    handleClick: any;
+    handleContextMenu: any;
+    onKeyDown: any;
+    onDoubleClick: any;
 };
 
-const GridObject: React.FC<props> = ({ file, isSelected, index, handleClick, handleContextMenu }) => {
+const GridObject: React.FC<props> = ({
+    file,
+    isSelected,
+    index,
+    handleClick,
+    handleContextMenu,
+    onKeyDown,
+    onDoubleClick,
+}) => {
     const icon = file.type === 'folder' ? <Folder sx={iconStyle} /> : <InsertDriveFile sx={iconStyle} />;
     // TODO:
     const ItemComponent =
         file.type === 'folder' ? (isSelected ? FolderActiveItem : FolderItem) : isSelected ? FileActiveItem : FileItem;
 
     return (
+        // on key down not working
         <Grid item xs={2} sm={2} md={2} key={index}>
             <ItemComponent
-                onClick={(event) => handleClick(event, file)}
-                onContextMenu={(event) => handleContextMenu(event, file)}
+                onClick={handleClick}
+                onContextMenu={handleContextMenu}
+                onKeyDown={onKeyDown}
+                onDoubleClick={onDoubleClick}
             >
                 {/* TODO: */}
                 {file.type === 'file' && <SBox></SBox>}
