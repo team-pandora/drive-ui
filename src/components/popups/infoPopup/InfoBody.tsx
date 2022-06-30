@@ -1,7 +1,7 @@
-import React from 'react';
 import ImageIcon from '@mui/icons-material/Image';
 import { Box, Button, Divider, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { popupActions } from '../../../store/popups';
 import UserAvatar from '../../layout/Avatar';
@@ -29,6 +29,7 @@ const InfoBox = styled(Box)({
     display: 'flex',
     flexFlow: 'row nowrap',
     gap: '0vw',
+    margin: '25px',
 });
 
 const InfoText = styled(Typography)({
@@ -90,6 +91,7 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
             >
                 {`${i18next.t('buttons.Access')}`}
             </Button>
+            <br />
             <InfoText>{`${i18next.t('messages.Properties')}`}</InfoText>
             <InfoBox>
                 <InfoProperties isDeleted={false}></InfoProperties>

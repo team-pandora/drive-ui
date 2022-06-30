@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
-import { CircularProgress, IconButton, List, SnackbarContent } from '@mui/material';
+import { CircularProgress, Divider, IconButton, List, SnackbarContent } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import i18next from 'i18next';
 import React from 'react';
@@ -15,6 +15,7 @@ const SContent = styled(SnackbarContent)({
         marginLeft: 0,
         paddingLeft: 0,
     },
+    boxShadow: 'none',
 });
 
 const SHeader = styled(SnackbarContent)({
@@ -58,12 +59,15 @@ const StatusSnackbar: React.FC = () => {
 
     const content = files.map((file: any) => {
         return (
-            <SContent
-                message={file.name}
-                action={statusAction(file.status)}
-                dir="ltr"
-                sx={{ backgroundColor: 'white', color: '#222', borderRadius: '0 0 0 0' }}
-            />
+            <>
+                <SContent
+                    message={file.name}
+                    action={statusAction(file.status)}
+                    dir="ltr"
+                    sx={{ backgroundColor: 'white', color: '#222', borderRadius: '0 0 0 0' }}
+                />
+                <Divider />
+            </>
         );
     });
 
@@ -74,7 +78,7 @@ const StatusSnackbar: React.FC = () => {
                 anchorOrigin={{ vertical: 'bottom', horizontal: dir === 'rtl' ? 'left' : 'right' }}
                 onClose={handleClose}
             >
-                <List>
+                <List sx={{ boxShadow: '0 2px 8px 0 rgb(0 0 0 / 20%)', padding: '0px' }}>
                     <SHeader message="Uploads" action={closeAction} />
                     {content}
                 </List>
