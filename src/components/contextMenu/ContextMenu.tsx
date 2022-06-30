@@ -72,7 +72,7 @@ const ContextMenu: React.FC<props> = ({ page }) => {
             }}
             dir={dir}
         >
-            <MenuList sx={{ width: 300 }} dense>
+            <MenuList sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px' }} dense>
                 <Share handleClose={handleClose} />
                 <Shortcut handleClose={handleClose} />
                 <MoveTo handleClose={handleClose} />
