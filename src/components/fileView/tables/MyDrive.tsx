@@ -102,7 +102,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
                     </Table>
                 </TableContainer>
             </Paper>
-            <ContextMenu />
+            <ContextMenu page="MyDrive" />
         </Box>
     );
 };

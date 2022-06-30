@@ -84,7 +84,7 @@ const MyDriveGrid: React.FC<props> = ({ filesArray }) => {
                     {files}
                 </Grid>
             </Box>
-            <ContextMenu />
+            <ContextMenu page="MyDrive" />
         </SBox>
     );
 };

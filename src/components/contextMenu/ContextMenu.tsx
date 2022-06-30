@@ -14,8 +14,13 @@ import Remove from './buttons/Remove';
 import Rename from './buttons/Rename';
 import Share from './buttons/Share';
 import Shortcut from './buttons/Shortcut';
+import Unfavorite from './buttons/Unfavorite';
 
-const ContextMenu = () => {
+type props = {
+    page: string;
+};
+
+const ContextMenu: React.FC<props> = ({ page }) => {
     const dir = i18next.dir(i18next.language);
     const dispatch = useDispatch();
     const contextMenu = useSelector((state: any) => state.global.contextMenu);
@@ -71,7 +76,11 @@ const ContextMenu = () => {
                 <Share handleClose={handleClose} />
                 <Shortcut handleClose={handleClose} />
                 <MoveTo handleClose={handleClose} />
-                <Favorite handleClose={handleClose} />
+                {page !== 'Favorites' ? (
+                    <Favorite handleClose={handleClose} />
+                ) : (
+                    <Unfavorite handleClose={handleClose} />
+                )}
                 <Rename handleClick={handleRename} />
                 <Divider />
                 <Copy handleClose={handleClose} />

@@ -9,11 +9,10 @@ import {
     Toc,
 } from '@mui/icons-material';
 import { Box, Divider, IconButton, styled } from '@mui/material';
-import { useState } from 'react';
+import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { globalActions } from '../store/global';
 import { popupActions } from '../store/popups';
-import { getCookieValue } from '../utils/cookies';
 
 const Icons = styled(Box)(() => ({
     display: 'flex',
@@ -22,15 +21,20 @@ const Icons = styled(Box)(() => ({
     alignItems: 'center',
 }));
 
-const MoreVertClick = () => {
-    console.log('MoreVertClick');
+type props = {
+    page: string;
 };
 
-const HeaderMenu = () => {
+const HeaderMenu: React.FC<props> = ({ page }) => {
     const dispatch = useDispatch();
 
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.selected);
+
+    const MoreVertClick = (event: any) => {
+        dispatch(globalActions.setContextMenu());
+        dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
+    };
 
     const isGridViewClick = () => {
         dispatch(globalActions.setIsGridView());
@@ -44,6 +48,18 @@ const HeaderMenu = () => {
         dispatch(popupActions.setShare());
     };
 
+    const handleDelete = () => {
+        if (page === i18next.t('titles.Trash')) {
+            dispatch(popupActions.setRemove());
+        } else {
+            console.log('delete');
+        }
+    };
+
+    const handleRestore = () => {
+        console.log('restore');
+    };
+
     return (
         <Icons>
             {files.length > 0 && (
@@ -52,21 +68,29 @@ const HeaderMenu = () => {
                         display: 'flex',
                     }}
                 >
+                    {page !== i18next.t('titles.Trash') && (
+                        <>
+                            <IconButton>
+                                <InsertLink onClick={handleShareOpen} />
+                            </IconButton>
+                            <IconButton>
+                                <PersonAddAltOutlined onClick={handleShareOpen} />
+                            </IconButton>
+                        </>
+                    )}
+                    {page === i18next.t('titles.Trash') && (
+                        <IconButton>
+                            <RestoreOutlined onClick={handleRestore} />
+                        </IconButton>
+                    )}
                     <IconButton>
-                        <InsertLink onClick={handleShareOpen} />
+                        <DeleteOutline onClick={handleDelete} />
                     </IconButton>
-                    <IconButton>
-                        <PersonAddAltOutlined onClick={handleShareOpen} />
-                    </IconButton>
-                    <IconButton>
-                        <RestoreOutlined />
-                    </IconButton>
-                    <IconButton>
-                        <DeleteOutline />
-                    </IconButton>
-                    <IconButton>
-                        <MoreVert onClick={MoreVertClick} />
-                    </IconButton>
+                    {page !== i18next.t('titles.Trash') && (
+                        <IconButton>
+                            <MoreVert onClick={(event) => MoreVertClick(event)} />
+                        </IconButton>
+                    )}
                 </Box>
             )}
             {files.length > 0 && <Divider orientation="vertical" flexItem />}

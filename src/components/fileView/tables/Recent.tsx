@@ -82,7 +82,7 @@ const RecentsTable: React.FC<{ filesArray: any[] }> = (props) => {
                     </Table>
                 </TableContainer>
             </Paper>
-            <ContextMenu />
+            <ContextMenu page="Recent" />
         </Box>
     );
 };

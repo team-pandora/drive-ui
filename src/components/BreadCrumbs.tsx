@@ -1,6 +1,4 @@
 import { Box, Breadcrumbs, Link, styled } from '@mui/material';
-import i18next from 'i18next';
-import { Key } from 'react';
 import { useSelector } from 'react-redux';
 import HeaderMenu from './HeaderMenu';
 
@@ -46,7 +44,7 @@ const TableMenuHeader: React.FC<props> = ({ title }) => {
             <Breadcrumbs sx={{ fontSize: '1.1rem', width: '70%' }} separator=">" aria-label="breadcrumb">
                 {breadcrumbs}
             </Breadcrumbs>
-            <HeaderMenu />
+            <HeaderMenu page={title} />
         </HeaderBar>
     );
 };

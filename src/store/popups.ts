@@ -33,7 +33,7 @@ const popupSlice = createSlice({
         setMoveTo: (state) => {
             state.moveTo = !state.moveTo;
         },
-        setHelp: (state) => {
+        setRemove: (state) => {
             state.remove = !state.remove;
         },
         setCopy: (state) => {

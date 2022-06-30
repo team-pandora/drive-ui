@@ -8,7 +8,7 @@ const RemovePopup = () => {
     const selectorFunction = (state: any) => state.popups.remove;
 
     const handleClose = () => {
-        dispatch(popupActions.setHelp());
+        dispatch(popupActions.setRemove());
     };
 
     return (

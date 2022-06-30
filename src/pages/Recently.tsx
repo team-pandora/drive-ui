@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
 import Table from '../components/fileView/tables/Recent';
+import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
 import { RecentData } from '../data/fakedata';
 
@@ -16,6 +17,7 @@ const Recently = () => {
                 <TableMenuHeader title={i18next.t('titles.Recent')} />
                 {isGridView ? <Grid filesArray={RecentData} /> : <Table filesArray={RecentData} />}
             </Box>
+            <SimpleSnackbar />
             <StatusSnackbar />
         </>
     );

@@ -27,13 +27,13 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
         const filesWithStatus = acceptedFiles.map((file: any) => {
             return { name: file.name, status: 'uploading' };
         });
+        console.log(acceptedFiles);
+
         dispatch(filesActions.setUploaded(filesWithStatus));
         dispatch(notificationsActions.setUploadOpen());
 
-        console.log('ugunkkn');
         acceptedFiles.forEach((file: any) => {
             setTimeout(() => {
-                console.log({ file });
                 dispatch(filesActions.setUploadedDone(file));
             }, Math.floor(Math.random() * 6000) + 1000);
         });
