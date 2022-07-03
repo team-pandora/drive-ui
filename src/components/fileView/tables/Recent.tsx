@@ -11,7 +11,9 @@ import TableHeader from '../tableHeaders/RecentlyHeader';
 
 type Order = 'asc' | 'desc';
 
-const RecentsTable: React.FC<{ filesArray: any[] }> = (props) => {
+type props = { filesArray: any[] };
+
+const RecentsTable: React.FC<props> = ({ filesArray }) => {
     const dispatch = useDispatch();
     const selectedFiles = useSelector((state: any) => state.files.selected);
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
@@ -30,7 +32,7 @@ const RecentsTable: React.FC<{ filesArray: any[] }> = (props) => {
         setOrderBy(property);
     };
 
-    const rowFiles = stableSort(props.filesArray, getComparator(order, orderBy))
+    const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file, index) => {
             const isItemSelected = isSelected(file, selectedFiles);
@@ -41,7 +43,7 @@ const RecentsTable: React.FC<{ filesArray: any[] }> = (props) => {
                     hover
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
-                    onKeyDown={(event) => handleKeyDown(event, props.filesArray, selectedFiles, dispatch)}
+                    onKeyDown={(event) => handleKeyDown(event, filesArray, selectedFiles, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}

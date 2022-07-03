@@ -1,7 +1,7 @@
+import { Box } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
 import i18next from 'i18next';
 import { useState } from 'react';
 import { PermissionButton } from './PermissionsButton';
@@ -50,7 +50,9 @@ const getUserStringPermission = (userPermission: string) => {
     }
 };
 
-const PermissionMenu: React.FC<{ permission: string }> = (props) => {
+type props = { permission: string };
+
+const PermissionMenu: React.FC<props> = ({ permission }) => {
     const dir = i18next.dir(i18next.language);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -62,11 +64,11 @@ const PermissionMenu: React.FC<{ permission: string }> = (props) => {
         setAnchorEl(null);
     };
 
-    const permission = getUserStringPermission(props.permission);
+    const formattedPermission = getUserStringPermission(permission);
 
     return (
         <Box>
-            <PermissionButton userPermission={permission} handleClick={handleClick} />
+            <PermissionButton userPermission={formattedPermission} handleClick={handleClick} />
             <StyledMenu
                 dir={dir}
                 id="demo-customized-menu"

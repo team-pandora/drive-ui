@@ -23,7 +23,9 @@ const AccordionSummaryBox = styled(AccordionSummary)({
     alignItems: 'center',
 });
 
-const ShareLink: React.FC<{ isOpen: boolean; handleChange: () => void }> = (props) => {
+type props = { isOpen: boolean; handleChange: () => void };
+
+const ShareLink: React.FC<props> = ({ isOpen, handleChange }) => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language);
     const handleFocus = (event: any) => event.target.select();
@@ -38,7 +40,7 @@ const ShareLink: React.FC<{ isOpen: boolean; handleChange: () => void }> = (prop
         dispatch(popupActions.setShare());
     };
     return (
-        <Accordion expanded={!props.isOpen} onChange={props.handleChange} dir={dir}>
+        <Accordion expanded={!isOpen} onChange={handleChange} dir={dir}>
             <AccordionSummary
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
@@ -47,7 +49,7 @@ const ShareLink: React.FC<{ isOpen: boolean; handleChange: () => void }> = (prop
                 }}
             >
                 <AccordionSummaryBox>
-                    <Avatar sx={{ backgroundColor: props.isOpen ? '#9aa0a6' : '#4285f4' }}>
+                    <Avatar sx={{ backgroundColor: isOpen ? '#9aa0a6' : '#4285f4' }}>
                         <Link />
                     </Avatar>
                     <Typography sx={{ margin: '0 10px', fontSize: '22px' }}>

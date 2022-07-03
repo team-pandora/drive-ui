@@ -3,9 +3,9 @@ import i18next from 'i18next';
 import { useState } from 'react';
 import SelectMenus from './SelectMenu';
 
-const CreateLink: React.FC<{
-    handleCreate: (event: any, time: string, permission: string) => void;
-}> = (props) => {
+type props = { handleCreate: (event: any, time: string, permission: string) => void };
+
+const CreateLink: React.FC<props> = ({ handleCreate }) => {
     const [timeValue, setTimeValue] = useState('');
     const [permission, setPermission] = useState('');
 
@@ -49,7 +49,7 @@ const CreateLink: React.FC<{
                 />
             </Box>
             <Button
-                onClick={(event) => props.handleCreate(event, timeValue, permission)}
+                onClick={(event) => handleCreate(event, timeValue, permission)}
                 disabled={timeValue === '' || permission === ''}
                 sx={{ color: '#4285f4', margin: '0px 1%', textTransform: 'none' }}
             >{`${i18next.t('buttons.CreateLink')}`}</Button>

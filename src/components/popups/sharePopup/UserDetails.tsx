@@ -9,22 +9,24 @@ const UserTab = styled(Box)({
     alignItems: 'center',
 });
 
-const UserDetail: React.FC<{
+type props = {
     user: { permission: string; fullName: string; mail: string; color: string };
-}> = (props) => {
+};
+
+const UserDetail: React.FC<props> = ({ user }) => {
     const dir = i18next.dir(i18next.language);
 
     return (
         <UserTab sx={{ direction: dir }}>
-            <UserAvatar name={props.user.fullName} color={props.user.color} />
+            <UserAvatar name={user.fullName} color={user.color} />
             <ListItemText sx={{}}>
-                <Typography variant="body2">{props.user.fullName}</Typography>
-                <Typography variant="caption">{props.user.mail}</Typography>
+                <Typography variant="body2">{user.fullName}</Typography>
+                <Typography variant="caption">{user.mail}</Typography>
             </ListItemText>
 
-            {props.user.permission !== 'owner' && <PermissionMenu permission={`${props.user.permission}`} />}
+            {user.permission !== 'owner' && <PermissionMenu permission={`${user.permission}`} />}
 
-            {props.user.permission === 'owner' && (
+            {user.permission === 'owner' && (
                 <Typography
                     sx={{
                         margin: '0px 4%',
