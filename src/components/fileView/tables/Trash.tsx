@@ -13,12 +13,13 @@ import {
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { TrashI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import TrashContextMenu from '../../contextMenu/TrashContextMenu';
 import FileType from '../FileType';
-import { handleClick, handleContextMenuClick, handleKeyDown, isSelected } from '../functions';
+import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/TrashHeader';
 
 type Order = 'asc' | 'desc';
@@ -38,6 +39,7 @@ type props = { filesArray: any[] };
 
 const TrashTable: React.FC<props> = ({ filesArray }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
     const selectedFiles = useSelector((state: any) => state.files.selected);
@@ -46,8 +48,6 @@ const TrashTable: React.FC<props> = ({ filesArray }) => {
     const [orderBy, setOrderBy] = React.useState<keyof TrashI>('owner');
     const [page, setPage] = React.useState(0);
     const rowsPerPage = 100;
-
-    const fileicon = FileType('folder');
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof TrashI) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -60,7 +60,7 @@ const TrashTable: React.FC<props> = ({ filesArray }) => {
 
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map((file, index) => {
+        .map((file: any, index) => {
             const isItemSelected = isSelected(file, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.fsObjectUpdatedAt, locales);
@@ -70,13 +70,14 @@ const TrashTable: React.FC<props> = ({ filesArray }) => {
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
                     onKeyDown={(event) => handleKeyDown(event, filesArray, selectedFiles, dispatch)}
+                    onDoubleClick={(event) => handleDoubleClick(event, file, history, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={file.name}
                     selected={isItemSelected}
                 >
-                    <TableCell padding="checkbox">{fileicon}</TableCell>
+                    <TableCell padding="checkbox">{FileType(file.type)}</TableCell>
                     <TableCell
                         component="th"
                         id={labelId}

@@ -1,6 +1,8 @@
 import { ListItem, ListItemButton, ListItemIcon, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
+import { useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
+import { filesActions } from '../../../store/files';
 
 const NavLinkStyle = styled(NavLink)({
     textDecoration: 'none',
@@ -15,6 +17,7 @@ type props = {
 };
 
 const NavButton: React.FC<props> = ({ path, label, children }) => {
+    const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language) === 'rtl' ? '25px 0 0 25px' : '0 25px 25px 0';
 
     const location = useLocation();
@@ -34,8 +37,12 @@ const NavButton: React.FC<props> = ({ path, label, children }) => {
         borderRadius: `${dir}`,
     };
 
+    const handleClick = (event: any) => {
+        dispatch(filesActions.setHierarchy({ type: 'clear' }));
+    };
+
     return (
-        <NavLinkStyle activeStyle={{ color: '#1967d2' }} to={path}>
+        <NavLinkStyle activeStyle={{ color: '#1967d2' }} to={`/${path}`} onClick={handleClick}>
             <SListItem sx={{ marginTop: '5px' }} disablePadding>
                 <ListItemButton sx={iconButtonStyle}>
                     <ListItemIcon sx={{ minWidth: '36px', marginX: '10px', color: `${isActive ? '#1967D2' : 'none'}` }}>

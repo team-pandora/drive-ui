@@ -1,21 +1,17 @@
 import { Folder, InsertDriveFile } from '@mui/icons-material';
-import { SvgIcon } from '@mui/material';
+import ImageIcon from '@mui/icons-material/Image';
 
 const FileType = (fileType: string) => {
     switch (fileType) {
         case 'folder':
-            return <Folder sx={{ color: 'rgb(95, 99, 104)' }} />;
+            return <Folder sx={{ color: 'rgb(140, 90, 90)' }} />;
         case 'file':
-            return <InsertDriveFile sx={{ color: 'rgb(95, 99, 104)' }} />;
+            return <InsertDriveFile sx={{ color: 'rgb(23, 135, 220)' }} />;
         case 'png':
-            return (
-                <SvgIcon>
-                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-                </SvgIcon>
-            );
+            return <ImageIcon sx={{ color: 'rgb(242, 34, 34)', mt: 0.4 }} />;
         // TODO:
         default:
-            return <Folder sx={{ color: 'rgb(95, 99, 104)' }} />;
+            return <InsertDriveFile sx={{ color: 'rgb(165, 200, 67)' }} />;
     }
 };
 

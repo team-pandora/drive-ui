@@ -38,8 +38,6 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });
 
-    const fileicon = FileType('folder');
-
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MyDriveI) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -48,7 +46,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
 
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map((file, index) => {
+        .map((file: any, index) => {
             const isItemSelected = isSelected(file, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.fsObjectUpdatedAt, locales);
@@ -68,7 +66,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
                     key={file.fsObjectUpdatedAt}
                     selected={isItemSelected}
                 >
-                    <TableCell padding="checkbox">{fileicon}</TableCell>
+                    <TableCell padding="checkbox">{FileType(file.type)}</TableCell>
                     <TableCell
                         component="th"
                         id={labelId}

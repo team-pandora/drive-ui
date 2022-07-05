@@ -1,5 +1,6 @@
 import { Box, Breadcrumbs, Link, styled } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { filesActions } from '../store/files';
 import HeaderMenu from './HeaderMenu';
 
 const StyledBreadcrumb = styled(Link)({
@@ -25,16 +26,30 @@ type props = {
 };
 
 const TableMenuHeader: React.FC<props> = ({ title }) => {
+    const dispatch = useDispatch();
     const breadcrumbs: any = [];
 
     const hierarchy = useSelector((state: any) => state.files.hierarchy);
 
     const breadcrumbsContent = hierarchy.length ? hierarchy : [title];
 
+    const handleClick = (event: any, item: any) => {
+        event.preventDefault();
+        console.log('sdafsdafd', item);
+
+        dispatch(filesActions.setHierarchy({ type: 'replace', content: item }));
+    };
+
     breadcrumbsContent.forEach((item: any, index: number) => {
         breadcrumbs.push(
-            <StyledBreadcrumb key={index} href={`/`} underline="hover" color="inherit">
-                {item}
+            <StyledBreadcrumb
+                onClick={(event) => handleClick(event, item)}
+                key={index}
+                href={`/`}
+                underline="hover"
+                color="inherit"
+            >
+                {item === title ? item : item.name}
             </StyledBreadcrumb>,
         );
     });

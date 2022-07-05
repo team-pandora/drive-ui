@@ -31,8 +31,6 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
 };
 
 export const handleKeyDown = (event: any, files: any, selectedFiles: any, dispatch: any) => {
-    console.log(event);
-
     if (event.key === 'Delete') {
         // await delete files
         const message =
@@ -66,7 +64,7 @@ export const handleContextMenuClick = (
 
 export const handleDoubleClick = (event: any, file: any, history: any, dispatch: any) => {
     history.push(`/folder/${file.fsObjectId}`);
-    dispatch(filesActions.setHierarchy(file));
+    dispatch(filesActions.setHierarchy({ type: 'push', content: { id: file.fsObjectId, name: file.name } }));
     dispatch(filesActions.setSelected([]));
 };
 

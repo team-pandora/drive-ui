@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
-import { Folder, InsertDriveFile } from '@mui/icons-material';
 import { Box, Grid, styled } from '@mui/material';
+import FileType from '../FileType';
 import GridTitle from './GridTitle';
 
 const FolderItem = styled(Box)(() => ({
@@ -51,10 +51,10 @@ const SBox = styled(Box)({
     backgroundColor: '#dadce0',
 });
 
-const iconStyle = {
+const IconStyle = styled(Box)({
     color: 'rgb(95, 99, 104)',
     padding: '0px 15px',
-};
+});
 
 type props = {
     file: any;
@@ -75,7 +75,7 @@ const GridObject: React.FC<props> = ({
     onKeyDown,
     onDoubleClick,
 }) => {
-    const icon = file.type === 'folder' ? <Folder sx={iconStyle} /> : <InsertDriveFile sx={iconStyle} />;
+    const icon = <IconStyle>{FileType(file.type)}</IconStyle>;
     // TODO:
     const ItemComponent =
         file.type === 'folder' ? (isSelected ? FolderActiveItem : FolderItem) : isSelected ? FileActiveItem : FileItem;

@@ -1,20 +1,24 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 
 const filesSlice = createSlice({
     name: 'files',
-    initialState: { selected: [], hierarchy: <any>[], uploaded: <any>[] },
+    initialState: { selected: [], hierarchy: <any>[], lastPopped: {}, uploaded: <any>[] },
     reducers: {
         setSelected: (state, action) => {
             state.selected = action.payload;
         },
         setHierarchy: (state, action) => {
-            if (action.payload === 'pop') {
-                state.hierarchy.pop();
-            } else if (action.payload === 'clear') {
+            if (action.payload.type === 'pop') {
+                state.lastPopped = state.hierarchy.pop();
+            } else if (action.payload.type === 'forward') {
+                state.hierarchy.push(state.lastPopped);
+            } else if (action.payload.type === 'clear') {
                 state.hierarchy = [];
-            } else {
-                state.hierarchy.push(action.payload);
+            } else if (action.payload.type === 'push') {
+                state.hierarchy.push(action.payload.content);
+            } else if (action.payload.type === 'replace') {
+                state.hierarchy.splice(current(state).hierarchy.indexOf(action.payload.content) + 1);
             }
         },
         setUploaded: (state, action) => {

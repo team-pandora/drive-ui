@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import i18next from 'i18next';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';

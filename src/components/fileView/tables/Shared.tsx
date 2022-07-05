@@ -28,6 +28,7 @@ type props = { filesArray: any[] };
 
 const SharedTable: React.FC<props> = ({ filesArray }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
     const selectedFiles = useSelector((state: any) => state.files.selected);
@@ -37,19 +38,15 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
     const [page, setPage] = React.useState(0);
     const rowsPerPage = 100;
 
-    const fileicon = FileType('folder');
-
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
 
-    const history = useHistory();
-
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map((file, index) => {
+        .map((file: any, index) => {
             const isItemSelected = isSelected(file, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.stateCreatedAt, locales);
@@ -66,7 +63,7 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
                     key={file.name}
                     selected={isItemSelected}
                 >
-                    <TableCell padding="checkbox">{fileicon}</TableCell>
+                    <TableCell padding="checkbox">{FileType(file.type)}</TableCell>
                     <TableCell
                         component="th"
                         id={labelId}
