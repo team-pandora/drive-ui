@@ -45,6 +45,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:docker": "export REACT_APP_IS_DOCKER=true && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

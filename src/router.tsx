@@ -47,6 +47,8 @@ export const Router: React.FC = () => {
             <Route path="/statusTransferred">
                 <StatusTransferred />
             </Route>
+            <Route path="/api"></Route>
+            <Route path="/auth"></Route>
             <Route path="*">
                 <Redirect to="/my-drive" />
             </Route>

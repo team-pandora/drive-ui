@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Box, LinearProgress, Stack, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
@@ -48,12 +49,13 @@ const MyDrive = () => {
         });
     }, [locationKeys]);
 
-    const stack = isLoading && (
+    const loadingAnimation = (
         <Stack
             sx={{
                 width: '85%',
                 color: 'grey.500',
                 position: 'absolute',
+                mt: 1.2,
             }}
             spacing={2}
         >
@@ -66,9 +68,8 @@ const MyDrive = () => {
             <Box flex={4} paddingTop={2} padding={2}>
                 {/* TODO: */}
                 <TableMenuHeader title={i18next.t('titles.MyDrive')} />
-                {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                {isLoading ? loadingAnimation : isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
                 <ToastContainer position="bottom-right" />
-                {stack}
             </Box>
             <StatusSnackbar />
         </>
