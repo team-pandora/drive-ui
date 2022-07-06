@@ -1,11 +1,22 @@
+/* eslint-disable consistent-return */
 import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { StatusCodes } from 'http-status-codes';
+import { getCookieValue } from '../utils/cookies';
 
 export const getFile = async (parent: null | string) => {
-    const response = await Axios.get(
-        `http://localhost:8000/api/users/62655a5dd681ae7e5f9eafe0/states/fsObjects?parent=${parent}`,
-    );
-    const data = await response.data;
-    return data;
+    try {
+        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}`, {
+            withCredentials: true,
+        });
+        const data = await response.data;
+        return data;
+    } catch (error: any) {
+        if (error.request.status === StatusCodes.UNAUTHORIZED) {
+            document.location.href = '/auth/login?relayState=/shared';
+            return null;
+        }
+    }
 };
 
 export const downloadFile = async (fileId: string) => {
