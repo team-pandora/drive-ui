@@ -1,9 +1,15 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 import { CreateNewFolderOutlined, DriveFolderUpload, UploadFile } from '@mui/icons-material';
 import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { uploadFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
 import Word from '../../../assets/Word.png';
@@ -22,21 +28,32 @@ type props = {
 const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language);
+    const params: { folderId: string } = useParams();
+    const folderId: string = params.folderId ? params.folderId : 'null';
 
-    const onDrop = useCallback((acceptedFiles: any) => {
+    const onDrop = useCallback(async (acceptedFiles: any) => {
         const filesWithStatus = acceptedFiles.map((file: any) => {
             return { name: file.name, status: 'uploading' };
         });
-        console.log(acceptedFiles);
 
         dispatch(filesActions.setUploaded(filesWithStatus));
         dispatch(notificationsActions.setUploadOpen());
 
-        acceptedFiles.forEach((file: any) => {
-            setTimeout(() => {
+        for (const file of acceptedFiles) {
+            try {
+                console.log(file);
+                await uploadFile(file, folderId);
                 dispatch(filesActions.setUploadedDone(file));
-            }, Math.floor(Math.random() * 6000) + 1000);
-        });
+            } catch (error) {
+                console.log(error);
+                dispatch(filesActions.setUploadedFailed(file));
+            }
+        }
+        // acceptedFiles.forEach((file: any) => {
+        //     setTimeout(() => {
+        //         dispatch(filesActions.setUploadedDone(file));
+        //     }, Math.floor(Math.random() * 6000) + 1000);
+        // });
     }, []);
 
     const { getRootProps, getInputProps, open } = useDropzone({

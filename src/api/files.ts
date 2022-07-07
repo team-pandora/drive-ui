@@ -2,9 +2,10 @@
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { StatusCodes } from 'http-status-codes';
+import { handleError } from './error';
 import { getCookieValue } from '../utils/cookies';
 
-export const getFile = async (parent: null | string) => {
+export const getFile = async (parent: string) => {
     try {
         const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}`, {
             withCredentials: true,
@@ -12,10 +13,7 @@ export const getFile = async (parent: null | string) => {
         const data = await response.data;
         return data;
     } catch (error: any) {
-        if (error.request.status === StatusCodes.UNAUTHORIZED) {
-            document.location.href = '/auth/login?relayState=/shared';
-            return null;
-        }
+        handleError(error, 'my-drive');
     }
 };
 
@@ -52,16 +50,25 @@ export const RenameFile = async (fileId: string, newName: string) => {
     );
 };
 
-export const uploadFile = async (file: any) => {
-    const response = await Axios.post(`http://localhost:8000/api/users/fs/file/maya/true/${null}`, {
-        name: 'alive4',
-        parent: null,
-        key: 'string',
-        bucket: 'string',
-        size: 50,
-        public: false,
-        source: 'drive',
-    });
-    const data = await response.data;
-    console.log(data);
+export const uploadFile = async (file: any, parent: string) => {
+    try {
+        const formData = new FormData();
+        console.log('aaa');
+        formData.append('file', file);
+        console.log('bbb');
+
+        await Axios.post(`http://localhost/api/users/fs/file`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+            params: {
+                name: file.name,
+                size: file.size,
+                parent,
+                public: false,
+                client: 'drive',
+            },
+        });
+        console.log('ccc');
+    } catch (error) {
+        handleError(error, parent);
+    }
 };

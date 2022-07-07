@@ -34,6 +34,16 @@ const filesSlice = createSlice({
 
             state.uploaded[index].status = 'done';
         },
+        setUploadedFailed: (state, action) => {
+            let index = 0;
+            state.uploaded.forEach((item: any, i: any) => {
+                if (item.name === action.payload.name) {
+                    index = i;
+                }
+            });
+
+            state.uploaded[index].status = 'failed';
+        },
     },
 });
 

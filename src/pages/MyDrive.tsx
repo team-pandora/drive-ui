@@ -24,7 +24,7 @@ const MyDrive = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const params: { folderId: string } = useParams();
-    const folderId: string | null = params.folderId ? params.folderId : null;
+    const folderId: string | null = params.folderId ? params.folderId : 'null';
     const [files, setFiles] = useState<any[]>([]);
     const [locationKeys, setLocationKeys] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);

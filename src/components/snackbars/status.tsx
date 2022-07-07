@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import { CircularProgress, Divider, IconButton, List, SnackbarContent } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
 import Snackbar from '@mui/material/Snackbar';
 import i18next from 'i18next';
 import React from 'react';
@@ -42,11 +43,16 @@ const StatusSnackbar: React.FC = () => {
     };
 
     const statusAction = (fileStatus: string) => {
-        return fileStatus === 'uploading' ? (
-            <CircularProgress size={20} sx={{ marginX: '5px' }} />
-        ) : (
-            <CheckCircleIcon sx={{ color: 'green' }} />
-        );
+        switch (fileStatus) {
+            case 'uploading':
+                return <CircularProgress size={20} sx={{ marginX: '5px' }} />;
+            case 'done':
+                return <CheckCircleIcon sx={{ color: 'green' }} />;
+            case 'failed':
+                return <ErrorIcon sx={{ color: 'red' }} />;
+            default:
+                return null;
+        }
     };
 
     const closeAction = (
