@@ -3,8 +3,11 @@ import { createSlice, current } from '@reduxjs/toolkit';
 
 const filesSlice = createSlice({
     name: 'files',
-    initialState: { selected: [], hierarchy: <any>[], lastPopped: {}, uploaded: <any>[] },
+    initialState: { files: [], selected: [], hierarchy: <any>[], lastPopped: {}, uploaded: <any>[] },
     reducers: {
+        setFiles: (state, action) => {
+            state.files = action.payload;
+        },
         setSelected: (state, action) => {
             state.selected = action.payload;
         },

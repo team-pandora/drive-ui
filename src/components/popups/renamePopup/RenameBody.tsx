@@ -2,6 +2,10 @@ import { Box, Button, styled, TextField } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { getFile, RenameFile } from '../../../api/files';
+import { useFiles } from '../../../hooks/useFiles';
+import { filesActions } from '../../../store/files';
 import { notificationsActions } from '../../../store/notifications';
 import { popupActions } from '../../../store/popups';
 
@@ -24,10 +28,16 @@ const RenameBody = () => {
     };
 
     const onRenameSubmit = async () => {
-        // await RenameFile(selectedFiles[0], value);
-        dispatch(popupActions.setRename());
-        dispatch(notificationsActions.setContent(`${i18next.t('messages.FileRenamedSuccessfully')}`));
-        dispatch(notificationsActions.setSimpleOpen());
+        try {
+            await RenameFile(selectedFiles[0], textRef.current!.value);
+            dispatch(filesActions.setFiles(await getFile(selectedFiles[0].parent || 'null')));
+            dispatch(notificationsActions.setContent(`${i18next.t('messages.FileRenamedSuccessfully')}`));
+            dispatch(notificationsActions.setSimpleOpen());
+        } catch (error) {
+            toast.error('Failed renaming the file');
+        } finally {
+            dispatch(popupActions.setRename());
+        }
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -35,8 +45,6 @@ const RenameBody = () => {
             onRenameSubmit();
         }
     };
-
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const onCancel = (event: React.MouseEvent<HTMLElement>) => {
         dispatch(popupActions.setRename());

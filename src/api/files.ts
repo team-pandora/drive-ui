@@ -1,9 +1,6 @@
 /* eslint-disable consistent-return */
 import Axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import { StatusCodes } from 'http-status-codes';
 import { handleError } from './error';
-import { getCookieValue } from '../utils/cookies';
 
 export const getFile = async (parent: string) => {
     try {
@@ -44,19 +41,18 @@ export const test = async () => {
     console.log('in test function');
 };
 
-export const RenameFile = async (fileId: string, newName: string) => {
-    const response = await Axios.get(
-        `http://127.0.0.1:8000/api/users/62655a5dd681ae7e5f9eafe0/fsObjects/states?parent=${null}`,
-    );
+export const RenameFile = async (file: any, newName: string) => {
+    try {
+        await Axios.patch(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}`, { name: newName });
+    } catch (error) {
+        handleError(error, window.location.pathname);
+    }
 };
 
 export const uploadFile = async (file: any, parent: string) => {
     try {
         const formData = new FormData();
-        console.log('aaa');
         formData.append('file', file);
-        console.log('bbb');
-
         await Axios.post(`http://localhost/api/users/fs/file`, formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
             params: {
@@ -67,7 +63,6 @@ export const uploadFile = async (file: any, parent: string) => {
                 client: 'drive',
             },
         });
-        console.log('ccc');
     } catch (error) {
         handleError(error, parent);
     }

@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
 import Table from '../components/fileView/tables/MyDrive';
+import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
 import { filesActions } from '../store/files';
@@ -25,11 +26,12 @@ const MyDrive = () => {
     const dispatch = useDispatch();
     const params: { folderId: string } = useParams();
     const folderId: string | null = params.folderId ? params.folderId : 'null';
-    const [files, setFiles] = useState<any[]>([]);
     const [locationKeys, setLocationKeys] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
+    const files = useSelector((state: any) => state.files.files);
+    console.log('files', files);
 
-    const isLoading = useFiles(folderId, setFiles);
+    const isLoading = useFiles(folderId);
 
     useEffect(() => {
         return history.listen((location) => {
@@ -71,6 +73,7 @@ const MyDrive = () => {
                 {isLoading ? loadingAnimation : isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
                 <ToastContainer position="bottom-right" />
             </Box>
+            <SimpleSnackbar />
             <StatusSnackbar />
         </>
     );

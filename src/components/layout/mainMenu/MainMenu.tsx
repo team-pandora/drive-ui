@@ -5,11 +5,9 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useQuery } from 'react-query';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { uploadFile } from '../../../api/files';
+import { getFile, uploadFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
 import Word from '../../../assets/Word.png';
@@ -41,8 +39,8 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
 
         for (const file of acceptedFiles) {
             try {
-                console.log(file);
                 await uploadFile(file, folderId);
+                dispatch(filesActions.setFiles(await getFile(folderId)));
                 dispatch(filesActions.setUploadedDone(file));
             } catch (error) {
                 console.log(error);

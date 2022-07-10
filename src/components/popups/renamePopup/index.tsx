@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RenameFile } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
 import { GenericDialog } from '../Dialog';
 import RenamePopup from './RenamePopup';
@@ -7,14 +8,14 @@ const RenameDialog = () => {
     const dispatch = useDispatch();
     const selectorFunction = (state: any) => state.popups.rename;
 
-    const handleClose = () => {
+    const handleClick = () => {
         dispatch(popupActions.setRename());
     };
 
     return (
         <GenericDialog
             selectorFunction={selectorFunction}
-            onClose={handleClose}
+            onClose={handleClick}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             PaperProps={{
