@@ -50,7 +50,7 @@ function TableHeader(props: EnhancedTableProps) {
         },
     ];
 
-    const dir = i18next.dir(i18next.language) === 'rtl';
+    const dir = i18next.dir(i18next.language);
 
     headCells.forEach((cell) => {
         // TODO:
@@ -72,6 +72,7 @@ function TableHeader(props: EnhancedTableProps) {
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
+                        sx={{ textAlign: dir === 'rtl' ? 'right' : 'left' }}
                     >
                         {sortableHeadCells.trash.includes(headCell.id) && (
                             <TableSortLabel

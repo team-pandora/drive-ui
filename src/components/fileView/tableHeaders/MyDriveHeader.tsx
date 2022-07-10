@@ -49,7 +49,7 @@ const TableHeader: React.FC<props> = ({ onRequestSort, order, orderBy }) => {
         },
     ];
 
-    const dir = i18next.dir(i18next.language) === 'rtl';
+    const dir = i18next.dir(i18next.language);
 
     headCells.forEach((cell) => {
         // TODO: maya
@@ -72,6 +72,7 @@ const TableHeader: React.FC<props> = ({ onRequestSort, order, orderBy }) => {
                             align={headCell.numeric ? 'right' : 'left'}
                             padding={headCell.disablePadding ? 'none' : 'normal'}
                             sortDirection={orderBy === headCell.id ? order : false}
+                            sx={{ textAlign: dir === 'rtl' ? 'right' : 'left' }}
                         >
                             {sortableHeadCells.myDrive.includes(headCell.id) && (
                                 <TableSortLabel
