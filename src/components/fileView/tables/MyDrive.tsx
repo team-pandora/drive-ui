@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MyDriveI } from '../../../data/fakedata';
+import { fileSizeFormatter } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
@@ -83,7 +84,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
                     </TableCell>
                     <TableCell align={dir}>{stringDate}</TableCell>
                     <TableCell sx={{ width: '8%' }} align={dir}>
-                        {file.size ? file.size : '-'}
+                        {file.size ? fileSizeFormatter(file.size) : '-'}
                     </TableCell>
                 </TableRow>
             );
