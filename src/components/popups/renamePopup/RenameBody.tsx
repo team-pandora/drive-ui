@@ -3,8 +3,7 @@ import i18next from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getFile, RenameFile } from '../../../api/files';
-import { useFiles } from '../../../hooks/useFiles';
+import { getFiles, RenameFile } from '../../../api/files';
 import { filesActions } from '../../../store/files';
 import { notificationsActions } from '../../../store/notifications';
 import { popupActions } from '../../../store/popups';
@@ -20,8 +19,8 @@ const RenameBodyBox = styled(Box)({
 const RenameBody = () => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language);
-    const [value, setValue] = useState('file name');
     const selectedFiles = useSelector((state: any) => state.files.selected);
+    const [value, setValue] = useState(selectedFiles[0].name);
     const textRef = useRef<HTMLInputElement>(null);
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
@@ -30,11 +29,11 @@ const RenameBody = () => {
     const onRenameSubmit = async () => {
         try {
             await RenameFile(selectedFiles[0], textRef.current!.value);
-            dispatch(filesActions.setFiles(await getFile(selectedFiles[0].parent || 'null')));
+            dispatch(filesActions.setFiles(await getFiles(selectedFiles[0].parent)));
             dispatch(notificationsActions.setContent(`${i18next.t('messages.FileRenamedSuccessfully')}`));
             dispatch(notificationsActions.setSimpleOpen());
         } catch (error) {
-            toast.error('Failed renaming the file');
+            toast.error(`${i18next.t('messages.FailedRenamingFile')}`);
         } finally {
             dispatch(popupActions.setRename());
         }

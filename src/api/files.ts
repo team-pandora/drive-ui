@@ -2,15 +2,15 @@
 import Axios from 'axios';
 import { handleError } from './error';
 
-export const getFile = async (parent: string) => {
+export const getFiles = async (parent: string) => {
     try {
-        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}`, {
+        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`, {
             withCredentials: true,
         });
         const data = await response.data;
         return data;
     } catch (error: any) {
-        handleError(error, 'my-drive');
+        handleError(error, window.location.pathname.slice(1));
     }
 };
 
@@ -45,7 +45,7 @@ export const RenameFile = async (file: any, newName: string) => {
     try {
         await Axios.patch(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}`, { name: newName });
     } catch (error) {
-        handleError(error, window.location.pathname);
+        handleError(error, window.location.pathname.slice(1));
     }
 };
 
@@ -64,6 +64,14 @@ export const uploadFile = async (file: any, parent: string) => {
             },
         });
     } catch (error) {
-        handleError(error, parent);
+        handleError(error, window.location.pathname.slice(1));
+    }
+};
+
+export const deleteFile = async (file: any) => {
+    try {
+        await Axios.post(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/trash`);
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
     }
 };

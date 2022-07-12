@@ -103,7 +103,10 @@
     "RequestStorageLabel": "סיבה להגדלת שטח...",
     "FileDeletedSuccessfully": "הקובץ נמחק בהצלחה",
     "FilesDeletedSuccessfully": "הקבצים נמחקו בהצלחה",
-    "FileRenamedSuccessfully": "שם הקובץ שונה בהצלחה"
+    "FailedDeleteFile": "שגיאה במחיקת הקובץ",
+    "FailedDeleteFiles": "שגיאה במחיקת הקבצים",
+    "FileRenamedSuccessfully": "שם הקובץ שונה בהצלחה",
+    "FailedRenameFile": "שגיאה בשינוי שם הקובץ"
   },
   "titles": {
     "Folders": "תיקיות",

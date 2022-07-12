@@ -11,7 +11,11 @@ import {
 import { Box, Divider, IconButton, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { deleteFile, getFiles } from '../api/files';
+import { filesActions } from '../store/files';
 import { globalActions } from '../store/global';
+import { notificationsActions } from '../store/notifications';
 import { popupActions } from '../store/popups';
 
 const Icons = styled(Box)(() => ({
@@ -30,6 +34,7 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
 
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.selected);
+    const selectedFiles = useSelector((state: any) => state.files.selected);
 
     const MoreVertClick = (event: any) => {
         dispatch(globalActions.setContextMenu());
@@ -48,11 +53,27 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
         dispatch(popupActions.setShare());
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (page === i18next.t('titles.Trash')) {
             dispatch(popupActions.setRemove());
         } else {
-            console.log('delete');
+            try {
+                await Promise.all(selectedFiles.map(deleteFile));
+
+                const message =
+                    selectedFiles.length === 1
+                        ? `${i18next.t('messages.FileDeletedSuccessfully')}`
+                        : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
+                dispatch(filesActions.setFiles(await getFiles(selectedFiles[0].parent)));
+                dispatch(notificationsActions.setContent(message));
+                dispatch(notificationsActions.setSimpleOpen());
+            } catch (error) {
+                const message =
+                    selectedFiles.length === 1
+                        ? `${i18next.t('messages.FailedDeletingFile')}`
+                        : `${i18next.t('messages.FailedDeletingFiles')}`;
+                toast.error(message);
+            }
         }
     };
 
@@ -98,7 +119,7 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
                 {!isGridView && <CalendarViewMonth onClick={isGridViewClick} />}
                 {isGridView && <Toc onClick={isGridViewClick} />}
             </IconButton>
-            <IconButton>
+            <IconButton disabled={selectedFiles.length > 1}>
                 <InfoOutlined onClick={handleInfoOpen} />
             </IconButton>
         </Icons>

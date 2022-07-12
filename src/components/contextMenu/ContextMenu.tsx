@@ -1,12 +1,14 @@
 import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { deleteFile, getFiles } from '../../api/files';
+import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
 import { popupActions } from '../../store/popups';
 import { Copy } from './buttons/Copy';
 import Download from './buttons/Download';
-import ExternalTransfer from './buttons/ExternalTransfer';
 import Favorite from './buttons/Favorite';
 import Info from './buttons/Info';
 import MoveTo from './buttons/MoveTo';
@@ -31,14 +33,26 @@ const ContextMenu: React.FC<props> = ({ page }) => {
         dispatch(globalActions.setContextMenu());
     };
 
-    const handleRemove = () => {
-        const message =
-            selectedFiles.length === 1
-                ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-        dispatch(notificationsActions.setContent(message));
-        dispatch(notificationsActions.setSimpleOpen());
-        handleClose();
+    const handleRemove = async () => {
+        try {
+            await Promise.all(selectedFiles.map(deleteFile));
+
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FileDeletedSuccessfully')}`
+                    : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
+            dispatch(filesActions.setFiles(await getFiles(selectedFiles[0].parent)));
+            dispatch(notificationsActions.setContent(message));
+            dispatch(notificationsActions.setSimpleOpen());
+        } catch (error) {
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FailedDeletingFile')}`
+                    : `${i18next.t('messages.FailedDeletingFiles')}`;
+            toast.error(message);
+        } finally {
+            handleClose();
+        }
     };
 
     const handleRename = () => {
@@ -81,12 +95,10 @@ const ContextMenu: React.FC<props> = ({ page }) => {
                 ) : (
                     <Unfavorite handleClose={handleClose} />
                 )}
-                <Rename handleClick={handleRename} />
-                <Divider />
                 <Copy handleClose={handleClose} />
-                <ExternalTransfer handleClose={handleClose} />
+                {selectedFiles.length === 1 && <Rename handleClick={handleRename} />}
                 <Divider />
-                <Info handleClose={handleClose} />
+                {selectedFiles.length === 1 && <Info handleClose={handleClose} />}
                 <Download handleClose={handleDownload} />
                 <Divider />
                 <Remove handleClick={handleRemove} />

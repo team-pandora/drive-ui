@@ -103,7 +103,10 @@
     "RequestStorageLabel": "Why you need more space...",
     "FileDeletedSuccessfully": "File deleted successfully",
     "FilesDeletedSuccessfully": "Files deleted successfully",
-    "FileRenamedSuccessfully": "File renamed successfully"
+    "FailedDeleteFile": "Failed deleting the file",
+    "FailedDeleteFiles": "Failed deleting the files",
+    "FileRenamedSuccessfully": "File renamed successfully",
+    "FailedRenameFile": "Failed renaming the file"
   },
   "titles": {
     "Folders": "Folders",

@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getFile, uploadFile } from '../../../api/files';
+import { getFiles, uploadFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
 import Word from '../../../assets/Word.png';
@@ -40,7 +40,7 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
         for (const file of acceptedFiles) {
             try {
                 await uploadFile(file, folderId);
-                dispatch(filesActions.setFiles(await getFile(folderId)));
+                dispatch(filesActions.setFiles(await getFiles(folderId)));
                 dispatch(filesActions.setUploadedDone(file));
             } catch (error) {
                 console.log(error);
