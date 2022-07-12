@@ -21,7 +21,7 @@ const ToolBarIcons = () => {
         <Icons>
             <Settings />
             <Help />
-            <UserAvatar name={name} color={userColor} />
+            <UserAvatar name={name} color={userColor} isDisabled={false} />
         </Icons>
     );
 };

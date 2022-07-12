@@ -1,11 +1,11 @@
 import { Box } from '@mui/material';
-import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
 import Menu, { MenuProps } from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 import i18next from 'i18next';
 import { useState } from 'react';
-import { PermissionButton } from './PermissionsButton';
-import { PermissionType } from './PermissionType';
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -54,39 +54,30 @@ type props = { permission: string };
 
 const PermissionMenu: React.FC<props> = ({ permission }) => {
     const dir = i18next.dir(i18next.language);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const permissions = [i18next.t('permissions.Read'), i18next.t('permissions.Write')];
+    const [value, setValue] = useState(`${i18next.t('permissions.Write')}`);
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
+    const handleChange = (event: SelectChangeEvent) => {
+        setValue(event.target.value);
     };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const formattedPermission = getUserStringPermission(permission);
 
     return (
         <Box>
-            <PermissionButton userPermission={formattedPermission} handleClick={handleClick} />
-            <StyledMenu
-                dir={dir}
-                id="demo-customized-menu"
-                MenuListProps={{
-                    'aria-labelledby': 'demo-customized-button',
-                }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-            >
-                <PermissionType label={i18next.t('permissions.Read')} checked={true} onClick={handleClose} />
-                <PermissionType label={i18next.t('permissions.Write')} checked={true} onClick={handleClose} />
-
-                <Divider sx={{ my: 0.5 }} />
-
-                <PermissionType label={i18next.t('permissions.Ownership')} checked={false} onClick={handleClose} />
-                <PermissionType label={i18next.t('permissions.RemoveAccess')} checked={false} onClick={handleClose} />
-            </StyledMenu>
+            <FormControl hiddenLabel variant="filled" sx={{ m: 1, width: 150, height: 40, top: '4px' }} size="small">
+                <Select
+                    labelId="demo-simple-select-filled-label"
+                    id="demo-simple-select-filled"
+                    value={value}
+                    onChange={handleChange}
+                >
+                    <MenuItem dir={dir} value={permissions[0]}>
+                        {permissions[0]}
+                    </MenuItem>
+                    <MenuItem dir={dir} value={permissions[1]}>
+                        {permissions[1]}
+                    </MenuItem>
+                </Select>
+            </FormControl>
         </Box>
     );
 };

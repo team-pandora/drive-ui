@@ -125,7 +125,8 @@
     "OutgoingApprovalFromTomcal": "Tomcal Approvals",
     "OutgoingApprovalFromCargo": "Cargo Approvals",
     "ExternalTransferIncomingName": "Received from {{networkName}}",
-    "ExternalTransferOutgoingName": "Approvals to {{networkName}}"
+    "ExternalTransferOutgoingName": "Approvals to {{networkName}}",
+    "PeopleWithAccess": "People with access"
   },
   "info": {
     "Type": "Type",
@@ -134,7 +135,8 @@
     "Modified": "Last modified",
     "Created": "Created",
     "HaveAccess": "Who has access",
-    "Deleted": "Date deleted"
+    "Deleted": "Date deleted",
+    "Location": "Location"
   },
   "Help": {
     "Questions": {

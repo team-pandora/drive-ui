@@ -1,5 +1,7 @@
-import { Avatar, IconButton, ListItem, Menu, styled, Typography } from '@mui/material';
+import { Avatar, Box, IconButton, Menu, styled, Typography } from '@mui/material';
+import i18next from 'i18next';
 import { Fragment, useState } from 'react';
+import UserAvatar from './Avatar';
 
 const AvatarIcon = styled(Avatar)({
     width: '32px',
@@ -12,24 +14,40 @@ const AvatarIconFull = styled(Avatar)({
     fontSize: '64px',
 });
 
+const SBox = styled(Box)({
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+});
+
+const TextBoxStyle = styled(Box)({
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'end',
+});
+
 function stringAvatar(name: string, color: string) {
     return {
         sx: {
             bgcolor: `${color}`,
         },
-        children: name[0],
+        children: name,
     };
 }
 
 type props = {
     name: string;
     color: string;
-    isDisabled: boolean;
+    extraUsers: {
+        name: string;
+        color: string;
+    }[];
 };
 
-const UserAvatar: React.FC<props> = ({ name, color, isDisabled }) => {
+const AvatarList: React.FC<props> = ({ name, color, extraUsers }) => {
     const [showAvatarMenu, setShowAvatarMenu] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const dir = i18next.dir(i18next.language);
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -41,9 +59,11 @@ const UserAvatar: React.FC<props> = ({ name, color, isDisabled }) => {
         setShowAvatarMenu(true);
     };
 
+    const fixDir = dir === 'ltr' ? 'rtl' : 'ltr';
+
     return (
         <Fragment>
-            <IconButton disabled={isDisabled} onClick={handleClick}>
+            <IconButton onClick={handleClick}>
                 <AvatarIcon {...stringAvatar(name, color)} />
             </IconButton>
             <Menu
@@ -51,26 +71,33 @@ const UserAvatar: React.FC<props> = ({ name, color, isDisabled }) => {
                 id="account-menu"
                 open={showAvatarMenu}
                 onClose={handleClose}
+                dir={fixDir}
                 PaperProps={{
                     elevation: 0,
                     sx: {
                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                         mt: 1.5,
+                        maxHeight: '370px',
+                        width: '200px',
                     },
                 }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <ListItem>
-                    <AvatarIconFull {...stringAvatar(name, color)} sx={{ margin: 'auto', bgcolor: color }} />
-                </ListItem>
-                <ListItem sx={{ display: 'block', textAlign: 'center' }}>
-                    <Typography sx={{ fontWeight: '500', color: '#202124' }}>{name}</Typography>
-                    <Typography sx={{ fontSize: 'small', color: '#5f6368' }}>Example@gmagdfgdgil.com</Typography>
-                </ListItem>
+                {extraUsers.map((user: { name: string; color: string }, index) => {
+                    return (
+                        <SBox>
+                            <TextBoxStyle>
+                                <Typography sx={{ fontWeight: '500', color: '#202124' }}>{user.name}</Typography>
+                                <Typography sx={{ fontSize: 'small', color: '#5f6368' }}>יכול/ה לערוך</Typography>
+                            </TextBoxStyle>
+                            <UserAvatar name={user.name} color={user.color} isDisabled={true} />
+                        </SBox>
+                    );
+                })}
             </Menu>
         </Fragment>
     );
 };
 
-export default UserAvatar;
+export default AvatarList;

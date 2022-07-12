@@ -29,7 +29,6 @@ const MyDrive = () => {
     const [locationKeys, setLocationKeys] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.files);
-    console.log('files', files);
 
     const isLoading = useFiles(folderId);
 

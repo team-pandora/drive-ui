@@ -5,6 +5,7 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getFiles, uploadFile } from '../../../api/files';
@@ -25,6 +26,7 @@ type props = {
 
 const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dispatch = useDispatch();
+    const queryClient = useQueryClient();
     const dir = i18next.dir(i18next.language);
     const params: { folderId: string } = useParams();
     const folderId: string = params.folderId ? params.folderId : 'null';

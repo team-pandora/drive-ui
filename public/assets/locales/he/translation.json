@@ -94,7 +94,7 @@
     "ExpirationTime": "תוקף השיתוף",
     "Permission": "סוג הרשאה",
     "Quota": "נוצלו {{used}} GB מתוך {{limit}} GB",
-    "Properties": "פרטי קובץ",
+    "Properties": "מאפייני מערכת",
     "NewFolder": "תיקייה חדשה",
     "DeletePermanently": "למחוק באופן סופי",
     "DeleteMsgSingle": "הפריט {{name}} יימחק באופן סופי ולא תוכל לשחזר אותו. האם אתה בטוח?",
@@ -126,7 +126,9 @@
     "OutgoingApprovalFromTomcal": "אישורים למרחב התומכל",
     "OutgoingApprovalFromCargo": "אישורים למרחב המבצעי",
     "ExternalTransferIncomingName": "התקבל ממרחב {{networkName}}",
-    "ExternalTransferOutgoingName": "אישורים למרחב {{networkName}}"
+    "ExternalTransferOutgoingName": "אישורים למרחב {{networkName}}",
+    "PeopleWithAccess": "אנשים עם גישה"
+
   },
   "info": {
     "Type": "סוג",
@@ -135,7 +137,8 @@
     "Modified": "שונה לאחרונה",
     "Created": "נוצר",
     "HaveAccess": "למי יש גישה",
-    "Deleted": "נמחק"
+    "Deleted": "נמחק",
+    "Location": "מיקום"
   },
   "Help": {
     "Questions": {

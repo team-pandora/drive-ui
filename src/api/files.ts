@@ -75,3 +75,24 @@ export const deleteFile = async (file: any) => {
         handleError(error, window.location.pathname.slice(1));
     }
 };
+
+export const getUser = async () => {
+    await Axios.get(`http://localhost/api/users/info`)
+        .then((response) => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch((error) => {
+            handleError(error, 'my-drive');
+        });
+};
+
+export const getPermittedUsers = async (fileId: string) => {
+    try {
+        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${fileId}`);
+        const data = await response.data;
+        return data;
+    } catch (error: any) {
+        handleError(error, 'my-drive');
+    }
+};

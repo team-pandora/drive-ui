@@ -1,5 +1,13 @@
-import { Box, styled } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
+import i18next from 'i18next';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { getPermittedUsers } from '../../../api/files';
+import { filesActions } from '../../../store/files';
 import getRandomColor from '../../../utils/time';
+import { IServerError } from '../../../utils/types';
 import UserDetail from './UserDetails';
 
 const users = [
@@ -15,36 +23,6 @@ const users = [
         permission: 'read',
         color: getRandomColor(),
     },
-    // {
-    //   name: "עומר שטרן",
-    //   email: "omer.shtern@gmail.com",
-    //   permission: "write",
-    //   color: getRandomColor(),
-    // },
-    // {
-    //   name: "רוני גז",
-    //   email: "roni.gez@gmaOwnersil.com",
-    //   permission: "write",
-    //   color: getRandomColor(),
-    // },
-    // {
-    //   name: "ליאור פרץ",
-    //   email: "lior.horse@gmail.com",
-    //   permission: "write",
-    //   color: getRandomColor(),
-    // },
-    // {
-    //   name: "גל גבע",
-    //   email: "gal.geva@gmail.com",
-    //   permission: "write",
-    //   color: getRandomColor(),
-    // },
-    // {
-    //   name: "עומר שטרן",
-    //   email: "omer.shtern@gmail.com",
-    //   permission: "write",
-    //   color: getRandomColor(),
-    // },
 ];
 
 const OwnersBox = styled(Box)({
@@ -54,22 +32,40 @@ const OwnersBox = styled(Box)({
 });
 
 const Owners = () => {
+    const [permittedUsers, setPermittedUsers] = useState([]);
+    const selectedFiles = useSelector((state: any) => state.files.selectedFiles);
+
+    const dispatch = useDispatch();
+    const { isLoading } = useQuery('permittedUsers', () => getPermittedUsers(selectedFiles), {
+        onError: (error: IServerError) => {
+            toast.error('Failed loading files');
+        },
+        onSuccess: (data) => {
+            setPermittedUsers(data);
+        },
+    });
+
     return (
-        <OwnersBox>
-            {users.map((user) => {
-                return (
-                    <UserDetail
-                        key={user.email}
-                        user={{
-                            fullName: user.name,
-                            mail: user.email,
-                            permission: user.permission,
-                            color: user.color,
-                        }}
-                    />
-                );
-            })}
-        </OwnersBox>
+        <>
+            <Typography fontSize={'18px'} m={'2%'}>
+                {`${i18next.t('titles.PeopleWithAccess')}`}
+            </Typography>
+            <OwnersBox>
+                {users.map((user) => {
+                    return (
+                        <UserDetail
+                            key={user.email}
+                            user={{
+                                fullName: user.name,
+                                mail: user.email,
+                                permission: user.permission,
+                                color: user.color,
+                            }}
+                        />
+                    );
+                })}
+            </OwnersBox>
+        </>
     );
 };
 

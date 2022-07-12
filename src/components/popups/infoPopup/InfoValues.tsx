@@ -1,28 +1,28 @@
 import { List, styled, Typography } from '@mui/material';
 
 const ValueList = styled(List)({
+    color: 'gray',
     display: 'flex',
     flexDirection: 'column',
-    gap: '3rem',
+    gap: '1rem',
     alignItems: 'left',
-    padding: '1rem 2vw 1rem',
+    margin: '0px 3.5vw 1px 1vw',
 });
 
-const UserList = styled(List)({
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    textTransform: 'none',
-    marginTop: '-20px',
+const SValues = styled(Typography)({
+    fontSize: '14px',
+    color: '#000000',
 });
 
 export const InfoValues = (props: any) => {
     return (
         <ValueList>
-            <Typography>{props.type}</Typography>
-            <Typography>{props.size}</Typography>
-            <Typography>{props.owner}</Typography>
-            <Typography>{props.modified}</Typography>
-            <Typography>{props.created}</Typography>
+            <SValues>{props.type}</SValues>
+            <SValues>{props.size}</SValues>
+            <SValues>{props.parent}</SValues>
+            <SValues>{props.owner}</SValues>
+            <SValues>{props.modified}</SValues>
+            <SValues>{props.created}</SValues>
             {props.isDeleted && <p>12 Oct 2021</p>}
         </ValueList>
     );

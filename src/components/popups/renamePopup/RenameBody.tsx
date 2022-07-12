@@ -1,6 +1,7 @@
 import { Box, Button, styled, TextField } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useRef, useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getFiles, RenameFile } from '../../../api/files';
@@ -25,6 +26,7 @@ const RenameBody = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
     };
+    const queryClient = useQueryClient();
 
     const onRenameSubmit = async () => {
         try {

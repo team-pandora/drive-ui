@@ -1,58 +1,25 @@
 import { Box, styled } from '@mui/material';
-import i18next from 'i18next';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getSharedUsers } from '../../../api/users';
-import AutoComplete from './AutoComplete';
+import SearchAutoComplete from './AutoComplete';
 import PermissionMenu from './permissions/PermissionMenu';
 
-const SearchBox = styled(Box)(() => ({
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,.04)',
-    width: '600px',
+const SBox = styled(Box)({
+    width: '620px',
     height: '50px',
-    borderRadius: '10px 10px 0px 0px',
-    borderBottom: '2px solid #4285f4',
-}));
-
-const PlaceHolder = styled(Box)(() => ({
+    maxHeight: '200px',
     display: 'flex',
-    alignItems: 'center',
-    margin: '0 10px',
-    width: '100%',
-    // backgroundColor: "yellow",
-}));
+    justifyContent: 'space-between',
+});
 
-const SearchBar = () => {
-    const dir = i18next.dir(i18next.language);
-    const [value, setValue] = useState('');
-    const [users, setUsers] = useState([]);
+const SearchBox = () => {
     const selectedUsers = useSelector((state: any) => state.users.users);
 
-    const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value.length > 1) {
-            setValue(event.target.value);
-            console.log('here');
-            setUsers(await getSharedUsers());
-        }
-    };
-
     return (
-        <Box
-            sx={{
-                width: '620px',
-                height: '50px',
-                maxHeight: '200px',
-                display: 'flex',
-                // alignItems: "center",
-                justifyContent: 'space-between',
-            }}
-        >
-            <AutoComplete />
-            {selectedUsers.length > 0 && <PermissionMenu permission="maya fisher" />}
-        </Box>
+        <SBox>
+            <SearchAutoComplete />
+            {selectedUsers.length > 0 && <PermissionMenu permission="owner owner" />}
+        </SBox>
     );
 };
 
-export default SearchBar;
+export default SearchBox;

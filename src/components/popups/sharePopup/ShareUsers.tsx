@@ -11,11 +11,23 @@ const AccordionSummaryBox = styled(AccordionSummary)({
     alignItems: 'center',
 });
 
+const SBox = styled(Box)({
+    display: 'flex',
+    margin: '0 10px',
+    justifyContent: 'flex-end',
+    marginTop: '40px',
+});
+
+const SButton = styled(Button)({
+    margin: '0px 1%',
+    textTransform: 'none',
+});
+
 type props = { isOpen: boolean; handleChange: () => void };
 
 const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
     const dir = i18next.dir(i18next.language);
-    const selectedUsers = useSelector((state: any) => state.users.users);
+    const selectedUsers = useSelector((state: any) => state.users.selectedUsers);
     return (
         <Accordion expanded={isOpen} onChange={handleChange} dir={dir}>
             <AccordionSummary
@@ -39,23 +51,10 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
                 <SearchUsers />
                 {selectedUsers.length === 0 && <Owners />}
                 {selectedUsers.length > 0 && (
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            margin: '0 10px',
-                            justifyContent: 'flex-end',
-                            marginTop: '40px',
-                        }}
-                    >
-                        <Button variant="text" sx={{ margin: '0px 1%', textTransform: 'none' }}>{`${i18next.t(
-                            'buttons.Cancel',
-                        )}`}</Button>
-                        <Button
-                            // onClick={onRenameSubmit}
-                            variant="contained"
-                            sx={{ margin: '0px 1%', textTransform: 'none' }}
-                        >{`${i18next.t('buttons.Share')}`}</Button>
-                    </Box>
+                    <SBox>
+                        <SButton variant="text">{`${i18next.t('buttons.Cancel')}`}</SButton>
+                        <SButton variant="contained">{`${i18next.t('buttons.Share')}`}</SButton>
+                    </SBox>
                 )}
             </AccordionDetails>
         </Accordion>

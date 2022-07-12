@@ -1,6 +1,6 @@
 import { AppBar, Box, styled, Toolbar } from '@mui/material';
+import Logo from '../../../assets/NewLogo.svg';
 import title from '../../../assets/drive-logo.svg';
-import logo from '../../../assets/logo.svg';
 import SearchBar from './Search';
 import ToolBarIcons from './ToolBarIcons';
 
@@ -8,9 +8,9 @@ const SToolbar = styled(Toolbar)({
     backgroundColor: 'white',
 });
 
-const Logo = styled('img')({
-    height: '48px',
-    width: '48px',
+const SLogo = styled('img')({
+    height: '75px',
+    width: '75px',
 });
 
 const Title = styled('img')({
@@ -38,8 +38,10 @@ const TopBar = () => {
         <SAppBar>
             <SToolbar>
                 <SLogoBox>
-                    <Logo src={logo} alt="drive logo" />
-                    <Title src={title} alt="drive logo" />
+                    <SLogo src={Logo} alt="drive-logo" />
+                    <Box width="100%" height="100%">
+                        <Title src={title} alt="drive logo" />
+                    </Box>
                 </SLogoBox>
                 <SearchBar />
                 <Box sx={{ width: '100%' }}></Box>
