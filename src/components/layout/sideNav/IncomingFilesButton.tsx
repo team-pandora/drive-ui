@@ -21,7 +21,6 @@ const IncomingFilesButton: React.FC<props> = ({ path, label, icon, isOpen, onArr
     const dir = i18next.dir(i18next.language) === 'rtl' ? '25px 0 0 25px' : '0 25px 25px 0';
 
     // TODO:
-    // eslint-disable-next-line no-nested-ternary
     const ArrowIcon = isOpen ? ArrowDropDown : i18next.dir(i18next.language) === 'rtl' ? ArrowLeft : ArrowRight;
 
     const handleClick = (event: any) => {

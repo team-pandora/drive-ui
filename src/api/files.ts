@@ -14,6 +14,21 @@ export const getMyDriveFiles = async (parent: string) => {
     }
 };
 
+export const getFavoriteFiles = async (parent: string) => {
+    try {
+        const response = await Axios.get(
+            `http://localhost/api/users/fs/query?parent=${parent}&favorite=true&trash=false`,
+            {
+                withCredentials: true,
+            },
+        );
+        const data = await response.data;
+        return data;
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
+};
+
 export const getTrashFiles = async (parent: string) => {
     try {
         const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=true`, {
@@ -24,6 +39,14 @@ export const getTrashFiles = async (parent: string) => {
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
     }
+};
+
+export const addToFavorite = async (file: any) => {
+    await Axios.post(`http://localhost/api/users/fs/${file.fsObjectId}/favorite`);
+};
+
+export const removeFromFavorite = async (file: any) => {
+    await Axios.delete(`http://localhost/api/users/fs/${file.fsObjectId}/favorite`);
 };
 
 export const downloadFile = async (fileId: string) => {

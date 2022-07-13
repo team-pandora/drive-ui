@@ -41,5 +41,6 @@ module.exports = {
         'no-default-export': 'off',
         'import/prefer-default-export': 'off',
         'no-restricted-syntax': 'off',
+        'no-nested-ternary': 'off',
     },
 };

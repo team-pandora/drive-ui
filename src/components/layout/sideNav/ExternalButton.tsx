@@ -29,7 +29,6 @@ const ExternalButton: React.FC<props> = ({ path, label, icon, isOpen, onArrowCli
     });
 
     // TODO:
-    // eslint-disable-next-line no-nested-ternary
     const ArrowIcon = isOpen ? ArrowDropDown : i18next.dir(i18next.language) === 'rtl' ? ArrowLeft : ArrowRight;
     const location = useLocation();
     const isActive = location.pathname === `/${path}`;

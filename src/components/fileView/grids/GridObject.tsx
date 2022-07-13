@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { Box, Grid, styled } from '@mui/material';
 import FileType from '../FileType';
 import GridTitle from './GridTitle';

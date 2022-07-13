@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { Box, LinearProgress, Stack, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';

@@ -50,7 +50,7 @@ const FavoritesTable: React.FC<props> = ({ filesArray }) => {
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={file.name}
+                    key={file.fsObjectUpdatedAt}
                     selected={isItemSelected}
                 >
                     <TableCell padding="checkbox">{FileType(file.type)}</TableCell>
