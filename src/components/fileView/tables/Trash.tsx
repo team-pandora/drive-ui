@@ -15,6 +15,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { TrashI } from '../../../data/fakedata';
+import { fileSizeFormatter } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import TrashContextMenu from '../../contextMenu/TrashContextMenu';
@@ -74,7 +75,7 @@ const TrashTable: React.FC<props> = ({ filesArray }) => {
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={file.name}
+                    key={file.fsObjectUpdatedAt}
                     selected={isItemSelected}
                 >
                     <TableCell padding="checkbox">{FileType(file.type)}</TableCell>
@@ -94,7 +95,7 @@ const TrashTable: React.FC<props> = ({ filesArray }) => {
                     </TableCell>
                     <TableCell align={dir}>{stringDate}</TableCell>
                     <TableCell sx={{ width: '8%' }} align={dir}>
-                        {file.size ? file.size : '-'}
+                        {file.size ? fileSizeFormatter(file.size) : '-'}
                     </TableCell>
                 </TableRow>
             );

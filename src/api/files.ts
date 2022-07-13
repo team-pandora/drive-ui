@@ -2,9 +2,21 @@
 import Axios from 'axios';
 import { handleError } from './error';
 
-export const getFiles = async (parent: string) => {
+export const getMyDriveFiles = async (parent: string) => {
     try {
         const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`, {
+            withCredentials: true,
+        });
+        const data = await response.data;
+        return data;
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
+};
+
+export const getTrashFiles = async (parent: string) => {
+    try {
+        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=true`, {
             withCredentials: true,
         });
         const data = await response.data;
@@ -68,9 +80,25 @@ export const uploadFile = async (file: any, parent: string) => {
     }
 };
 
-export const deleteFile = async (file: any) => {
+export const moveToTrash = async (file: any) => {
     try {
         await Axios.post(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/trash`);
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
+};
+
+export const restoreFile = async (file: any) => {
+    try {
+        await Axios.post(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/restore`);
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
+};
+
+export const deleteFile = async (file: any) => {
+    try {
+        await Axios.delete(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/trash`);
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
     }

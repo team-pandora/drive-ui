@@ -1,6 +1,10 @@
 import { Box, Button, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { deleteFile, getTrashFiles } from '../../../api/files';
+import { filesActions } from '../../../store/files';
+import { notificationsActions } from '../../../store/notifications';
 import { popupActions } from '../../../store/popups';
 
 const SBox = styled(Box)({
@@ -28,12 +32,30 @@ const RemoveBody: React.FC = () => {
     const dispatch = useDispatch();
     const selectedFiles = useSelector((state: any) => state.files.selected);
 
-    const onSubmit = async () => {
+    const handleClose = () => {
         dispatch(popupActions.setRemove());
     };
 
-    const onCancel = (event: React.MouseEvent<HTMLElement>) => {
-        dispatch(popupActions.setRemove());
+    const onSubmit = async () => {
+        try {
+            await Promise.all(selectedFiles.map(deleteFile));
+
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FileDeletedSuccessfully')}`
+                    : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
+            dispatch(filesActions.setFiles(await getTrashFiles(selectedFiles[0].parent)));
+            dispatch(notificationsActions.setContent(message));
+            dispatch(notificationsActions.setSimpleOpen());
+        } catch (error) {
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FailedDeletingFile')}`
+                    : `${i18next.t('messages.FailedDeletingFiles')}`;
+            toast.error(message);
+        } finally {
+            handleClose();
+        }
     };
 
     const content =
@@ -64,7 +86,7 @@ const RemoveBody: React.FC = () => {
                         <Button
                             variant="text"
                             sx={{ margin: '0px 1%', textTransform: 'none' }}
-                            onClick={onCancel}
+                            onClick={handleClose}
                         >{`${i18next.t('buttons.Cancel')}`}</Button>
                         <Button
                             onClick={onSubmit}

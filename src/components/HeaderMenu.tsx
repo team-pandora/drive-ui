@@ -12,11 +12,12 @@ import { Box, Divider, IconButton, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { deleteFile, getFiles } from '../api/files';
+import { getMyDriveFiles, moveToTrash, restoreFile } from '../api/files';
 import { filesActions } from '../store/files';
 import { globalActions } from '../store/global';
 import { notificationsActions } from '../store/notifications';
 import { popupActions } from '../store/popups';
+import { selectGetFilesFunc } from '../utils/files';
 
 const Icons = styled(Box)(() => ({
     display: 'flex',
@@ -58,13 +59,13 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
             dispatch(popupActions.setRemove());
         } else {
             try {
-                await Promise.all(selectedFiles.map(deleteFile));
+                await Promise.all(selectedFiles.map(moveToTrash));
 
                 const message =
                     selectedFiles.length === 1
                         ? `${i18next.t('messages.FileDeletedSuccessfully')}`
                         : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-                dispatch(filesActions.setFiles(await getFiles(selectedFiles[0].parent)));
+                dispatch(filesActions.setFiles(await getMyDriveFiles(selectedFiles[0].parent)));
                 dispatch(notificationsActions.setContent(message));
                 dispatch(notificationsActions.setSimpleOpen());
             } catch (error) {
@@ -77,8 +78,24 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
         }
     };
 
-    const handleRestore = () => {
-        console.log('restore');
+    const handleRestore = async () => {
+        try {
+            await Promise.all(selectedFiles.map(restoreFile));
+
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FileRestoredSuccessfully')}`
+                    : `${i18next.t('messages.FilesRestoredSuccessfully')}`;
+            dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
+            dispatch(notificationsActions.setContent(message));
+            dispatch(notificationsActions.setSimpleOpen());
+        } catch (error) {
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FailedRestoreFile')}`
+                    : `${i18next.t('messages.FailedRestoreFiles')}`;
+            toast.error(message);
+        }
     };
 
     return (

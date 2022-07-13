@@ -1,3 +1,5 @@
+import { getMyDriveFiles, getTrashFiles } from '../api/files';
+
 export const fileSizeFormatter = (size: number) => {
     const KB = Math.floor(size / 1000);
     const MB = Math.floor(KB / 1000);
@@ -10,4 +12,15 @@ export const fileSizeFormatter = (size: number) => {
     if (KB >= 0.1) return `${KB} KB`;
 
     return `${size}B`;
+};
+
+export const selectGetFilesFunc = () => {
+    switch (window.location.pathname) {
+        case '/my-drive':
+            return getMyDriveFiles;
+        case '/trash':
+            return getTrashFiles;
+        default:
+            return getMyDriveFiles;
+    }
 };

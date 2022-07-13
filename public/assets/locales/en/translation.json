@@ -106,7 +106,11 @@
     "FailedDeleteFile": "Failed deleting the file",
     "FailedDeleteFiles": "Failed deleting the files",
     "FileRenamedSuccessfully": "File renamed successfully",
-    "FailedRenameFile": "Failed renaming the file"
+    "FailedRenameFile": "Failed renaming the file",
+    "FileRestoredSuccessfully": "File restored successfully",
+    "FilesRestoredSuccessfully": "Files restored successfully",
+    "FailedRestoreFile": "Failed restoring the file",
+    "FailedRestoreFiles": "Failed restoring the files"
   },
   "titles": {
     "Folders": "Folders",

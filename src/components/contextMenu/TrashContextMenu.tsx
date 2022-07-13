@@ -1,8 +1,11 @@
 import { Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { deleteFile, getTrashFiles, restoreFile } from '../../api/files';
+import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
-import { popupActions } from '../../store/popups';
+import { notificationsActions } from '../../store/notifications';
 import Remove from './buttons/Remove';
 import Restore from './buttons/Restore';
 
@@ -17,14 +20,48 @@ const TrashContextMenu = () => {
         dispatch(globalActions.setContextMenu());
     };
 
-    const handleClickRestore = () => {
-        handleClose();
-        alert(selectedFiles);
+    const handleRestore = async () => {
+        try {
+            await Promise.all(selectedFiles.map(restoreFile));
+
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FileRestoredSuccessfully')}`
+                    : `${i18next.t('messages.FilesRestoredSuccessfully')}`;
+            dispatch(filesActions.setFiles(await getTrashFiles(selectedFiles[0].parent)));
+            dispatch(notificationsActions.setContent(message));
+            dispatch(notificationsActions.setSimpleOpen());
+        } catch (error) {
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FailedRestoreFile')}`
+                    : `${i18next.t('messages.FailedRestoreFiles')}`;
+            toast.error(message);
+        } finally {
+            handleClose();
+        }
     };
 
-    const handleClickRemove = () => {
-        handleClose();
-        dispatch(popupActions.setRemove());
+    const handleRemove = async () => {
+        try {
+            await Promise.all(selectedFiles.map(deleteFile));
+
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FileDeletedSuccessfully')}`
+                    : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
+            dispatch(filesActions.setFiles(await getTrashFiles(selectedFiles[0].parent)));
+            dispatch(notificationsActions.setContent(message));
+            dispatch(notificationsActions.setSimpleOpen());
+        } catch (error) {
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FailedDeletingFile')}`
+                    : `${i18next.t('messages.FailedDeletingFiles')}`;
+            toast.error(message);
+        } finally {
+            handleClose();
+        }
     };
 
     return (
@@ -49,8 +86,8 @@ const TrashContextMenu = () => {
             dir={dir}
         >
             <MenuList sx={{ width: 300 }} dense>
-                <Restore handleClick={handleClickRestore} />
-                <Remove handleClick={handleClickRemove} />
+                <Restore handleClick={handleRestore} />
+                <Remove handleClick={handleRemove} />
             </MenuList>
         </Menu>
     );

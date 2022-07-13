@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getMyDriveFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
 import Table from '../components/fileView/tables/MyDrive';
@@ -25,12 +26,12 @@ const MyDrive = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const params: { folderId: string } = useParams();
-    const folderId: string | null = params.folderId ? params.folderId : 'null';
+    const folderId: string = params.folderId ? params.folderId : 'null';
     const [locationKeys, setLocationKeys] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.files);
 
-    const isLoading = useFiles(folderId);
+    const isLoading = useFiles(folderId, getMyDriveFiles);
 
     useEffect(() => {
         return history.listen((location) => {

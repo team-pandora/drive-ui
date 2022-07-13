@@ -106,7 +106,11 @@
     "FailedDeleteFile": "שגיאה במחיקת הקובץ",
     "FailedDeleteFiles": "שגיאה במחיקת הקבצים",
     "FileRenamedSuccessfully": "שם הקובץ שונה בהצלחה",
-    "FailedRenameFile": "שגיאה בשינוי שם הקובץ"
+    "FailedRenameFile": "שגיאה בשינוי שם הקובץ",
+    "FileRestoredSuccessfully": "הקובץ שוחזר בהצלחה",
+    "FilesRestoredSuccessfully": "הקבצים שוחזרו בהצלחה",
+    "FailedRestoreFile": "שגיאה בשחזור הקובץ",
+    "FailedRestoreFiles": "שגיאה בשחזור הקבצים"
   },
   "titles": {
     "Folders": "תיקיות",
@@ -128,7 +132,6 @@
     "ExternalTransferIncomingName": "התקבל ממרחב {{networkName}}",
     "ExternalTransferOutgoingName": "אישורים למרחב {{networkName}}",
     "PeopleWithAccess": "אנשים עם גישה"
-
   },
   "info": {
     "Type": "סוג",

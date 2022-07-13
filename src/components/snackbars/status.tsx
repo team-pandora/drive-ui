@@ -69,7 +69,7 @@ const StatusSnackbar: React.FC = () => {
                 <SContent
                     message={file.name}
                     action={statusAction(file.status)}
-                    dir="ltr"
+                    dir={dir}
                     sx={{ backgroundColor: 'white', color: '#222', borderRadius: '0 0 0 0' }}
                 />
                 <Divider />
