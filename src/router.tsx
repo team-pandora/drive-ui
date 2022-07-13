@@ -4,10 +4,10 @@ import Favorites from './pages/Favorites';
 import IncomingCargo from './pages/IncomingCargo';
 import IncomingTomcal from './pages/IncomingTomcal';
 import MyDrive from './pages/MyDrive';
-import Quota from './pages/Quota';
 import Recently from './pages/Recently';
 import Shared from './pages/Shared';
 import StatusTransferred from './pages/StatusTransferred';
+import Storage from './pages/Storage';
 import Trash from './pages/Trash';
 
 export const Router: React.FC = () => {
@@ -35,7 +35,7 @@ export const Router: React.FC = () => {
                 <Trash />
             </Route>
             <Route path="/storage" exact>
-                <Quota />
+                <Storage />
             </Route>
             {/* TODO: */}
             <Route path="/external-transferred-dropbox">

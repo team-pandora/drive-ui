@@ -5,7 +5,9 @@ import Table from '../components/fileView/tables/Favorites';
 import StatusSnackbar from '../components/snackbars/status';
 import { FavoritesData } from '../data/fakedata';
 
-const Quota = () => {
+const Storage = () => {
+    document.title = `Drive – ${i18next.t('sideBar.Storage')}`;
+
     return (
         <>
             <Box flex={4} paddingTop={2} padding={2}>
@@ -17,4 +19,4 @@ const Quota = () => {
     );
 };
 
-export default Quota;
+export default Storage;
