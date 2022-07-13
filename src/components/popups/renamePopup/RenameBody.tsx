@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getMyDriveFiles, RenameFile } from '../../../api/files';
+import { getFiles, RenameFile } from '../../../api/files';
 import { filesActions } from '../../../store/files';
 import { notificationsActions } from '../../../store/notifications';
 import { popupActions } from '../../../store/popups';
@@ -31,7 +31,7 @@ const RenameBody = () => {
     const onRenameSubmit = async () => {
         try {
             await RenameFile(selectedFiles[0], textRef.current!.value);
-            dispatch(filesActions.setFiles(await getMyDriveFiles(selectedFiles[0].parent)));
+            dispatch(filesActions.setFiles(await getFiles(selectedFiles[0].parent)));
             dispatch(notificationsActions.setContent(`${i18next.t('messages.FileRenamedSuccessfully')}`));
             dispatch(notificationsActions.setSimpleOpen());
         } catch (error) {

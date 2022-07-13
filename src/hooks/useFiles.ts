@@ -1,7 +1,6 @@
 import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getMyDriveFiles } from '../api/files';
 import { filesActions } from '../store/files';
 import { IServerError } from '../utils/types';
 

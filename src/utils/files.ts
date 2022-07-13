@@ -1,4 +1,4 @@
-import { getFavoriteFiles, getMyDriveFiles, getTrashFiles } from '../api/files';
+import { getFavoriteFiles, getFiles, getTrashFiles } from '../api/files';
 
 export const fileSizeFormatter = (size: number) => {
     const KB = Math.floor(size / 1000);
@@ -17,12 +17,12 @@ export const fileSizeFormatter = (size: number) => {
 export const selectGetFilesFunc = () => {
     switch (window.location.pathname) {
         case '/my-drive':
-            return getMyDriveFiles;
+            return getFiles;
         case '/trash':
             return getTrashFiles;
         case '/favorites':
             return getFavoriteFiles;
         default:
-            return getMyDriveFiles;
+            return getFiles;
     }
 };

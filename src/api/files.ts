@@ -2,7 +2,7 @@
 import Axios from 'axios';
 import { handleError } from './error';
 
-export const getMyDriveFiles = async (parent: string) => {
+export const getFiles = async (parent: string) => {
     try {
         const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`, {
             withCredentials: true,
@@ -18,6 +18,21 @@ export const getFavoriteFiles = async (parent: string) => {
     try {
         const response = await Axios.get(
             `http://localhost/api/users/fs/query?parent=${parent}&favorite=true&trash=false`,
+            {
+                withCredentials: true,
+            },
+        );
+        const data = await response.data;
+        return data;
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
+};
+
+export const getSubfolders = async (parent: string | null) => {
+    try {
+        const response = await Axios.get(
+            `http://localhost/api/users/fs/query?parent=${parent}&trash=false&type=folder`,
             {
                 withCredentials: true,
             },
@@ -49,6 +64,11 @@ export const removeFromFavorite = async (file: any) => {
     await Axios.delete(`http://localhost/api/users/fs/${file.fsObjectId}/favorite`);
 };
 
+export const getFile = async (fsOjbectId: string) => {
+    const response = await Axios.get(`http://localhost/api/users/fs/query/${fsOjbectId}`);
+    const data = await response.data;
+    return data;
+};
 export const downloadFile = async (fileId: string) => {
     const response = await Axios.get(
         `http://localhost/api/storage/bucket/62655a5dd681ae7e5f9eafe0/key/62655a5dd681ae7e5f9eafe2`,

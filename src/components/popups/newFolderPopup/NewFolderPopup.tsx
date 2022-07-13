@@ -3,6 +3,7 @@ import { Avatar, Box, Button, styled, TextField, Typography } from '@mui/materia
 import i18next from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { createFolder } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
 
 const NewFolder = styled(Box)({
@@ -27,6 +28,11 @@ const NewFolderBody = styled(Box)({
 
 const NewFolderPopup: React.FC = () => {
     const dir = i18next.dir(i18next.language);
+
+    // arab
+    const parentFolder =
+        document.location.pathname.slice(1) === 'my-drive' ? null : document.location.pathname.slice(1);
+
     const [value, setValue] = useState('Untitled folder');
     const dispatch = useDispatch();
 
@@ -36,6 +42,7 @@ const NewFolderPopup: React.FC = () => {
     };
 
     const onNewFolderSubmit = async () => {
+        await createFolder({ name: value, parent: parentFolder });
         dispatch(popupActions.setNewFolder());
     };
 

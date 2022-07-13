@@ -2,50 +2,45 @@ import styled from '@emotion/styled';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import FolderIcon from '@mui/icons-material/Folder';
 import StarIcon from '@mui/icons-material/Star';
 import { ListItem, ListItemIcon, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { popupActions } from '../../../store/popups';
 
-const SelectedHomeIcon = styled(HomeIcon)({
-    color: 'white',
-});
+type props = {
+    index: number;
+    selectedIndex: number;
+    iconType: string;
+    onClick: any;
+    setParent: any;
+    children: string;
+    id: string | undefined | null;
+};
 
-const SelectedSharedIcon = styled(PeopleAltIcon)({
-    color: 'white',
-});
-
-const SelectedStarredIcon = styled(StarIcon)({
-    color: 'white',
-});
-
-const SelectedForwardIcon = styled(ArrowForwardIosIcon)({
-    color: 'white',
-});
-
-const SelectedText = styled(Typography)({
-    color: 'white',
-    fontWeight: 'bold',
-});
-
-export const NavigationListItem = (props: any) => {
-    const { index, selectedIndex } = props;
+export const NavigationListItem: React.FC<props> = ({
+    index,
+    selectedIndex,
+    iconType,
+    onClick,
+    children,
+    setParent,
+    id,
+}) => {
     const isSelected = index === selectedIndex;
-
-    const ToggleableHomeIcon = isSelected ? SelectedHomeIcon : HomeIcon;
-    const ToggleableSharedIcon = isSelected ? SelectedSharedIcon : PeopleAltIcon;
-    const ToggleableStarredIcon = isSelected ? SelectedStarredIcon : StarIcon;
-    const ToggleableForwardIcon = isSelected ? SelectedForwardIcon : ArrowForwardIosIcon;
-    const ToggleableText = isSelected ? SelectedText : Typography;
+    const selectedColor = isSelected ? 'white' : '#757575';
+    const dispatch = useDispatch();
 
     let Icon: any;
-    switch (props.iconType) {
+    switch (iconType) {
         case 'home':
-            Icon = ToggleableHomeIcon;
+            Icon = <HomeIcon sx={{ color: selectedColor }} />;
             break;
         case 'shared':
-            Icon = ToggleableSharedIcon;
+            Icon = <PeopleAltIcon sx={{ color: selectedColor }} />;
             break;
-        case 'starred':
-            Icon = ToggleableStarredIcon;
+        case 'folder':
+            Icon = <FolderIcon sx={{ color: selectedColor }} />;
             break;
         default:
             break;
@@ -64,13 +59,18 @@ export const NavigationListItem = (props: any) => {
                 },
             }}
             selected={isSelected}
-            onClick={props.onClick}
+            onClick={onClick}
         >
-            <ListItemIcon>
-                <Icon />
-            </ListItemIcon>
-            <ToggleableText sx={{ marginLeft: '10px', userSelect: 'none' }}>{props.children}</ToggleableText>
-            <ToggleableForwardIcon sx={{ cursor: 'pointer', marginLeft: 'auto' }} />
+            <ListItemIcon>{Icon}</ListItemIcon>
+            <Typography sx={{ marginLeft: '10px', userSelect: 'none', color: selectedColor, fontWeight: '500' }}>
+                {children}
+            </Typography>
+            <ArrowForwardIosIcon
+                sx={{ cursor: 'pointer', marginLeft: 'auto', color: selectedColor }}
+                onClick={() => {
+                    setParent(id);
+                }}
+            />
         </ListItem>
     );
 };
