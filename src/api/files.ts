@@ -28,7 +28,7 @@ export const getTrashFiles = async (parent: string) => {
 
 export const downloadFile = async (fileId: string) => {
     const response = await Axios.get(
-        `http://localhost:7000/api/storage/bucket/62655a5dd681ae7e5f9eafe0/key/62655a5dd681ae7e5f9eafe2`,
+        `http://localhost/api/storage/bucket/62655a5dd681ae7e5f9eafe0/key/62655a5dd681ae7e5f9eafe2`,
     );
     const data = await response.data;
     console.log(data);
@@ -47,6 +47,17 @@ export const createFile = async (file: any) => {
     });
     const data = await response.data;
     console.log(data);
+};
+
+export const createFolder = async (file: any) => {
+    try {
+        await Axios.post('http://localhost/api/users/fs/folder', {
+            name: file.name,
+            parent: file.parent,
+        });
+    } catch (error) {
+        handleError(error, window.location.pathname.slice(1));
+    }
 };
 
 export const test = async () => {
