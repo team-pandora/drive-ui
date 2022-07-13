@@ -9,6 +9,7 @@ import StatusSnackbar from '../components/snackbars/status';
 import { RecentData } from '../data/fakedata';
 
 const Recently = () => {
+    document.title = `Drive – ${i18next.t('sideBar.Recently')}`;
     const isGridView = useSelector((state: any) => state.global.isGridView);
 
     return (

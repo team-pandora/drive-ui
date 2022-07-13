@@ -23,6 +23,7 @@ const SBox = styled(Box)({
 });
 
 const MyDrive = () => {
+    document.title = `Drive – ${i18next.t('sideBar.myDrive')}`;
     const history = useHistory();
     const dispatch = useDispatch();
     const params: { folderId: string } = useParams();

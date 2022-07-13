@@ -9,6 +9,7 @@ import StatusSnackbar from '../components/snackbars/status';
 import { FavoritesData } from '../data/fakedata';
 
 const Favorites = () => {
+    document.title = `Drive – ${i18next.t('sideBar.Favorites')}`;
     const isGridView = useSelector((state: any) => state.global.isGridView);
 
     return (

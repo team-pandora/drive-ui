@@ -10,6 +10,7 @@ import { SharedData } from '../data/fakedata';
 
 const Shared = () => {
     const isGridView = useSelector((state: any) => state.global.isGridView);
+    document.title = `Drive – ${i18next.t('sideBar.SharedWithMe')}`;
 
     return (
         <>

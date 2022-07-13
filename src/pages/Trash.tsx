@@ -14,6 +14,7 @@ import { useFiles } from '../hooks/useFiles';
 import { filesActions } from '../store/files';
 
 const Trash = () => {
+    document.title = `Drive – ${i18next.t('sideBar.Trash')}`;
     const history = useHistory();
     const dispatch = useDispatch();
     const params: { folderId: string } = useParams();
