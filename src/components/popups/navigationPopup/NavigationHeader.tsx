@@ -1,7 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, styled, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { getFile } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
+import { NavigationRootHeader } from './root/NavigationRootHeader';
 
 const HeaderContent = styled(Box)({
     margin: '14px',
@@ -10,11 +14,39 @@ const HeaderContent = styled(Box)({
     justifyContent: 'space-between',
 });
 
-const NavigationHeader = () => {
+type props = {
+    parent: string | undefined | null;
+    setParent: any;
+};
+
+const NavigationHeader: React.FC<props> = ({ parent, setParent }) => {
+    if (parent === undefined) return <NavigationRootHeader></NavigationRootHeader>;
+
+    const [parentName, setParentName] = useState<string>();
+
     const dispatch = useDispatch();
 
+    const fetchData = async () => {
+        if (parent === null) setParentName('My Drive');
+        else {
+            setParentName((await getFile(parent)).name);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     const handleNavigationClose = () => {
+        setParent(undefined);
         dispatch(popupActions.setNavigation());
+    };
+
+    const handleBack = async () => {
+        if (parent === null) setParent(undefined);
+        else {
+            setParent((await getFile(parent!)).parent);
+        }
     };
 
     return (
@@ -26,6 +58,10 @@ const NavigationHeader = () => {
             }}
         >
             <HeaderContent>
+                <ArrowBackIosIcon
+                    sx={{ alignSelf: 'center', color: '#757575', cursor: 'pointer' }}
+                    onClick={handleBack}
+                />
                 <Typography
                     sx={{
                         fontSize: '16px',
@@ -34,9 +70,10 @@ const NavigationHeader = () => {
                         fontWeight: 'bold',
                         alignSelf: 'center',
                         userSelect: 'none',
+                        marginRight: 'auto',
                     }}
                 >
-                    Drive
+                    {parentName}
                 </Typography>
                 <CloseIcon onClick={handleNavigationClose} sx={{ cursor: 'pointer', color: 'gray' }} />
             </HeaderContent>
