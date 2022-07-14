@@ -55,7 +55,7 @@ const NavigationRootBody: React.FC<props> = ({ setParent }) => {
                         selectedIndex={selectedIndex}
                         iconType={'shared'}
                         setParent={setParent}
-                        id={null}
+                        id={'shared'}
                     >
                         Shared with me
                     </NavigationListItem>

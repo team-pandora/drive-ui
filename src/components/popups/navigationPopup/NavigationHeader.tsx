@@ -35,7 +35,7 @@ const NavigationHeader: React.FC<props> = ({ parent, setParent }) => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [parent]);
 
     const handleNavigationClose = () => {
         setParent(undefined);
@@ -44,7 +44,9 @@ const NavigationHeader: React.FC<props> = ({ parent, setParent }) => {
 
     const handleBack = async () => {
         if (parent === null) setParent(undefined);
-        else {
+        if (parent === 'shared') {
+            setParent(undefined);
+        } else {
             setParent((await getFile(parent!)).parent);
         }
     };

@@ -15,6 +15,7 @@ const popupSlice = createSlice({
         externalTransfer: false,
         newFolder: false,
         navigation: false,
+        navigationNewFolder: false,
         storage: false,
     },
     reducers: {
@@ -50,6 +51,9 @@ const popupSlice = createSlice({
         },
         setNavigation: (state) => {
             state.navigation = !state.navigation;
+        },
+        setNavigationNewFolder: (state) => {
+            state.navigationNewFolder = !state.navigationNewFolder;
         },
         setStorage: (state) => {
             state.storage = !state.storage;

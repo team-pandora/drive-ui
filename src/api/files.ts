@@ -29,6 +29,18 @@ export const getFavoriteFiles = async (parent: string) => {
 
 export const getSubfolders = async (parent: string | null) => {
     try {
+        // arab
+        if (parent === 'shared') {
+            const response = await Axios.get(
+                `http://localhost/api/users/fs/query?trash=false&type=folder&root=true&permission=read&permission=write`,
+                {
+                    withCredentials: true,
+                },
+            );
+            const data = await response.data;
+            return data;
+        }
+
         const response = await Axios.get(
             `http://localhost/api/users/fs/query?parent=${parent}&trash=false&type=folder`,
             {
@@ -66,6 +78,13 @@ export const getFile = async (fsOjbectId: string) => {
     const data = await response.data;
     return data;
 };
+
+// export const getSharedFiles = async (fsObjectId: string) => {
+//     const response = await Axios.get('http://localhost/api/users/fs/query/?permission=read&permission=write');
+//     const data = await response.data;
+//     return data;
+// };
+
 export const downloadFile = async (fileId: string) => {
     const response = await Axios.get(
         `http://localhost/api/storage/bucket/62655a5dd681ae7e5f9eafe0/key/62655a5dd681ae7e5f9eafe2`,
