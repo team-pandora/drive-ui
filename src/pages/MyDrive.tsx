@@ -52,17 +52,18 @@ const MyDrive = () => {
     }, [locationKeys]);
 
     const loadingAnimation = (
-        <Stack
-            sx={{
-                width: '85%',
-                color: 'grey.500',
-                position: 'absolute',
-                mt: 1.2,
-            }}
-            spacing={2}
-        >
-            <LinearProgress color="inherit" />
-        </Stack>
+        // <Stack
+        //     sx={{
+        //         width: '85%',
+        //         color: 'grey.500',
+        //         position: 'absolute',
+        //         mt: 1.2,
+        //     }}
+        //     spacing={2}
+        // >
+        //     <LinearProgress color="inherit" />
+        // </Stack>
+        <></>
     );
 
     return (

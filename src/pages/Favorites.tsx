@@ -1,8 +1,9 @@
-import { Box, LinearProgress, Stack } from '@mui/material';
+import { Box } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { getFavoriteFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
@@ -43,17 +44,18 @@ const Favorites = () => {
     }, [locationKeys]);
 
     const loadingAnimation = (
-        <Stack
-            sx={{
-                width: '85%',
-                color: 'grey.500',
-                position: 'absolute',
-                mt: 1.2,
-            }}
-            spacing={2}
-        >
-            <LinearProgress color="inherit" />
-        </Stack>
+        // <Stack
+        //     sx={{
+        //         width: '85%',
+        //         color: 'grey.500',
+        //         position: 'absolute',
+        //         mt: 1.2,
+        //     }}
+        //     spacing={2}
+        // >
+        //     <LinearProgress color="inherit" />
+        // </Stack>
+        <></>
     );
 
     return (
@@ -61,6 +63,7 @@ const Favorites = () => {
             <Box flex={4} paddingTop={2} padding={2}>
                 <TableMenuHeader title={i18next.t('titles.Favorites')} />
                 {isLoading ? loadingAnimation : isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                <ToastContainer position="bottom-right" />
             </Box>
             <SimpleSnackbar />
             <StatusSnackbar />

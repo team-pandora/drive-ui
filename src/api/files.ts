@@ -7,8 +7,7 @@ export const getMyDriveFiles = async (parent: string) => {
         const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`, {
             withCredentials: true,
         });
-        const data = await response.data;
-        return data;
+        return response.data;
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
     }
@@ -22,8 +21,7 @@ export const getFavoriteFiles = async (parent: string) => {
                 withCredentials: true,
             },
         );
-        const data = await response.data;
-        return data;
+        return response.data;
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
     }
@@ -34,8 +32,7 @@ export const getTrashFiles = async (parent: string) => {
         const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=true`, {
             withCredentials: true,
         });
-        const data = await response.data;
-        return data;
+        return response.data;
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
     }
