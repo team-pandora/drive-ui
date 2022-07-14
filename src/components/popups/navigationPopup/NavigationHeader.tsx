@@ -27,10 +27,9 @@ const NavigationHeader: React.FC<props> = ({ parent, setParent }) => {
     const dispatch = useDispatch();
 
     const fetchData = async () => {
-        if (parent === null) setParentName('My Drive');
-        else {
-            setParentName((await getFile(parent)).name);
-        }
+        if (parent === 'shared') setParentName('Shared');
+        else if (parent === null) setParentName('My Drive');
+        else setParentName((await getFile(parent)).name);
     };
 
     useEffect(() => {
