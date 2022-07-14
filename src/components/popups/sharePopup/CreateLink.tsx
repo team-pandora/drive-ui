@@ -9,7 +9,8 @@ const CreateLink: React.FC<props> = ({ handleCreate }) => {
     const [timeValue, setTimeValue] = useState('');
     const [permission, setPermission] = useState('');
 
-    const timeLimit = ['15 min', '30 min', '1 hr', '12 hr', '24 hr']; // change to number
+    // const timeLimit = ['5 min', '15 min', '30 hr', '1 hr', '1.5 hr'];
+    const timeLimit = [`5 דק'`, `15 דק'`, `30 דק'`, `1 ש'`, `1.5 ש'`];
     const permissions = [i18next.t('permissions.Read'), i18next.t('permissions.Write')];
 
     const selectedTimeLimit = (value: string) => {

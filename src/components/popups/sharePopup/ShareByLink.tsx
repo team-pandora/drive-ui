@@ -1,4 +1,4 @@
-import { Link } from '@mui/icons-material';
+import { Link, PriorityHigh } from '@mui/icons-material';
 import {
     Accordion,
     AccordionDetails,
@@ -21,6 +21,25 @@ const AccordionSummaryBox = styled(AccordionSummary)({
     width: '100%',
     display: 'flex',
     alignItems: 'center',
+});
+
+const SLinkBox = styled(Box)({
+    display: 'flex',
+    width: '100%',
+    height: '70px',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+});
+
+const WarningMessage = styled(Typography)({
+    width: '560px',
+    height: '30px',
+    fontSize: '14px',
+    display: 'flex',
+    alignItems: 'center',
+    fontWeight: 'bold',
+    color: '#ff3b3b',
 });
 
 type props = { isOpen: boolean; handleChange: () => void };
@@ -63,26 +82,25 @@ const ShareLink: React.FC<props> = ({ isOpen, handleChange }) => {
                     <Stack spacing={2}>
                         <CreateLink handleCreate={handleCreate} />
                         {link !== '' && (
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    width: '100%',
-                                    height: '50px',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <InputBase
-                                    style={{
-                                        width: '90%',
-                                        backgroundColor: '#f5f5f5',
-                                    }}
-                                    type="text"
-                                    readOnly
-                                    onFocus={handleFocus}
-                                    value={link}
-                                />
-                            </Box>
+                            <>
+                                <SLinkBox>
+                                    <WarningMessage>
+                                        <PriorityHigh sx={{ margin: '10px', color: '#ff3b3b' }} />
+                                        {`${i18next.t('alerts.ShareLinkWarning')}`}
+                                    </WarningMessage>
+                                    <InputBase
+                                        style={{
+                                            width: '90%',
+                                            height: '30px',
+                                            backgroundColor: '#f5f5f5',
+                                        }}
+                                        type="text"
+                                        readOnly
+                                        onFocus={handleFocus}
+                                        value={link}
+                                    />
+                                </SLinkBox>
+                            </>
                         )}
                     </Stack>
                     <Stack direction="row" spacing={0} justifyContent="flex-end">

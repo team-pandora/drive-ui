@@ -166,11 +166,20 @@ export const getUser = async () => {
         });
 };
 
-export const getPermittedUsers = async (fileId: string) => {
+export const getPermittedUsers = async (fsObjectId: string) => {
     try {
-        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${fileId}`);
+        const response = await Axios.get(`/api/users/fs/${fsObjectId}/shared`);
         const data = await response.data;
         return data;
+    } catch (error: any) {
+        handleError(error, 'my-drive');
+    }
+};
+
+export const shareFile = async (fsObjectId: string, userId: string, permission: string) => {
+    try {
+        const response = await Axios.post(`http://localhost/api/users/fs/${fsObjectId}/share`, { userId, permission });
+        return response.data;
     } catch (error: any) {
         handleError(error, 'my-drive');
     }

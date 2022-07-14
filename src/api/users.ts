@@ -10,7 +10,7 @@ export const getUser = async () => {
 
 export const getSharedUsers = async (name: string) => {
     if (name.length !== 0) {
-        const res = await Axios.get('http://kartoffel.branch-yesodot.org/api/entities?page=1&pageSize=20');
+        const res = await Axios.get(`api/users/users?query=${name}&source=es_name`);
         const data = await res.data;
         return data;
     }
@@ -19,4 +19,9 @@ export const getSharedUsers = async (name: string) => {
 
 export const searchUsersByName = async (name: string) => {
     return [1, 2];
+};
+
+export const getCurrentUser = async () => {
+    const res = await Axios.get(`api/users/user`);
+    return res.data;
 };
