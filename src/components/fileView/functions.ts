@@ -7,6 +7,7 @@ import { notificationsActions } from '../../store/notifications';
 // const dispatch = useDispatch();
 
 export const handleClick = (event: React.MouseEvent<unknown>, file: any, selectedFiles: any, dispatch: any) => {
+    console.log(file);
     const selectedIndex = selectedFiles.indexOf(file);
     let newSelected: readonly string[] = [];
 

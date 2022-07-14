@@ -1,5 +1,6 @@
 import { Box, Breadcrumbs, Link, styled } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { filesActions } from '../store/files';
 import HeaderMenu from './HeaderMenu';
 
@@ -27,6 +28,7 @@ type props = {
 
 const TableMenuHeader: React.FC<props> = ({ title }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const breadcrumbs: any = [];
 
     const hierarchy = useSelector((state: any) => state.files.hierarchy);
@@ -35,9 +37,8 @@ const TableMenuHeader: React.FC<props> = ({ title }) => {
 
     const handleClick = (event: any, item: any) => {
         event.preventDefault();
-        console.log('sdafsdafd', item);
-
         dispatch(filesActions.setHierarchy({ type: 'replace', content: item }));
+        history.push(`/folder/${item.id}`);
     };
 
     breadcrumbsContent.forEach((item: any, index: number) => {

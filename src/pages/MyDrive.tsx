@@ -1,4 +1,4 @@
-import { Box, LinearProgress, Stack, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +31,7 @@ const MyDrive = () => {
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.files);
 
-    const isLoading = useFiles(folderId, getFiles);
+    const isLoading = useFiles('my-drive', folderId, getFiles);
 
     useEffect(() => {
         return history.listen((location) => {

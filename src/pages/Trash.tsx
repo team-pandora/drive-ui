@@ -22,7 +22,7 @@ const Trash = () => {
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.files);
 
-    const isLoading = useFiles(folderId, getTrashFiles);
+    const isLoading = useFiles('trash', folderId, getTrashFiles);
 
     useEffect(() => {
         return history.listen((location) => {

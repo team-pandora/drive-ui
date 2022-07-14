@@ -23,7 +23,7 @@ const Favorites = () => {
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.files);
 
-    const isLoading = useFiles(folderId, getFavoriteFiles);
+    const isLoading = useFiles('favorites', folderId, getFavoriteFiles);
 
     useEffect(() => {
         return history.listen((location) => {

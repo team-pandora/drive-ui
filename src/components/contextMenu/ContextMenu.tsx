@@ -110,10 +110,6 @@ const ContextMenu: React.FC<props> = ({ page }) => {
         handleClose();
     };
 
-    if (selectedFiles.length > 0) {
-        console.log(selectedFiles[0].favorite);
-    }
-
     return (
         <Menu
             sx={{
@@ -139,6 +135,7 @@ const ContextMenu: React.FC<props> = ({ page }) => {
                 <Share handleClose={handleClose} />
                 <Shortcut handleClose={handleClose} />
                 <MoveTo handleClose={handleClose} />
+                {/* TODO */}
                 {selectedFiles[0]?.favorite ? (
                     <Unfavorite handleClose={handleRemoveFavorite} />
                 ) : (

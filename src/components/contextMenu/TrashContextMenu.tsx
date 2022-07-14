@@ -28,7 +28,7 @@ const TrashContextMenu = () => {
                 selectedFiles.length === 1
                     ? `${i18next.t('messages.FileRestoredSuccessfully')}`
                     : `${i18next.t('messages.FilesRestoredSuccessfully')}`;
-            dispatch(filesActions.setFiles(await getTrashFiles(selectedFiles[0].parent)));
+            dispatch(filesActions.setFiles(await getTrashFiles()));
             dispatch(notificationsActions.setContent(message));
             dispatch(notificationsActions.setSimpleOpen());
         } catch (error) {
@@ -50,7 +50,7 @@ const TrashContextMenu = () => {
                 selectedFiles.length === 1
                     ? `${i18next.t('messages.FileDeletedSuccessfully')}`
                     : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-            dispatch(filesActions.setFiles(await getTrashFiles(selectedFiles[0].parent)));
+            dispatch(filesActions.setFiles(await getTrashFiles()));
             dispatch(notificationsActions.setContent(message));
             dispatch(notificationsActions.setSimpleOpen());
         } catch (error) {

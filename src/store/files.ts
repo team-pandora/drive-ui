@@ -28,23 +28,11 @@ const filesSlice = createSlice({
             state.uploaded = action.payload;
         },
         setUploadedDone: (state, action) => {
-            let index = 0;
-            state.uploaded.forEach((item: any, i: any) => {
-                if (item.name === action.payload.name) {
-                    index = i;
-                }
-            });
-
+            const index = state.uploaded.findIndex((file: any) => file.name === action.payload.name);
             state.uploaded[index].status = 'done';
         },
         setUploadedFailed: (state, action) => {
-            let index = 0;
-            state.uploaded.forEach((item: any, i: any) => {
-                if (item.name === action.payload.name) {
-                    index = i;
-                }
-            });
-
+            const index = state.uploaded.findIndex((file: any) => file.name === action.payload.name);
             state.uploaded[index].status = 'failed';
         },
     },

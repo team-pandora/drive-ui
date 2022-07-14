@@ -4,9 +4,8 @@ import { handleError } from './error';
 
 export const getFiles = async (parent: string) => {
     try {
-        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`, {
-            withCredentials: true,
-        });
+        // TODO: parent null returning nested folders
+        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`);
         return response.data;
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
@@ -17,10 +16,16 @@ export const getFavoriteFiles = async (parent: string) => {
     try {
         const response = await Axios.get(
             `http://localhost/api/users/fs/query?parent=${parent}&favorite=true&trash=false`,
-            {
-                withCredentials: true,
-            },
         );
+        return response.data;
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
+};
+
+export const getTrashFiles = async () => {
+    try {
+        const response = await Axios.get(`http://localhost/api/users/fs/query?trash=true`);
         return response.data;
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
@@ -31,9 +36,6 @@ export const getSubfolders = async (parent: string | null) => {
     try {
         const response = await Axios.get(
             `http://localhost/api/users/fs/query?parent=${parent}&trash=false&type=folder`,
-            {
-                withCredentials: true,
-            },
         );
         const data = await response.data;
         return data;
@@ -42,19 +44,12 @@ export const getSubfolders = async (parent: string | null) => {
     }
 };
 
-export const getTrashFiles = async (parent: string) => {
+export const addToFavorite = async (file: any) => {
     try {
-        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=true`, {
-            withCredentials: true,
-        });
-        return response.data;
+        await Axios.post(`http://localhost/api/users/fs/${file.fsObjectId}/favorite`);
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
     }
-};
-
-export const addToFavorite = async (file: any) => {
-    await Axios.post(`http://localhost/api/users/fs/${file.fsObjectId}/favorite`);
 };
 
 export const removeFromFavorite = async (file: any) => {
@@ -66,6 +61,7 @@ export const getFile = async (fsOjbectId: string) => {
     const data = await response.data;
     return data;
 };
+
 export const downloadFile = async (fileId: string) => {
     const response = await Axios.get(
         `http://localhost/api/storage/bucket/62655a5dd681ae7e5f9eafe0/key/62655a5dd681ae7e5f9eafe2`,
@@ -89,11 +85,11 @@ export const createFile = async (file: any) => {
     console.log(data);
 };
 
-export const createFolder = async (file: any) => {
+export const createFolder = async (name: string, parent: string | null) => {
     try {
         await Axios.post('http://localhost/api/users/fs/folder', {
-            name: file.name,
-            parent: file.parent,
+            name,
+            parent,
         });
     } catch (error) {
         handleError(error, window.location.pathname.slice(1));

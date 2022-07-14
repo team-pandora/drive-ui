@@ -45,7 +45,6 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
                 dispatch(filesActions.setFiles(await getFiles(folderId)));
                 dispatch(filesActions.setUploadedDone(file));
             } catch (error) {
-                console.log(error);
                 dispatch(filesActions.setUploadedFailed(file));
             }
         }
