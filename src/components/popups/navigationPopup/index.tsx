@@ -1,12 +1,13 @@
 import { Box, Divider, styled } from '@mui/material';
 import i18next from 'i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
 import { GenericDialog } from '../Dialog';
 import NavigationBody from './NavigationBody';
 import NavigationFooter from './NavigationFooter';
 import NavigationHeader from './NavigationHeader';
+import { getFile, getFiles, getSubfolders } from '../../../api/files';
 
 const SBox = styled(Box)({
     width: '100%',
@@ -34,13 +35,22 @@ const NavigationDialog: React.FC<props> = ({ initialParent }) => {
         dispatch(popupActions.setNavigation());
     };
 
+    const [files, setFiles] = useState([]);
+    const fetchData = async () => {
+        if (parent !== undefined) setFiles(await getSubfolders(parent));
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [parent]);
+
     return (
         <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
             <SBox sx={{ dir }}>
                 <NavigationHeader parent={parent} setParent={setParent} />
-                <NavigationBody parent={parent} setParent={setParent} />
+                <NavigationBody parent={parent} setParent={setParent} files={files} />
                 <Divider />
-                <NavigationFooter isRoot={parent === undefined} action={'Add shortcut'} />
+                <NavigationFooter parent={parent} action={'Add shortcut'} fetchFunc={fetchData} />
             </SBox>
         </GenericDialog>
     );

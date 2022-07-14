@@ -1,7 +1,7 @@
 import { Box, ListItemText, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
 import UserAvatar from '../../layout/Avatar';
-import PermissionMenu from './permissions/PermissionMenu';
+import PermissionMenu from './permissions/ChangePermissionMenu';
 
 const UserTab = styled(Box)({
     width: '100%',
@@ -10,12 +10,11 @@ const UserTab = styled(Box)({
 });
 
 type props = {
-    user: { permission: string; fullName: string; mail: string; color: string };
+    user: { id: string; permission: string; fullName: string; mail: string; color: string };
 };
 
 const UserDetail: React.FC<props> = ({ user }) => {
     const dir = i18next.dir(i18next.language);
-
     return (
         <UserTab sx={{ direction: dir }}>
             <UserAvatar name={user.fullName} color={user.color} isDisabled={false} />

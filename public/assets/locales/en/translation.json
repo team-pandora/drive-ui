@@ -110,7 +110,11 @@
     "FileRestoredSuccessfully": "File restored successfully",
     "FilesRestoredSuccessfully": "Files restored successfully",
     "FailedRestoreFile": "Failed restoring the file",
-    "FailedRestoreFiles": "Failed restoring the files"
+    "FailedRestoreFiles": "Failed restoring the files",
+    "SearchHelp": "Search for users by name, mail or T"
+  },
+  "alerts": {
+    "ShareLinkWarning": "The link will be available for 24 hours. After that, it will be deleted"
   },
   "titles": {
     "Folders": "Folders",

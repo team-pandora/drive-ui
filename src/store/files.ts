@@ -3,7 +3,14 @@ import { createSlice, current } from '@reduxjs/toolkit';
 
 const filesSlice = createSlice({
     name: 'files',
-    initialState: { files: [], selected: [], hierarchy: <any>[], lastPopped: {}, uploaded: <any>[] },
+    initialState: {
+        files: [],
+        selected: [],
+        hierarchy: <any>[],
+        lastPopped: {},
+        uploaded: <any>[],
+        selectedPermission: 'write',
+    },
     reducers: {
         setFiles: (state, action) => {
             state.files = action.payload;
@@ -34,6 +41,9 @@ const filesSlice = createSlice({
         setUploadedFailed: (state, action) => {
             const index = state.uploaded.findIndex((file: any) => file.name === action.payload.name);
             state.uploaded[index].status = 'failed';
+        },
+        setPermission: (state, action) => {
+            state.selectedPermission = action.payload;
         },
     },
 });

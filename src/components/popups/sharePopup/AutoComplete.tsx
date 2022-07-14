@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getSharedUsers } from '../../../api/users';
+import { getSharedUsers as searchUsers } from '../../../api/users';
 import { usersActions } from '../../../store/users';
 
 const AutoCompleteStyle = {
@@ -30,7 +30,7 @@ const SearchAutoComplete = () => {
     const [searchedUsers, setSearchedUsers] = useState([]);
     const selectedUsers = useSelector((state: any) => state.users.selectedUsers);
 
-    const { isLoading, mutateAsync } = useMutation((name: string) => getSharedUsers(name), {
+    const { isLoading, mutateAsync } = useMutation((query: string) => searchUsers(query), {
         onSuccess: (data: any) => {
             setSearchedUsers(data);
         },

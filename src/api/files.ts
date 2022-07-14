@@ -34,6 +34,18 @@ export const getTrashFiles = async () => {
 
 export const getSubfolders = async (parent: string | null) => {
     try {
+        // arab
+        if (parent === 'shared') {
+            const response = await Axios.get(
+                `http://localhost/api/users/fs/query?trash=false&type=folder&root=true&permission=read&permission=write`,
+                {
+                    withCredentials: true,
+                },
+            );
+            const data = await response.data;
+            return data;
+        }
+
         const response = await Axios.get(
             `http://localhost/api/users/fs/query?parent=${parent}&trash=false&type=folder`,
         );
@@ -62,6 +74,12 @@ export const getFile = async (fsOjbectId: string) => {
     return data;
 };
 
+// export const getSharedFiles = async (fsObjectId: string) => {
+//     const response = await Axios.get('http://localhost/api/users/fs/query/?permission=read&permission=write');
+//     const data = await response.data;
+//     return data;
+// };
+
 export const downloadFile = async (fileId: string) => {
     const response = await Axios.get(
         `http://localhost/api/storage/bucket/62655a5dd681ae7e5f9eafe0/key/62655a5dd681ae7e5f9eafe2`,
@@ -85,7 +103,7 @@ export const createFile = async (file: any) => {
     console.log(data);
 };
 
-export const createFolder = async (name: string, parent: string | null) => {
+export const createFolder = async (name: string, parent: string | null | undefined) => {
     try {
         await Axios.post('http://localhost/api/users/fs/folder', {
             name,
@@ -162,11 +180,20 @@ export const getUser = async () => {
         });
 };
 
-export const getPermittedUsers = async (fileId: string) => {
+export const getPermittedUsers = async (fsObjectId: string) => {
     try {
-        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${fileId}`);
+        const response = await Axios.get(`/api/users/fs/${fsObjectId}/shared`);
         const data = await response.data;
         return data;
+    } catch (error: any) {
+        handleError(error, 'my-drive');
+    }
+};
+
+export const shareFile = async (fsObjectId: string, userId: string, permission: string) => {
+    try {
+        const response = await Axios.post(`http://localhost/api/users/fs/${fsObjectId}/share`, { userId, permission });
+        return response.data;
     } catch (error: any) {
         handleError(error, 'my-drive');
     }

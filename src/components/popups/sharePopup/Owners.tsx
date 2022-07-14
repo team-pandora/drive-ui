@@ -5,43 +5,39 @@ import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getPermittedUsers } from '../../../api/files';
-import { filesActions } from '../../../store/files';
-import getRandomColor from '../../../utils/time';
+import { getCurrentUser } from '../../../api/users';
 import { IServerError } from '../../../utils/types';
 import UserDetail from './UserDetails';
-
-const users = [
-    {
-        name: 'מאיה פישר (את/ה)',
-        email: 'maya.fisher53@gmail.com',
-        permission: 'owner',
-        color: getRandomColor(),
-    },
-    {
-        name: 'ירין בניסטי',
-        email: 'yarin.benisty@gmail.com',
-        permission: 'read',
-        color: getRandomColor(),
-    },
-];
 
 const OwnersBox = styled(Box)({
     marginTop: '2.5%',
     maxHeight: '200px',
-    overflowY: `${users.length > 5 ? 'scroll' : 'hidden'}`,
 });
 
 const Owners = () => {
-    const [permittedUsers, setPermittedUsers] = useState([]);
-    const selectedFiles = useSelector((state: any) => state.files.selectedFiles);
+    const [permittedUsers, setPermittedUsers] = useState<any[]>([]);
+    const selectedFiles = useSelector((state: any) => state.files.selected);
+    // TODO: get current user from store
+    const [currentUser, setUser] = useState<any>();
+    const [myPermission, setMyPermission] = useState<string>('');
+
+    useQuery('getCurrentUser', () => getCurrentUser(), {
+        onError: (error: IServerError) => {
+            toast.error('Failed loading current users');
+        },
+        onSuccess: (data) => {
+            setUser(data);
+        },
+    });
 
     const dispatch = useDispatch();
-    const { isLoading } = useQuery('permittedUsers', () => getPermittedUsers(selectedFiles), {
+    const { isLoading } = useQuery('permittedUsers', () => getPermittedUsers(selectedFiles[0].fsObjectId), {
         onError: (error: IServerError) => {
-            toast.error('Failed loading files');
+            toast.error('Failed loading shared users');
         },
         onSuccess: (data) => {
             setPermittedUsers(data);
+            setMyPermission(permittedUsers.find((user: any) => user.state.userId === currentUser.id).state.permission);
         },
     });
 
@@ -50,16 +46,17 @@ const Owners = () => {
             <Typography fontSize={'18px'} m={'2%'}>
                 {`${i18next.t('titles.PeopleWithAccess')}`}
             </Typography>
-            <OwnersBox>
-                {users.map((user) => {
+            <OwnersBox sx={{ overflowY: `${permittedUsers.length > 3 ? 'scroll' : 'hidden'}` }}>
+                {permittedUsers.map((user: any) => {
                     return (
                         <UserDetail
-                            key={user.email}
+                            key={user.user.email}
                             user={{
-                                fullName: user.name,
-                                mail: user.email,
-                                permission: user.permission,
-                                color: user.color,
+                                id: user.state.userId,
+                                fullName: user.user.fullName,
+                                mail: user.user.mail,
+                                permission: user.state.permission,
+                                color: 'lightblue',
                             }}
                         />
                     );

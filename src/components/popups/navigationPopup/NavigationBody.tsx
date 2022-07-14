@@ -1,7 +1,6 @@
 import { Box, List, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getFile, getFiles, getSubfolders } from '../../../api/files';
 import { NavigationListItem } from './NavigationListItem';
 import NavigationRootBody from './root/NavigationRootBody';
 
@@ -19,19 +18,11 @@ const NavigationBodyBox = styled(Box)({
 type props = {
     parent: string | undefined | null;
     setParent: any;
+    files: any;
 };
 
-const NavigationBody: React.FC<props> = ({ parent, setParent }) => {
+const NavigationBody: React.FC<props> = ({ parent, setParent, files }) => {
     if (parent === undefined) return <NavigationRootBody setParent={setParent}></NavigationRootBody>;
-
-    const [files, setFiles] = useState([]);
-    const fetchData = async () => {
-        setFiles(await getSubfolders(parent));
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, [parent]);
 
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -39,7 +30,7 @@ const NavigationBody: React.FC<props> = ({ parent, setParent }) => {
         setSelectedIndex(index);
     };
 
-    const formattedFiles = files.map((file: any, index) => {
+    const formattedFiles = files.map((file: any, index: number) => {
         return (
             <NavigationListItem
                 index={index}
