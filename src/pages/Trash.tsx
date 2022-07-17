@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { getTrashFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
@@ -62,6 +63,7 @@ const Trash = () => {
             <Box flex={4} paddingTop={2} padding={2}>
                 <TableMenuHeader title={i18next.t('titles.Trash')} />
                 {isLoading ? loadingAnimation : isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                <ToastContainer position="bottom-right" />
             </Box>
             <SimpleSnackbar />
             <StatusSnackbar />

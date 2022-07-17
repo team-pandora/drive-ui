@@ -1,4 +1,4 @@
-import { getFavoriteFiles, getFiles, getTrashFiles } from '../api/files';
+import { getFavoriteFiles, getFiles, getRecentFiles, getSharedFiles, getTrashFiles } from '../api/files';
 
 export const fileSizeFormatter = (size: number) => {
     const KB = Math.floor(size / 1000);
@@ -11,7 +11,7 @@ export const fileSizeFormatter = (size: number) => {
 
     if (KB >= 0.1) return `${KB} KB`;
 
-    return `${size}B`;
+    return `${size} B`;
 };
 
 export const selectGetFilesFunc = () => {
@@ -22,6 +22,10 @@ export const selectGetFilesFunc = () => {
             return getTrashFiles;
         case '/favorites':
             return getFavoriteFiles;
+        case '/shared':
+            return getSharedFiles;
+        case '/recently':
+            return getRecentFiles;
         default:
             return getFiles;
     }

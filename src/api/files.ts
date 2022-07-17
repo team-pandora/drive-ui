@@ -1,5 +1,6 @@
-/* eslint-disable consistent-return */
 import Axios from 'axios';
+import { checkIfRecent } from '../utils/time';
+/* eslint-disable consistent-return */
 import { handleError } from './error';
 
 export const getFiles = async (parent: string) => {
@@ -22,6 +23,13 @@ export const getSharedFiles = async (parent: string) => {
     );
     const data = await response.data;
     return data;
+};
+
+export const getRecentFiles = async (parent: string) => {
+    const myDriveFiles = await getFiles(parent);
+    const sharedFiles = await getSharedFiles(parent);
+    const recentFiles = [...myDriveFiles, ...sharedFiles];
+    return recentFiles.filter((file) => checkIfRecent(file.stateUpdatedAt));
 };
 
 export const getFavoriteFiles = async (parent: string) => {
@@ -110,7 +118,6 @@ export const createFile = async (file: any) => {
         source: 'drive',
     });
     const data = await response.data;
-    console.log(data);
 };
 
 export const createFolder = async (name: string, parent: string | null | undefined) => {

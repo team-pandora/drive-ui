@@ -1,4 +1,3 @@
-import { Star } from '@mui/icons-material';
 import { Box, Paper, styled, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
@@ -25,15 +24,15 @@ const SBox = styled(Box)({
     flexWrap: 'wrap',
 });
 
-const FavoritesTable: React.FC<props> = ({ filesArray }) => {
+const StorageTable: React.FC<props> = ({ filesArray }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
     const selectedFiles = useSelector((state: any) => state.files.selected);
 
-    const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof FavoritesI>('owner');
+    const [order, setOrder] = React.useState<Order>('desc');
+    const [orderBy, setOrderBy] = React.useState<keyof FavoritesI>('size');
     const [page, setPage] = React.useState(0);
     const rowsPerPage = 100;
 
@@ -72,17 +71,7 @@ const FavoritesTable: React.FC<props> = ({ filesArray }) => {
                         }}
                         align={dir}
                     >
-                        <SBox>
-                            {file.name}
-                            <Star
-                                sx={{
-                                    color: '#fdd85d',
-                                    margin: '5px',
-                                    width: '15px',
-                                    height: '15px',
-                                }}
-                            />
-                        </SBox>
+                        <SBox>{file.name}</SBox>
                     </TableCell>
                     <TableCell sx={{ width: '20%' }} align={dir}>
                         {file.owner}
@@ -109,9 +98,9 @@ const FavoritesTable: React.FC<props> = ({ filesArray }) => {
                     </Table>
                 </TableContainer>
             </Paper>
-            <ContextMenu page="Favorites" />
+            <ContextMenu page="Storage" />
         </Box>
     );
 };
 
-export default FavoritesTable;
+export default StorageTable;

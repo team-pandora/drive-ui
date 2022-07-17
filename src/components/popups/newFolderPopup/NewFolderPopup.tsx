@@ -36,7 +36,6 @@ const NewFolderPopup: React.FC = () => {
     const dir = i18next.dir(i18next.language);
     const dispatch = useDispatch();
     const history = useHistory();
-    const queryClient = useQueryClient();
 
     const [value, setValue] = useState('Untitled folder');
     const selectedFiles = useSelector((state: any) => state.files.selected);

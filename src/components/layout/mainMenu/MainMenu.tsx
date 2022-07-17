@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getFiles, uploadFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
@@ -26,12 +26,14 @@ type props = {
 
 const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dispatch = useDispatch();
-    const queryClient = useQueryClient();
+    const history = useHistory();
+
     const dir = i18next.dir(i18next.language);
     const params: { folderId: string } = useParams();
     const folderId: string = params.folderId ? params.folderId : 'null';
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
+        if (folderId === 'null') history.push(`/my-drive`);
         const filesWithStatus = acceptedFiles.map((file: any) => {
             return { name: file.name, status: 'uploading' };
         });
@@ -41,19 +43,14 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
 
         for (const file of acceptedFiles) {
             uploadFile(file, folderId)
-                .then(async (response: any) => {
+                .then(async () => {
                     dispatch(filesActions.setFiles(await getFiles(folderId)));
                     dispatch(filesActions.setUploadedDone(file));
                 })
-                .catch((error) => {
+                .catch(() => {
                     dispatch(filesActions.setUploadedFailed(file));
                 });
         }
-        // acceptedFiles.forEach((file: any) => {
-        //     setTimeout(() => {
-        //         dispatch(filesActions.setUploadedDone(file));
-        //     }, Math.floor(Math.random() * 6000) + 1000);
-        // });
     }, []);
 
     const { getRootProps, getInputProps, open } = useDropzone({

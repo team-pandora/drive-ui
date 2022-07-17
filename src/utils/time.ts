@@ -17,4 +17,15 @@ export const ISOStringToDateString = (ISOString: string, locales: string) => {
     return stringDate;
 };
 
+export const checkIfRecent = (date: string) => {
+    const now = new Date();
+    const dateToCheck = new Date(date);
+    const diff = now.getTime() - dateToCheck.getTime();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    if (hours < 1) {
+        return true;
+    }
+    return false;
+};
+
 export default getRandomColor;

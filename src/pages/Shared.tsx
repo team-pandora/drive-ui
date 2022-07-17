@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { getFiles, getSharedFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
@@ -63,6 +64,7 @@ const Shared = () => {
             <Box flex={4} paddingTop={2} padding={2}>
                 <TableMenuHeader title={i18next.t('titles.SharedWithMe')} />
                 {isGridView === true ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                <ToastContainer position="bottom-right" />
             </Box>
             <SimpleSnackbar />
             <StatusSnackbar />
