@@ -5,11 +5,23 @@ import { handleError } from './error';
 export const getFiles = async (parent: string) => {
     try {
         // TODO: parent null returning nested folders
-        const response = await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`);
-        return response.data;
+        if (parent === 'null') {
+            return (
+                await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=owner`)
+            ).data;
+        }
+        return (await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`)).data;
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
     }
+};
+
+export const getSharedFiles = async (parent: string) => {
+    const response = await Axios.get(
+        `http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`,
+    );
+    const data = await response.data;
+    return data;
 };
 
 export const getFavoriteFiles = async (parent: string) => {
@@ -36,14 +48,18 @@ export const getSubfolders = async (parent: string | null) => {
     try {
         // arab
         if (parent === 'shared') {
-            const response = await Axios.get(
-                `http://localhost/api/users/fs/query?trash=false&type=folder&root=true&permission=read&permission=write`,
-                {
-                    withCredentials: true,
-                },
-            );
-            const data = await response.data;
-            return data;
+            return (
+                await Axios.get(
+                    `http://localhost/api/users/fs/query?trash=false&type=folder&root=true&permission=read&permission=write`,
+                )
+            ).data;
+        }
+        if (!parent) {
+            return (
+                await Axios.get(
+                    `http://localhost/api/users/fs/query?parent=null&trash=false&permission=owner&type=folder`,
+                )
+            ).data;
         }
 
         const response = await Axios.get(
@@ -73,12 +89,6 @@ export const getFile = async (fsOjbectId: string) => {
     const data = await response.data;
     return data;
 };
-
-// export const getSharedFiles = async (fsObjectId: string) => {
-//     const response = await Axios.get('http://localhost/api/users/fs/query/?permission=read&permission=write');
-//     const data = await response.data;
-//     return data;
-// };
 
 export const downloadFile = async (fileId: string) => {
     const response = await Axios.get(

@@ -40,13 +40,14 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
         dispatch(notificationsActions.setUploadOpen());
 
         for (const file of acceptedFiles) {
-            try {
-                await uploadFile(file, folderId);
-                dispatch(filesActions.setFiles(await getFiles(folderId)));
-                dispatch(filesActions.setUploadedDone(file));
-            } catch (error) {
-                dispatch(filesActions.setUploadedFailed(file));
-            }
+            uploadFile(file, folderId)
+                .then(async (response: any) => {
+                    dispatch(filesActions.setFiles(await getFiles(folderId)));
+                    dispatch(filesActions.setUploadedDone(file));
+                })
+                .catch((error) => {
+                    dispatch(filesActions.setUploadedFailed(file));
+                });
         }
         // acceptedFiles.forEach((file: any) => {
         //     setTimeout(() => {

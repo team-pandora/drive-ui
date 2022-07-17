@@ -13,7 +13,7 @@ export const useFiles = (pageKey: string, folderId: string, getFilesFunc: any): 
         onSuccess: (data) => {
             dispatch(filesActions.setFiles(data));
         },
-        refetchOnWindowFocus: false,
+        // refetchOnWindowFocus: false,
     });
 
     return isFetching;

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RecentI } from '../../../data/fakedata';
+import { fileSizeFormatter } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
@@ -69,7 +70,7 @@ const RecentsTable: React.FC<props> = ({ filesArray }) => {
                         }}
                         align={dir}
                     >
-                        {file.size ? file.size : '-'}
+                        {file.size ? fileSizeFormatter(file.size) : '-'}
                     </TableCell>
                 </TableRow>
             );

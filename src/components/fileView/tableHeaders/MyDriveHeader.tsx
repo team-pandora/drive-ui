@@ -79,7 +79,7 @@ const TableHeader: React.FC<props> = ({ onRequestSort, order, orderBy }) => {
                                     active={orderBy === headCell.id}
                                     direction={orderBy === headCell.id ? order : 'asc'}
                                     onClick={createSortHandler(headCell.id)}
-                                    dir="ltr"
+                                    dir={dir}
                                 >
                                     {headCell.label}
                                     {orderBy === headCell.id ? (
