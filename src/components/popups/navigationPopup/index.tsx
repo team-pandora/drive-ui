@@ -21,9 +21,10 @@ const SBox = styled(Box)({
 
 type props = {
     initialParent?: string | undefined | null;
+    fsObjectId: string;
 };
 
-const NavigationDialog: React.FC<props> = ({ initialParent }) => {
+const NavigationDialog: React.FC<props> = ({ initialParent, fsObjectId }) => {
     const dir = i18next.dir(i18next.language);
 
     const [parent, setParent] = useState<string | undefined | null>(initialParent);
@@ -35,7 +36,9 @@ const NavigationDialog: React.FC<props> = ({ initialParent }) => {
         dispatch(popupActions.setNavigation());
     };
 
-    const [files, setFiles] = useState([]);
+    const [files, setFiles] = useState<any>([]);
+    if (files.length) dispatch(popupActions.setNavigationSelectedFolder(files[0]?.fsObjectId));
+
     const fetchData = async () => {
         if (parent !== undefined) setFiles(await getSubfolders(parent));
     };
@@ -48,9 +51,9 @@ const NavigationDialog: React.FC<props> = ({ initialParent }) => {
         <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
             <SBox sx={{ dir }}>
                 <NavigationHeader parent={parent} setParent={setParent} />
-                <NavigationBody parent={parent} setParent={setParent} files={files} />
+                <NavigationBody parent={parent} setParent={setParent} files={files} fsObjectId={fsObjectId} />
                 <Divider />
-                <NavigationFooter parent={parent} action={'Add shortcut'} fetchFunc={fetchData} />
+                <NavigationFooter parent={parent!} fetchFunc={fetchData} fsObjectId={fsObjectId} />
             </SBox>
         </GenericDialog>
     );

@@ -1,8 +1,8 @@
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import { Box, Button, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getFile } from '../../../api/files';
+import { useDispatch, useSelector } from 'react-redux';
+import { copy, createShortcut, getFile, move } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
 import NavigationNewFolderPopup from './navigationNewFolder';
 
@@ -31,14 +31,27 @@ const NewFolderButton = styled(CreateNewFolderIcon)({
 });
 
 type props = {
-    parent: string | undefined | null;
-    action: string;
+    parent: string | null;
     fetchFunc: any;
+    fsObjectId: string;
 };
 
-const NavigationFooter: React.FC<props> = ({ parent, action, fetchFunc }) => {
+const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectId }) => {
     const dispatch = useDispatch();
-    const isRoot = parent === undefined;
+    const displayNewFolder = parent === undefined || parent === 'shared';
+
+    const action = useSelector((state: any) => state.popups.navigationState);
+    const folderId = useSelector((state: any) => state.popups.navigationSelectedFolder);
+
+    const handleClick = async () => {
+        const file = await getFile(fsObjectId);
+        if (action === 'shortcut')
+            createShortcut(fsObjectId, `Shortcut to ${file.name}`, folderId === null ? parent : folderId);
+        else if (action === 'move') move(fsObjectId, folderId === null ? parent : folderId, file.type);
+        else if (action === 'copy') copy(fsObjectId, `Copy of ${file.name}`, folderId === null ? parent : folderId);
+
+        dispatch(popupActions.setNavigation());
+    };
 
     const handleNavigationClose = () => {
         dispatch(popupActions.setNavigation());
@@ -58,8 +71,10 @@ const NavigationFooter: React.FC<props> = ({ parent, action, fetchFunc }) => {
                 }}
             >
                 <FooterContent>
-                    {!isRoot && <NewFolderButton onClick={handleNewFolderClick} />}
-                    <FooterButton onClick={handleNavigationClose}>{action}</FooterButton>
+                    {!displayNewFolder && <NewFolderButton onClick={handleNewFolderClick} />}
+                    <FooterButton onClick={handleClick}>
+                        <span style={{ textTransform: 'capitalize' }}>{action}</span>
+                    </FooterButton>
                 </FooterContent>
             </Box>
             <NavigationNewFolderPopup parent={parent} fetchFunc={fetchFunc}></NavigationNewFolderPopup>

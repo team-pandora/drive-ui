@@ -1,6 +1,8 @@
 import { Box, List, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { getFile } from '../../../api/files';
+import { popupActions } from '../../../store/popups';
 import { NavigationListItem } from './NavigationListItem';
 import NavigationRootBody from './root/NavigationRootBody';
 
@@ -19,16 +21,49 @@ type props = {
     parent: string | undefined | null;
     setParent: any;
     files: any;
+    fsObjectId: string;
 };
 
 const NavigationBody: React.FC<props> = ({ parent, setParent, files }) => {
     if (parent === undefined) return <NavigationRootBody setParent={setParent}></NavigationRootBody>;
 
+    const dispatch = useDispatch();
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const handleListItemClick = (event: React.MouseEvent, index: number) => {
+        dispatch(popupActions.setNavigationSelectedFolder(files[index].fsObjectId));
         setSelectedIndex(index);
     };
+
+    const handleNavigationKeyDown = (event: any) => {
+        let newIndex;
+        if (!event.repeat) {
+            switch (event.key) {
+                case 'ArrowUp':
+                    newIndex = (selectedIndex - 1) % files.length;
+                    newIndex = newIndex >= 0 ? newIndex : newIndex + files.length;
+                    dispatch(popupActions.setNavigationSelectedFolder(files[newIndex].fsObjectId));
+                    setSelectedIndex(newIndex);
+                    break;
+                case 'ArrowDown':
+                    newIndex = (selectedIndex + 1) % files.length;
+                    newIndex = newIndex >= 0 ? newIndex : newIndex + files.length;
+                    dispatch(popupActions.setNavigationSelectedFolder(files[newIndex].fsObjectId));
+                    setSelectedIndex(newIndex);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleNavigationKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleNavigationKeyDown);
+        };
+    }, [handleNavigationKeyDown]);
 
     const formattedFiles = files.map((file: any, index: number) => {
         return (

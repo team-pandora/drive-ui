@@ -6,26 +6,20 @@ import { popupActions } from '../../../store/popups';
 import MovePopup from '../../popups/navigationPopup';
 
 type props = {
-    handleClose: () => void;
+    handleClick: () => void;
+    fsObjectId: string;
 };
 
-const MoveTo: React.FC<props> = ({ handleClose }) => {
-    const dispatch = useDispatch();
-
-    const handleShortcutDialog = () => {
-        handleClose();
-        dispatch(popupActions.setNavigation());
-    };
-
+const MoveTo: React.FC<props> = ({ handleClick, fsObjectId }) => {
     return (
         <>
-            <MenuItem onClick={handleShortcutDialog}>
+            <MenuItem onClick={handleClick}>
                 <ListItemIcon>
                     <DriveFileMoveOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText>{`${i18next.t('contextMenu.MoveTo')}`}</ListItemText>
             </MenuItem>
-            <MovePopup></MovePopup>
+            <MovePopup fsObjectId={fsObjectId}></MovePopup>
         </>
     );
 };

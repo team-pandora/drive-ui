@@ -60,6 +60,9 @@ export const NavigationListItem: React.FC<props> = ({
             }}
             selected={isSelected}
             onClick={onClick}
+            onDoubleClick={() => {
+                setParent(id);
+            }}
         >
             <ListItemIcon>{Icon}</ListItemIcon>
             <Typography sx={{ marginLeft: '10px', userSelect: 'none', color: selectedColor, fontWeight: '500' }}>

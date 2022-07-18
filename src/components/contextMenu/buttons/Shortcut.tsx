@@ -5,25 +5,21 @@ import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
 import ShortcutPopup from '../../popups/navigationPopup';
 
-type props = { handleClose: () => void };
+type props = {
+    handleClick: () => void;
+    fsObjectId: string;
+};
 
-const Shortcut: React.FC<props> = ({ handleClose }) => {
-    const dispatch = useDispatch();
-
-    const handleShortcutDialog = () => {
-        handleClose();
-        dispatch(popupActions.setNavigation());
-    };
-
+const Shortcut: React.FC<props> = ({ handleClick, fsObjectId }) => {
     return (
         <>
-            <MenuItem onClick={handleShortcutDialog}>
+            <MenuItem onClick={handleClick}>
                 <ListItemIcon>
                     <AddToDriveIcon />
                 </ListItemIcon>
                 <ListItemText>{`${i18next.t('contextMenu.Shortcut')}`}</ListItemText>
             </MenuItem>
-            <ShortcutPopup />
+            <ShortcutPopup fsObjectId={fsObjectId} />
         </>
     );
 };

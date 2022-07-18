@@ -1,5 +1,5 @@
 import { Box, List, styled } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavigationListItem } from '../NavigationListItem';
 
@@ -20,10 +20,33 @@ type props = {
 const NavigationRootBody: React.FC<props> = ({ setParent }) => {
     const dispatch = useDispatch();
     const [selectedIndex, setSelectedIndex] = useState(0);
-
     const handleListItemClick = (event: React.MouseEvent, index: number) => {
         setSelectedIndex(index);
     };
+
+    const handleNavigationKeyDown = (event: any, parent?: string) => {
+        let newIndex;
+        switch (event.key) {
+            case 'ArrowUp':
+                newIndex = (selectedIndex - 1) % 2;
+                setSelectedIndex(newIndex >= 0 ? newIndex : newIndex + 2);
+                break;
+            case 'ArrowDown':
+                newIndex = (selectedIndex + 1) % 2;
+                setSelectedIndex(newIndex >= 0 ? newIndex : newIndex + 2);
+                break;
+            default:
+                break;
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleNavigationKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleNavigationKeyDown);
+        };
+    }, [handleNavigationKeyDown]);
 
     return (
         <>

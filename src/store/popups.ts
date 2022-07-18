@@ -17,6 +17,8 @@ const popupSlice = createSlice({
         navigation: false,
         navigationNewFolder: false,
         storage: false,
+        navigationState: '',
+        navigationSelectedFolder: null,
     },
     reducers: {
         setShare: (state) => {
@@ -57,6 +59,12 @@ const popupSlice = createSlice({
         },
         setStorage: (state) => {
             state.storage = !state.storage;
+        },
+        setNavigationState: (state, action) => {
+            state.navigationState = action.payload;
+        },
+        setNavigationSelectedFolder: (state, action) => {
+            state.navigationSelectedFolder = action.payload;
         },
     },
 });

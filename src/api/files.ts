@@ -226,3 +226,37 @@ export const getQuota = async () => {
         handleError(error, 'my-drive');
     }
 };
+
+export const createShortcut = async (fsObjectId: string, name: string, parent: string) => {
+    try {
+        const response = await Axios.post('http://localhost/api/users/fs/shortcut', {
+            ref: fsObjectId,
+            parent,
+            name,
+        });
+        return response.data;
+    } catch (error: any) {
+        handleError(error, 'my-drive');
+    }
+};
+
+export const move = async (fsObjectId: string, newParent: string, fileType: 'file' | 'folder' | 'shortcut') => {
+    try {
+        const response = await Axios.patch(`http://localhost/api/users/fs/${fileType}/${fsObjectId}`, {
+            parent: newParent,
+        });
+        return response.data;
+    } catch (error: any) {
+        handleError(error, 'my-drive');
+    }
+};
+
+export const copy = async (fsObjectId: string, name: string, parent: string) => {
+    try {
+        const response = await Axios.post(`http://localhost/api/users/fs/file/${fsObjectId}/duplicate`, {
+            name,
+            parent,
+            client: 'Driveclient',
+        });
+        return response.data;
+>>>>>>> 10e36ef (add navigation actions)

@@ -6,26 +6,20 @@ import { popupActions } from '../../../store/popups';
 import CopyPopup from '../../popups/navigationPopup';
 
 type props = {
-    handleClose: () => void;
+    handleClick: () => void;
+    fsObjectId: string;
 };
 
-export const Copy: React.FC<props> = ({ handleClose }) => {
-    const dispatch = useDispatch();
-
-    const handleCopyDialog = () => {
-        handleClose();
-        dispatch(popupActions.setNavigation());
-    };
-
+export const Copy: React.FC<props> = ({ handleClick, fsObjectId }) => {
     return (
         <>
-            <MenuItem onClick={handleCopyDialog}>
+            <MenuItem onClick={handleClick}>
                 <ListItemIcon>
                     <ContentCopyIcon />
                 </ListItemIcon>
                 <ListItemText>{`${i18next.t('contextMenu.Copy')}`}</ListItemText>
             </MenuItem>
-            <CopyPopup></CopyPopup>
+            <CopyPopup fsObjectId={fsObjectId}></CopyPopup>
         </>
     );
 };

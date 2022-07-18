@@ -126,6 +126,29 @@ const ContextMenu: React.FC<props> = ({ page }) => {
         }
     };
 
+    const handleShare = () => {
+        dispatch(popupActions.setShare());
+        handleClose();
+    };
+
+    const handleCopy = () => {
+        dispatch(popupActions.setNavigation());
+        dispatch(popupActions.setNavigationState('copy'));
+        handleClose();
+    };
+
+    const handleShortcut = () => {
+        dispatch(popupActions.setNavigation());
+        dispatch(popupActions.setNavigationState('shortcut'));
+        handleClose();
+    };
+
+    const handleMove = () => {
+        dispatch(popupActions.setNavigation());
+        dispatch(popupActions.setNavigationState('move'));
+        handleClose();
+    };
+
     return (
         <Menu
             sx={{
@@ -148,16 +171,16 @@ const ContextMenu: React.FC<props> = ({ page }) => {
             dir={dir}
         >
             <MenuList sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px' }} dense>
-                <Share handleClose={handleClose} />
-                <Shortcut handleClose={handleClose} />
-                <MoveTo handleClose={handleClose} />
+                <Share handleClick={handleShare} />
+                <Shortcut handleClick={handleShortcut} fsObjectId={selectedFiles[0]?.fsObjectId} />
+                <MoveTo handleClick={handleMove} fsObjectId={selectedFiles[0]?.fsObjectId} />
                 {/* TODO */}
                 {selectedFiles[0]?.favorite ? (
                     <Unfavorite handleClose={handleRemoveFavorite} />
                 ) : (
                     <Favorite handleClose={handleAddFavorite} />
                 )}
-                <Copy handleClose={handleClose} />
+                <Copy handleClick={handleCopy} fsObjectId={selectedFiles[0]?.fsObjectId} />
                 {selectedFiles.length === 1 && <Rename handleClick={handleRename} />}
                 <Divider />
                 {selectedFiles.length === 1 && <Info handleClose={handleClose} />}

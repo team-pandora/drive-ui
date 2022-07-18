@@ -6,19 +6,12 @@ import { useDispatch } from 'react-redux';
 import { popupActions } from '../../../store/popups';
 import SharePopup from '../../popups/sharePopup';
 
-type props = { handleClose: () => void };
+type props = { handleClick: () => void };
 
-const Share: React.FC<props> = ({ handleClose }) => {
-    const dispatch = useDispatch();
-
-    const handleOpen = () => {
-        dispatch(popupActions.setShare());
-        handleClose();
-    };
-
+const Share: React.FC<props> = ({ handleClick }) => {
     return (
         <Fragment>
-            <MenuItem onClick={handleOpen} disabled={false}>
+            <MenuItem onClick={handleClick} disabled={false}>
                 <ListItemIcon>
                     <PersonAddAltOutlinedIcon />
                 </ListItemIcon>
