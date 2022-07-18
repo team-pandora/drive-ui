@@ -5,6 +5,5 @@ export const handleError = (error: any, relayState: string) => {
         document.location.href = `/auth/login?relayState=/${relayState}`;
         return null;
     }
-    console.log(error);
     throw new Error('Something went wrong');
 };

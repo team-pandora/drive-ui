@@ -5,9 +5,8 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getFiles, uploadFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
@@ -29,10 +28,11 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const history = useHistory();
 
     const dir = i18next.dir(i18next.language);
-    const params: { folderId: string } = useParams();
-    const folderId: string = params.folderId ? params.folderId : 'null';
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
+        const params = window.location.pathname.split('/');
+        const folderId: string = params[1] === 'folder' ? params[2] : 'null';
+        console.log(folderId);
         if (folderId === 'null') history.push(`/my-drive`);
         const filesWithStatus = acceptedFiles.map((file: any) => {
             return { name: file.name, status: 'uploading' };

@@ -2,7 +2,7 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { addToFavorite, moveToTrash, removeFromFavorite } from '../../api/files';
+import { addToFavorite, download, moveToTrash, removeFromFavorite } from '../../api/files';
 import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
@@ -105,9 +105,25 @@ const ContextMenu: React.FC<props> = ({ page }) => {
         handleClose();
     };
 
-    const handleDownload = () => {
-        dispatch(notificationsActions.setSimpleOpen());
-        handleClose();
+    const handleDownload = async () => {
+        try {
+            // arab
+            for (let i = 0; i <= selectedFiles.length; i += 1) {
+                (function (ind) {
+                    setTimeout(function () {
+                        download(selectedFiles[ind]);
+                    }, 100 * ind);
+                })(i);
+            }
+        } catch (error) {
+            const message =
+                selectedFiles.length === 1
+                    ? `${i18next.t('messages.FailedDeletingFile')}`
+                    : `${i18next.t('messages.FailedDeletingFiles')}`;
+            toast.error(message);
+        } finally {
+            handleClose();
+        }
     };
 
     return (

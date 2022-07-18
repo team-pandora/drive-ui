@@ -1,5 +1,6 @@
-// import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
+import { download } from '../../api/files';
+// import { useDispatch } from 'react-redux';
 import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
@@ -7,7 +8,6 @@ import { notificationsActions } from '../../store/notifications';
 // const dispatch = useDispatch();
 
 export const handleClick = (event: React.MouseEvent<unknown>, file: any, selectedFiles: any, dispatch: any) => {
-    console.log(file);
     const selectedIndex = selectedFiles.indexOf(file);
     let newSelected: readonly string[] = [];
 
@@ -64,9 +64,13 @@ export const handleContextMenuClick = (
 };
 
 export const handleDoubleClick = (event: any, file: any, history: any, dispatch: any) => {
-    history.push(`/folder/${file.fsObjectId}`);
-    dispatch(filesActions.setHierarchy({ type: 'push', content: { id: file.fsObjectId, name: file.name } }));
-    dispatch(filesActions.setSelected([]));
+    if (file.type === 'folder') {
+        history.push(`/folder/${file.fsObjectId}`);
+        dispatch(filesActions.setHierarchy({ type: 'push', content: { id: file.fsObjectId, name: file.name } }));
+        dispatch(filesActions.setSelected([]));
+    } else {
+        download(file);
+    }
 };
 
 export const isSelected = (file: any, selectedFiles: any) => {

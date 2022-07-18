@@ -35,14 +35,12 @@ const IncreaseQuotaButton = styled(Button)({
 });
 
 type props = {
-    used: number;
-    limit: number;
+    used: string;
+    limit: string;
 };
 
 const Storage: React.FC<props> = ({ used, limit }) => {
-    const quotaUsed = Math.round((100 * used) / limit);
-
-    console.log(quotaUsed);
+    const quotaUsed = Math.round((100 * Number(used)) / Number(limit));
 
     const dispatch = useDispatch();
 

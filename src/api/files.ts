@@ -18,11 +18,15 @@ export const getFiles = async (parent: string) => {
 };
 
 export const getSharedFiles = async (parent: string) => {
-    const response = await Axios.get(
-        `http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`,
-    );
-    const data = await response.data;
-    return data;
+    try {
+        return (
+            await Axios.get(
+                `http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`,
+            )
+        ).data;
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
 };
 
 export const getRecentFiles = async (parent: string) => {
@@ -98,27 +102,26 @@ export const getFile = async (fsOjbectId: string) => {
     return data;
 };
 
-export const downloadFile = async (fileId: string) => {
-    const response = await Axios.get(
-        `http://localhost/api/storage/bucket/62655a5dd681ae7e5f9eafe0/key/62655a5dd681ae7e5f9eafe2`,
-    );
-    const data = await response.data;
-    console.log(data);
-    return data;
+export const download = async (file: any) => {
+    try {
+        window.location.href = `http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/download`;
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
 };
 
-export const createFile = async (file: any) => {
-    const response = await Axios.post('http://localhost:8000/api/users/62655a5dd681ae7e5f9eafe0/fs/file', {
-        name: 'alive4',
-        parent: null,
-        key: 'string',
-        bucket: 'string',
-        size: 50,
-        public: false,
-        source: 'drive',
-    });
-    const data = await response.data;
-};
+// export const createFile = async (file: any) => {
+//     const response = await Axios.post('http://localhost:8000/api/users/62655a5dd681ae7e5f9eafe0/fs/file', {
+//         name: 'alive4',
+//         parent: null,
+//         key: 'string',
+//         bucket: 'string',
+//         size: 50,
+//         public: false,
+//         source: 'drive',
+//     });
+//     const data = await response.data;
+// };
 
 export const createFolder = async (name: string, parent: string | null | undefined) => {
     try {
@@ -211,6 +214,14 @@ export const shareFile = async (fsObjectId: string, userId: string, permission: 
     try {
         const response = await Axios.post(`http://localhost/api/users/fs/${fsObjectId}/share`, { userId, permission });
         return response.data;
+    } catch (error: any) {
+        handleError(error, 'my-drive');
+    }
+};
+
+export const getQuota = async () => {
+    try {
+        return (await Axios.get(`http://localhost/api/users/quota`)).data;
     } catch (error: any) {
         handleError(error, 'my-drive');
     }
