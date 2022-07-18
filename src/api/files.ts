@@ -259,4 +259,7 @@ export const copy = async (fsObjectId: string, name: string, parent: string) => 
             client: 'Driveclient',
         });
         return response.data;
->>>>>>> 10e36ef (add navigation actions)
+    } catch (error: any) {
+        handleError(error, 'my-drive');
+    }
+};
