@@ -6,9 +6,9 @@ import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFiles } from './api/files';
 import { getCurrentUser } from './api/users';
-import loadingAnimation from './assets/NewLogo.svg';
 import Sidebar from './components/layout/sideNav';
 import Topbar from './components/layout/Topbar';
+import DriveAnimatedLogo from './DriveAnimationLogo.jsx';
 import { Router } from './router';
 import { filesActions } from './store/files';
 import { usersActions } from './store/users';
@@ -52,8 +52,9 @@ function App() {
 
     if (isLoadingUser || isLoadingFiles) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40vh' }}>
-                <img className="ld ld-bounce" src={loadingAnimation} width="300px" />
+            // TODO: center icon
+            <div style={{ display: 'flex', justifyContent: 'center', width: '1500px', height: '500px' }}>
+                <DriveAnimatedLogo />
             </div>
         );
     }
