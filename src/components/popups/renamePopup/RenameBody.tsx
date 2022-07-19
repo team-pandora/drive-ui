@@ -32,8 +32,7 @@ const RenameBody = () => {
         try {
             await RenameFile(selectedFiles[0], textRef.current!.value);
             dispatch(filesActions.setFiles(await getFiles(selectedFiles[0].parent)));
-            dispatch(notificationsActions.setContent(`${i18next.t('messages.FileRenamedSuccessfully')}`));
-            dispatch(notificationsActions.setSimpleOpen());
+            dispatch(notificationsActions.setSimpleOpen(`${i18next.t('messages.FileRenamedSuccessfully')}`));
         } catch (error) {
             toast.error(`${i18next.t('messages.FailedRenamingFile')}`);
         } finally {

@@ -45,11 +45,11 @@ export const sortableMyDriveCells = ['name', 'lastUpdated'];
 export const sortableTrashCells = ['lastUpdated'];
 
 export const sortableHeadCells = {
-    myDrive: ['name', 'fsObjectUpdatedAt'],
-    shared: ['name', 'stateCreatedAt'],
-    recent: [],
-    starred: ['name', 'fsObjectUpdatedAt'],
-    trash: ['name', 'fsObjectUpdatedAt'],
+    myDrive: ['name', 'fsObjectUpdatedAt', 'size'],
+    shared: ['name', 'sharedBy', 'stateCreatedAt'],
+    recent: ['name', 'size'],
+    starred: ['name', 'fsObjectUpdatedAt', 'size'],
+    trash: ['name', 'fsObjectUpdatedAt', 'size'],
     sentFilesStatus: ['name', 'transferDate'],
     incomingFiles: ['name', 'fsObjectUpdatedAt'],
     outgoingFiles: ['name', 'fsObjectUpdatedAt'],

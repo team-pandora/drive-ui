@@ -24,7 +24,7 @@ export const InfoProperties: React.FC<props> = ({ isDeleted }) => {
             <SValues>{`${i18next.t('info.Type')}`}</SValues>
             <SValues>{`${i18next.t('info.Size')}`}</SValues>
             <SValues>{`${i18next.t('info.Location')}`}</SValues>
-            <SValues>{`${i18next.t('info.Owner')}`}</SValues>
+            <SValues>{`${i18next.t('info.Permission')}`}</SValues>
             <SValues>{`${i18next.t('info.Modified')}`}</SValues>
             <SValues>{`${i18next.t('info.Created')}`}</SValues>
             {isDeleted && <Typography>{`${i18next.t('info.Deleted')}`}</Typography>}

@@ -57,8 +57,7 @@ const NewFolderPopup: React.FC = () => {
 
             if (!parentFolder) history.push(`/my-drive`);
             dispatch(filesActions.setFiles(await selectGetFilesFunc()(parentFolder || 'null')));
-            dispatch(notificationsActions.setContent(message));
-            dispatch(notificationsActions.setSimpleOpen());
+            dispatch(notificationsActions.setSimpleOpen(message));
         } catch (error) {
             const message =
                 selectedFiles.length === 1

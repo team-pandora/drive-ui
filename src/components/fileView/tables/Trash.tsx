@@ -14,7 +14,11 @@ import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { deleteFile, getTrashFiles } from '../../../api/files';
 import { TrashI } from '../../../data/fakedata';
+import { filesActions } from '../../../store/files';
+import { notificationsActions } from '../../../store/notifications';
 import { fileSizeFormatter } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
@@ -54,6 +58,20 @@ const TrashTable: React.FC<props> = ({ filesArray }) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
+    };
+
+    const emptyTrash = async () => {
+        try {
+            await Promise.all(filesArray.map(deleteFile));
+
+            const message = `${i18next.t('messages.BinEmpty')}`;
+
+            dispatch(filesActions.setFiles(await getTrashFiles()));
+            dispatch(notificationsActions.setSimpleOpen(message));
+        } catch (error) {
+            const message = selectedFiles.length === `${i18next.t('messages.BinEmptyFailed')}`;
+            toast.error(message);
+        }
     };
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -116,9 +134,10 @@ const TrashTable: React.FC<props> = ({ filesArray }) => {
                     >
                         {`${i18next.t('messages.BinMsg')}`}
                     </Typography>
-                    <Button sx={{ color: '#000000', margin: '0px 1%', textTransform: 'none' }}>{`${i18next.t(
-                        'buttons.Bin',
-                    )}`}</Button>
+                    <Button
+                        onClick={emptyTrash}
+                        sx={{ color: '#000000', margin: '0px 1%', textTransform: 'none' }}
+                    >{`${i18next.t('buttons.Bin')}`}</Button>
                 </SBox>
                 <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader>

@@ -20,10 +20,9 @@ export const InfoValues = (props: any) => {
             <SValues>{props.type}</SValues>
             <SValues>{props.size}</SValues>
             <SValues>{props.parent}</SValues>
-            <SValues>{props.owner}</SValues>
+            <SValues>{props.permission}</SValues>
             <SValues>{props.modified}</SValues>
             <SValues>{props.created}</SValues>
-            {props.isDeleted && <p>12 Oct 2021</p>}
         </ValueList>
     );
 };

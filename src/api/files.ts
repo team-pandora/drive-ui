@@ -1,4 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import Axios from 'axios';
+import { getRootPath } from '../utils/files';
 import { checkIfRecent } from '../utils/time';
 /* eslint-disable consistent-return */
 import { handleError } from './error';
@@ -51,6 +53,14 @@ export const getTrashFiles = async () => {
     try {
         const response = await Axios.get(`http://localhost/api/users/fs/query?trash=true`);
         return response.data;
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
+    }
+};
+
+export const getStorageFiles = async () => {
+    try {
+        return (await Axios.get(`http://localhost/api/users/fs/query?trash=false&permission=owner&type=file`)).data;
     } catch (error: any) {
         handleError(error, window.location.pathname.slice(1));
     }
@@ -261,5 +271,19 @@ export const copy = async (fsObjectId: string, name: string, parent: string) => 
         return response.data;
     } catch (error: any) {
         handleError(error, 'my-drive');
+    }
+};
+
+export const getFullPath = async (fsObjectId: string) => {
+    try {
+        const hierarchy = (await Axios.get(`http://localhost/api/users/fs/${fsObjectId}/hierarchy`)).data;
+        if (hierarchy.length === 0) {
+            const file: any = (await Axios.get(`http://localhost/api/users/fs/query/${fsObjectId}`)).data;
+            return getRootPath(file);
+        }
+        const file = (await Axios.get(`http://localhost/api/users/fs/query/${hierarchy[0]._id}`)).data;
+        return `${getRootPath(file)}/${hierarchy.map((currFile: any) => currFile.name).join('/')}`;
+    } catch (error: any) {
+        handleError(error, window.location.pathname.slice(1));
     }
 };

@@ -1,5 +1,12 @@
 import i18next from 'i18next';
-import { getFavoriteFiles, getFiles, getRecentFiles, getSharedFiles, getTrashFiles } from '../api/files';
+import {
+    getFavoriteFiles,
+    getFiles,
+    getRecentFiles,
+    getSharedFiles,
+    getStorageFiles,
+    getTrashFiles,
+} from '../api/files';
 
 export const fileSizeFormatter = (size: number) => {
     const dir = i18next.dir(i18next.language);
@@ -14,7 +21,9 @@ export const fileSizeFormatter = (size: number) => {
 
     if (KB >= 0.1) return dir === 'ltr' ? `${KB} KB` : `KB ${KB}`;
 
-    return dir === 'ltr' ? `${size} B` : `B ${size}`;
+    if (size >= 0.1) return dir === 'ltr' ? `${size} B` : `B ${size}`;
+
+    return '-';
 };
 
 export const selectGetFilesFunc = () => {
@@ -29,7 +38,19 @@ export const selectGetFilesFunc = () => {
             return getSharedFiles;
         case '/recently':
             return getRecentFiles;
+        case '/storage':
+            return getStorageFiles;
         default:
             return getFiles;
     }
+};
+
+export const getRootPath = (file: any) => {
+    if (file.trash) {
+        return `trash`;
+    }
+    if (file.permission === 'owner') {
+        return `my-drive`;
+    }
+    return `shared`;
 };

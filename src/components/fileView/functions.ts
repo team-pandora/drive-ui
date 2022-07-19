@@ -38,8 +38,7 @@ export const handleKeyDown = (event: any, files: any, selectedFiles: any, dispat
             selectedFiles.length === 1
                 ? `${i18next.t('messages.FileDeletedSuccessfully')}`
                 : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-        dispatch(notificationsActions.setContent(message));
-        dispatch(notificationsActions.setSimpleOpen());
+        dispatch(notificationsActions.setSimpleOpen(message));
     } else if (event.key === 'Escape') {
         dispatch(filesActions.setSelected([]));
     } else if (event.key === 'a' && event.ctrlKey) {

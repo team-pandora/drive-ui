@@ -45,8 +45,7 @@ const RemoveBody: React.FC = () => {
                     ? `${i18next.t('messages.FileDeletedSuccessfully')}`
                     : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
             dispatch(filesActions.setFiles(await getTrashFiles()));
-            dispatch(notificationsActions.setContent(message));
-            dispatch(notificationsActions.setSimpleOpen());
+            dispatch(notificationsActions.setSimpleOpen(message));
         } catch (error) {
             const message =
                 selectedFiles.length === 1

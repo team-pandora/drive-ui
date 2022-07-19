@@ -30,8 +30,7 @@ const TrashContextMenu = () => {
                     ? `${i18next.t('messages.FileRestoredSuccessfully')}`
                     : `${i18next.t('messages.FilesRestoredSuccessfully')}`;
             dispatch(filesActions.setFiles(await getTrashFiles()));
-            dispatch(notificationsActions.setContent(message));
-            dispatch(notificationsActions.setSimpleOpen());
+            dispatch(notificationsActions.setSimpleOpen(message));
         } catch (error) {
             const message =
                 selectedFiles.length === 1

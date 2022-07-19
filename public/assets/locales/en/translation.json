@@ -139,7 +139,7 @@
   "info": {
     "Type": "Type",
     "Size": "size",
-    "Owner": "Owner",
+    "Permission": "Permission",
     "Modified": "Last modified",
     "Created": "Created",
     "HaveAccess": "Who has access",

@@ -43,8 +43,7 @@ const ContextMenu: React.FC<props> = ({ page }) => {
                     ? `${i18next.t('messages.FileDeletedSuccessfully')}`
                     : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
             dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
-            dispatch(notificationsActions.setContent(message));
-            dispatch(notificationsActions.setSimpleOpen());
+            dispatch(notificationsActions.setSimpleOpen(message));
         } catch (error) {
             const message =
                 selectedFiles.length === 1
@@ -65,8 +64,7 @@ const ContextMenu: React.FC<props> = ({ page }) => {
                     ? `${i18next.t('messages.FileDeletedSuccessfully')}`
                     : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
             dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
-            dispatch(notificationsActions.setContent(message));
-            dispatch(notificationsActions.setSimpleOpen());
+            dispatch(notificationsActions.setSimpleOpen(message));
         } catch (error) {
             const message =
                 selectedFiles.length === 1
@@ -87,8 +85,7 @@ const ContextMenu: React.FC<props> = ({ page }) => {
                     ? `${i18next.t('messages.FileDeletedSuccessfully')}`
                     : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
             dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
-            dispatch(notificationsActions.setContent(message));
-            dispatch(notificationsActions.setSimpleOpen());
+            dispatch(notificationsActions.setSimpleOpen(message));
         } catch (error) {
             const message =
                 selectedFiles.length === 1

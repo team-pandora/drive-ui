@@ -1,9 +1,11 @@
 import { InsertDriveFile } from '@mui/icons-material';
 import { Box, Button, Divider, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getFullPath } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
+import { fileSizeFormatter } from '../../../utils/files';
 import UserAvatar from '../../layout/Avatar';
 import AvatarList from '../../layout/AvatarList';
 import { InfoProperties } from './InfoProperties';
@@ -67,6 +69,8 @@ const ImageStyle = {
     height: '6rem',
 };
 
+const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: 'numeric' };
+
 type props = {
     owner: {
         name: string;
@@ -82,6 +86,14 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
     const dir = i18next.dir(i18next.language);
     const selectedFiles = useSelector((state: any) => state.files.selected);
     const dispatch = useDispatch();
+    const [path, setPath] = useState<string | undefined | null>(undefined);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setPath(await getFullPath(selectedFiles[0].fsObjectId));
+        };
+        fetchData();
+    }, []);
 
     return (
         <Info dir={dir}>
@@ -115,12 +127,16 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
             <InfoBox>
                 <InfoProperties isDeleted={false}></InfoProperties>
                 <InfoValues
-                    type="png"
-                    size="1.5MB"
-                    owner="Example"
-                    modified="13 באוק' 2022, אני"
-                    created="13 באוק' 2022, אני"
-                    parent="Example"
+                    type={selectedFiles[0].type}
+                    size={fileSizeFormatter(selectedFiles[0].size)}
+                    permission={selectedFiles[0].permission}
+                    modified={new Date(selectedFiles[0].stateUpdatedAt)
+                        .toLocaleString('en-GB', options)
+                        .replace(' at', ',')}
+                    created={new Date(selectedFiles[0].stateCreatedAt)
+                        .toLocaleString('en-GB', options)
+                        .replace(' at', ',')}
+                    parent={path}
                 ></InfoValues>
             </InfoBox>
         </Info>

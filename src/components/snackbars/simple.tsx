@@ -24,7 +24,7 @@ const SimpleSnackbar: React.FC = () => {
     const content = useSelector((state: any) => state.notifications.content);
 
     const handleClose = (event: React.SyntheticEvent | Event) => {
-        dispatch(notificationsActions.setSimpleOpen());
+        dispatch(notificationsActions.setSimpleOpen(''));
     };
 
     const action = (
