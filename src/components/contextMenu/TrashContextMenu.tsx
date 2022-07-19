@@ -6,6 +6,7 @@ import { deleteFile, getTrashFiles, restoreFile } from '../../api/files';
 import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
+import { popupActions } from '../../store/popups';
 import Remove from './buttons/Remove';
 import Restore from './buttons/Restore';
 
@@ -43,25 +44,8 @@ const TrashContextMenu = () => {
     };
 
     const handleRemove = async () => {
-        try {
-            await Promise.all(selectedFiles.map(deleteFile));
-
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                    : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-            dispatch(filesActions.setFiles(await getTrashFiles()));
-            dispatch(notificationsActions.setContent(message));
-            dispatch(notificationsActions.setSimpleOpen());
-        } catch (error) {
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FailedDeletingFile')}`
-                    : `${i18next.t('messages.FailedDeletingFiles')}`;
-            toast.error(message);
-        } finally {
-            handleClose();
-        }
+        dispatch(popupActions.setRemove());
+        handleClose();
     };
 
     return (
