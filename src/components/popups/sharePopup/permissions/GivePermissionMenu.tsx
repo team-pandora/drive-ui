@@ -74,17 +74,6 @@ const GivePermission: React.FC<props> = ({ permission }) => {
         }
     };
 
-    // const { isLoading } = useQuery('getCurrentUser', () => getCurrentUser(), {
-    //     onError: (error: IServerError) => {
-    //         toast.error('Failed loading current users');
-    //     },
-    //     onSuccess: (data) => {
-    //         setUser(data);
-    //     },
-    // });
-
-    // console.log('user', user);
-
     return (
         <Box>
             <FormControl hiddenLabel variant="filled" sx={{ m: 1, width: 150, height: 40, top: '4px' }} size="small">

@@ -136,8 +136,8 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
                 {!isGridView && <CalendarViewMonth onClick={isGridViewClick} />}
                 {isGridView && <Toc onClick={isGridViewClick} />}
             </IconButton>
-            <IconButton disabled={selectedFiles.length > 1}>
-                <InfoOutlined onClick={handleInfoOpen} />
+            <IconButton onClick={handleInfoOpen} disabled={!(selectedFiles.length >= 1)}>
+                <InfoOutlined />
             </IconButton>
         </Icons>
     );

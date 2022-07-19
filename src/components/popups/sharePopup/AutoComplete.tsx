@@ -28,7 +28,6 @@ const SearchAutoComplete = () => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language);
     const [searchedUsers, setSearchedUsers] = useState([]);
-    const selectedUsers = useSelector((state: any) => state.users.selectedUsers);
 
     const { isLoading, mutateAsync } = useMutation((query: string) => searchUsers(query), {
         onSuccess: (data: any) => {

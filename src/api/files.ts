@@ -263,3 +263,7 @@ export const copy = async (fsObjectId: string, name: string, parent: string) => 
         handleError(error, 'my-drive');
     }
 };
+
+export const generateShareLink = async (fsObjectId: string, permission: string, expirationInSec: number) => {
+    return Axios.post(`/api/users/fs/${fsObjectId}/share/token`, { permission, expirationInSec });
+};

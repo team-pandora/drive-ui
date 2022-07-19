@@ -22,6 +22,5 @@ export const searchUsersByName = async (name: string) => {
 };
 
 export const getCurrentUser = async () => {
-    const res = await Axios.get(`api/users/user`);
-    return res.data;
+    return Axios.get(`api/users/user`);
 };

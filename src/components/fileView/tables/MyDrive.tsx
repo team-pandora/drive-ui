@@ -1,14 +1,15 @@
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
-import { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MyDriveI } from '../../../data/fakedata';
+import { globalActions } from '../../../store/global';
 import { fileSizeFormatter } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
+import BackgroundMainMenu from '../../layout/mainMenu/BackgroundMainMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/MyDriveHeader';
@@ -22,27 +23,32 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
     const history = useHistory();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
-
     const selectedFiles = useSelector((state: any) => state.files.selected);
+    const backgroundMenu = useSelector((state: any) => state.global.backgroundMenu);
 
     const [order, setOrder] = useState<Order>('asc');
     const [orderBy, setOrderBy] = useState<keyof MyDriveI>('owner');
     const [page, setPage] = useState(0);
     const rowsPerPage = 100;
 
-    const onDrop = useCallback((acceptedFiles: any) => {
-        acceptedFiles.forEach((file: any) => {
-            console.log(file);
-            // createFile(file);
-        });
-    }, []);
-
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });
-
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MyDriveI) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
+    };
+
+    const backgroundMainMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+        dispatch(globalActions.setBackgroundMenuPosition({ x: event.clientX, y: event.clientY }));
+        dispatch(globalActions.setBackgroundMenu());
+    };
+
+    const tableRowRightClick = () => {
+        // When row is clicked, background menu not supposed to appear.
+        dispatch(globalActions.setBackgroundMenu());
+    };
+
+    const closeBackgroundMainMenu = () => {
+        dispatch(globalActions.setBackgroundMenu());
     };
 
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
@@ -54,7 +60,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
             return (
                 <TableRow
                     sx={{
-                        backgroundColor: isDragActive ? '#e0e0e0' : 'white',
+                        backgroundColor: 'white',
                     }}
                     hover
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
@@ -90,18 +96,61 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
             );
         });
 
+    // TODO: scroll
+    const listInnerRef = useRef();
+    const onScroll = () => {
+        if (listInnerRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+            if (scrollTop + clientHeight === scrollHeight) {
+                console.log('reached bottom');
+            }
+        }
+    };
+
     return (
-        <Box {...getRootProps()}>
-            <input {...getInputProps()} />
-            <Paper elevation={0} sx={{ mb: 2 }}>
-                <TableContainer sx={{ maxHeight: 800 }}>
+        <Box sx={{ width: '100%', height: '100%' }} onContextMenu={backgroundMainMenuClick} ref={listInnerRef}>
+            <Paper elevation={0} sx={{ mb: 2 }} onContextMenu={tableRowRightClick}>
+                <TableContainer
+                    onScroll={onScroll}
+                    sx={{
+                        maxHeight: '87vh',
+                        '&::-webkit-scrollbar': {
+                            height: '16px',
+                            overflow: 'visible',
+                            width: '16px',
+                        },
+                        '&::-webkit-scrollbar-button': {
+                            height: 0,
+                            width: 0,
+                        },
+                        '&::-webkit-scrollbar-corner': {
+                            background: 'transparent',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            backgroundColor: 'rgba(0,0,0,.2)',
+                            backgroundClip: 'padding-box',
+                            border: 'solid transparent',
+                            borderWidth: '1px 6px 1px 1px',
+                            minHeight: '28px',
+                            padding: '100px 0 0',
+                            '-webkit-box-shadow': 'inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%)',
+                            boxShadow: 'inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%)',
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            backgroundClip: 'padding-box',
+                            border: 'solid transparent',
+                            borderWidth: '0 4px 0 0',
+                        },
+                    }}
+                >
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
                         <TableBody>{rowFiles}</TableBody>
                     </Table>
                 </TableContainer>
+                <ContextMenu page="MyDrive" />
             </Paper>
-            <ContextMenu page="MyDrive" />
+            <BackgroundMainMenu handleClose={closeBackgroundMainMenu} showMenu={backgroundMenu} />
         </Box>
     );
 };

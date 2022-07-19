@@ -12,8 +12,7 @@ const SBox = styled(Box)({
 });
 
 const SearchUsers = () => {
-    const selectedUsers = useSelector((state: any) => state.users.users);
-
+    const selectedUsers = useSelector((state: any) => state.users.selectedUsers);
     return (
         <SBox>
             <SearchAutoComplete />

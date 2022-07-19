@@ -1,18 +1,22 @@
-import { Box, styled } from '@mui/material';
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
+import { Box, Snackbar, styled } from '@mui/material';
 import i18next from 'i18next';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getFiles } from '../api/files';
+import { getFiles, uploadFile } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
-import Grid from '../components/fileView/grids';
+import Grid from '../components/fileView/grids/index';
 import Table from '../components/fileView/tables/MyDrive';
 import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
 import { filesActions } from '../store/files';
+import { notificationsActions } from '../store/notifications';
 
 // TODO:
 const SBox = styled(Box)({
@@ -66,16 +70,54 @@ const MyDrive = () => {
         <></>
     );
 
+    const onDrop = useCallback(async (acceptedFiles: any) => {
+        const filesWithStatus = acceptedFiles.map((file: any) => {
+            return { name: file.name, status: 'uploading' };
+        });
+        console.log('hello', filesWithStatus);
+
+        dispatch(filesActions.setUploaded(filesWithStatus));
+        dispatch(notificationsActions.setUploadOpen());
+
+        for (const file of acceptedFiles) {
+            try {
+                await uploadFile(file, folderId);
+                dispatch(filesActions.setFiles(await getFiles(folderId)));
+                dispatch(filesActions.setUploadedDone(file));
+            } catch (error) {
+                console.log(error);
+                dispatch(filesActions.setUploadedFailed(file));
+            }
+        }
+    }, []);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });
+
     return (
         <>
-            <Box flex={4} paddingTop={2} padding={2}>
-                {/* TODO: */}
+            <Box
+                flex={4}
+                p={2}
+                style={{
+                    backgroundColor: 'white',
+                    // height: '830px',
+                }}
+                {...getRootProps()}
+            >
+                <input {...getInputProps()} />
                 <TableMenuHeader title={i18next.t('titles.MyDrive')} />
-                {isLoading ? loadingAnimation : isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
                 <ToastContainer position="bottom-right" />
+                {isDragActive && (
+                    <Snackbar
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                        open={true}
+                        message="קבצים שמשוחררים כאן ייעלו מידיית לכאן"
+                    ></Snackbar>
+                )}
+                <SimpleSnackbar />
+                <StatusSnackbar />
             </Box>
-            <SimpleSnackbar />
-            <StatusSnackbar />
         </>
     );
 };

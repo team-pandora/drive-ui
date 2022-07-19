@@ -1,46 +1,49 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useState } from 'react';
+import { EnTimeLimitObject, HeTimeLimitObject } from '../../../constance/index';
 import SelectMenus from './SelectMenu';
 
-type props = { handleCreate: (event: any, time: string, permission: string) => void };
+type props = { handleCreate: (time: string, permission: string) => void };
+
+const SBox = styled(Box)({
+    width: '100%',
+    height: '40px',
+    display: 'flex',
+    justifyContent: 'space-between',
+});
+
+const MenuItemsBox = styled(Box)({
+    width: '340px',
+    height: '40px',
+    display: 'flex',
+    justifyContent: 'space-between',
+});
 
 const CreateLink: React.FC<props> = ({ handleCreate }) => {
-    const [timeValue, setTimeValue] = useState('');
+    const dir = i18next.dir(i18next.language);
+    const [timeValue, setTimeValue] = useState<any>();
     const [permission, setPermission] = useState('');
 
-    // const timeLimit = ['5 min', '15 min', '30 hr', '1 hr', '1.5 hr'];
-    const timeLimit = [`5 דק'`, `15 דק'`, `30 דק'`, `1 ש'`, `1.5 ש'`];
     const permissions = [i18next.t('permissions.Read'), i18next.t('permissions.Write')];
+    const timeLimits = dir === 'rtl' ? HeTimeLimitObject : EnTimeLimitObject;
 
-    const selectedTimeLimit = (value: string) => {
-        setTimeValue(value);
+    const selectedTimeLimit = (value: any) => {
+        const keyOfOBject = Object.keys(timeLimits).find((key) => timeLimits[key] === value);
+        const currentDate = new Date();
+        setTimeValue(Math.floor(currentDate.getTime() / 1000) - Number(keyOfOBject));
     };
 
     const selectedPermission = (value: string) => {
-        setPermission(value);
+        setPermission(value === i18next.t('permissions.Read') ? 'read' : 'write');
     };
 
     return (
-        <Box
-            sx={{
-                width: '100%',
-                height: '40px',
-                display: 'flex',
-                justifyContent: 'space-between',
-            }}
-        >
-            <Box
-                sx={{
-                    width: '340px',
-                    height: '40px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                }}
-            >
+        <SBox>
+            <MenuItemsBox>
                 <SelectMenus
                     label={i18next.t('messages.ExpirationTime')}
-                    menuItems={timeLimit}
+                    menuItems={dir === 'rtl' ? Object.values(HeTimeLimitObject) : Object.values(EnTimeLimitObject)}
                     selectClick={selectedTimeLimit}
                 />
                 <SelectMenus
@@ -48,13 +51,13 @@ const CreateLink: React.FC<props> = ({ handleCreate }) => {
                     menuItems={permissions}
                     selectClick={selectedPermission}
                 />
-            </Box>
+            </MenuItemsBox>
             <Button
-                onClick={(event) => handleCreate(event, timeValue, permission)}
+                onClick={() => handleCreate(permission, timeValue)}
                 disabled={timeValue === '' || permission === ''}
                 sx={{ color: '#4285f4', margin: '0px 1%', textTransform: 'none' }}
             >{`${i18next.t('buttons.CreateLink')}`}</Button>
-        </Box>
+        </SBox>
     );
 };
 
