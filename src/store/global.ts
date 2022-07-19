@@ -9,6 +9,8 @@ const globalSlice = createSlice({
         anchorEl: null,
         contextMenu: false,
         contextMenuPosition: { x: 0, y: 0 } || null,
+        backgroundMenu: false,
+        backgroundMenuPosition: { x: 0, y: 0 } || null,
         isGridView: getCookieValue('isGridView') === 'true',
     },
     reducers: {
@@ -27,6 +29,12 @@ const globalSlice = createSlice({
         setIsGridView: (state) => {
             state.isGridView = !state.isGridView;
             document.cookie = `isGridView=${state.isGridView}`;
+        },
+        setBackgroundMenuPosition: (state, action) => {
+            state.backgroundMenuPosition = action.payload;
+        },
+        setBackgroundMenu: (state) => {
+            state.backgroundMenu = !state.backgroundMenu;
         },
     },
 });

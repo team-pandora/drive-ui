@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { shareFile } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
+import { usersActions } from '../../../store/users';
 import Owners from './Owners';
 import SearchUsers from './SearchUsers';
 
@@ -59,9 +60,11 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
         {
             onSuccess: (data: any) => {
                 toast.success('Successfully shared users to file');
+                dispatch(usersActions.setSelectedUsers([]));
             },
             onError: (error: any) => {
                 toast.error(`Failed sharing files `);
+                // dispatch(usersActions.setSelectedUsers([]));
             },
         },
     );

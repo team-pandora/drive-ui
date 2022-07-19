@@ -287,3 +287,7 @@ export const getFullPath = async (fsObjectId: string) => {
         handleError(error, window.location.pathname.slice(1));
     }
 };
+
+export const generateShareLink = async (fsObjectId: string, permission: string, expirationInSec: number) => {
+    return Axios.post(`/api/users/fs/${fsObjectId}/share/token`, { permission, expirationInSec });
+};

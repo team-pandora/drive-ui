@@ -13,7 +13,9 @@ import {
 } from '@mui/material';
 import i18next from 'i18next';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleErrorMsg } from '../../../api/error';
+import { generateShareLink } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
 import CreateLink from './CreateLink';
 
@@ -35,11 +37,11 @@ const SLinkBox = styled(Box)({
 const WarningMessage = styled(Typography)({
     width: '560px',
     height: '30px',
-    fontSize: '14px',
+    fontSize: '16px',
     display: 'flex',
     alignItems: 'center',
     fontWeight: 'bold',
-    color: '#ff3b3b',
+    color: '#800080',
 });
 
 type props = { isOpen: boolean; handleChange: () => void };
@@ -47,17 +49,28 @@ type props = { isOpen: boolean; handleChange: () => void };
 const ShareLink: React.FC<props> = ({ isOpen, handleChange }) => {
     const dispatch = useDispatch();
     const dir = i18next.dir(i18next.language);
-    const handleFocus = (event: any) => event.target.select();
+    const handleFocus = (event: any) => {
+        // TODO: add copy to clipboard
+        event.target.select();
+    };
+
+    const selectedFiles = useSelector((state: any) => state.files.selected);
+
     const [link, setLink] = useState('');
 
-    const handleCreate = (time: string, permission: string) => {
-        // create link
-        setLink('https://drive.google.com/drive/folders/1la4wYAwz9mtHcySorx4yMF1Zr1AqyJbd?usp=sharing');
+    const handleCreate = async (permission: string, time: any) => {
+        const { fsObjectId } = selectedFiles[0];
+        generateShareLink(fsObjectId, permission, time)
+            .then((res) => {
+                setLink(`localhost/api/users/fs/${fsObjectId}/permission/token?token=${res.data.token}`);
+            })
+            .catch(handleErrorMsg('Failed creating link'));
     };
 
     const handleFinish = () => {
         dispatch(popupActions.setShare());
     };
+
     return (
         <Accordion expanded={!isOpen} onChange={handleChange} dir={dir}>
             <AccordionSummary
@@ -85,7 +98,7 @@ const ShareLink: React.FC<props> = ({ isOpen, handleChange }) => {
                             <>
                                 <SLinkBox>
                                     <WarningMessage>
-                                        <PriorityHigh sx={{ margin: '10px', color: '#ff3b3b' }} />
+                                        <PriorityHigh sx={{ margin: '10px', color: '#800080' }} />
                                         {`${i18next.t('alerts.ShareLinkWarning')}`}
                                     </WarningMessage>
                                     <InputBase

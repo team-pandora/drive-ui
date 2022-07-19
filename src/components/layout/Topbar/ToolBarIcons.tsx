@@ -1,10 +1,9 @@
 import { Box, styled } from '@mui/material';
+import { useSelector } from 'react-redux';
 import getRandomColor from '../../../utils/time';
 import UserAvatar from '../Avatar';
 import Help from './Help';
 import Settings from './Settings';
-
-const userColor = getRandomColor();
 
 const Icons = styled(Box)(() => ({
     display: 'flex',
@@ -13,15 +12,14 @@ const Icons = styled(Box)(() => ({
 }));
 
 const ToolBarIcons = () => {
-    // TODO: get user data
-    const name = 'John Doe';
-    const mail = 'maya.fisher@gmail,com';
+    const currentUser = useSelector((state: any) => state.users.user);
+    const userColor = getRandomColor(currentUser.fullName);
 
     return (
         <Icons>
             <Settings />
             <Help />
-            <UserAvatar name={name} color={userColor} isDisabled={false} />
+            <UserAvatar name={currentUser.fullName} color={userColor} isDisabled={false} />
         </Icons>
     );
 };

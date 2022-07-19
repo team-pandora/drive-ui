@@ -5,9 +5,9 @@ import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getPermittedUsers } from '../../../api/files';
-import { getCurrentUser } from '../../../api/users';
 import { IServerError } from '../../../utils/types';
 import UserDetail from './UserDetails';
+import getRandomColor from '../../../utils/time';
 
 const OwnersBox = styled(Box)({
     marginTop: '2.5%',
@@ -17,20 +17,9 @@ const OwnersBox = styled(Box)({
 const Owners = () => {
     const [permittedUsers, setPermittedUsers] = useState<any[]>([]);
     const selectedFiles = useSelector((state: any) => state.files.selected);
-    // TODO: get current user from store
-    const [currentUser, setUser] = useState<any>();
     const [myPermission, setMyPermission] = useState<string>('');
+    const currentUser = useSelector((state: any) => state.users.user);
 
-    useQuery('getCurrentUser', () => getCurrentUser(), {
-        onError: (error: IServerError) => {
-            toast.error('Failed loading current users');
-        },
-        onSuccess: (data) => {
-            setUser(data);
-        },
-    });
-
-    const dispatch = useDispatch();
     const { isLoading } = useQuery('permittedUsers', () => getPermittedUsers(selectedFiles[0].fsObjectId), {
         onError: (error: IServerError) => {
             toast.error('Failed loading shared users');
@@ -56,7 +45,7 @@ const Owners = () => {
                                 fullName: user.user.fullName,
                                 mail: user.user.mail,
                                 permission: user.state.permission,
-                                color: 'lightblue',
+                                color: getRandomColor(user.user.fullName),
                             }}
                         />
                     );

@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+import { toast } from 'react-toastify';
 
 export const handleError = (error: any, relayState: string) => {
     if (error.request?.status === StatusCodes.UNAUTHORIZED) {
@@ -6,4 +7,9 @@ export const handleError = (error: any, relayState: string) => {
         return null;
     }
     throw new Error('Something went wrong');
+};
+
+export const handleErrorMsg = (message: string) => (error: any) => {
+    console.log(`${message}. error: ${error}`);
+    toast.error(`${message}`);
 };
