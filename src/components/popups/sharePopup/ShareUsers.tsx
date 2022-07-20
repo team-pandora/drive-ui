@@ -62,7 +62,7 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
         {
             onSuccess: () => {
                 toast.success(`${i18next.t('messages.PermissionChanged')}`);
-                dispatch(notificationsActions.setContent('message'));
+                dispatch(notificationsActions.setSimpleOpen('message'));
                 dispatch(usersActions.setSelectedUsers([]));
             },
             onError: handleErrorMsg('Failed sharing files'),
