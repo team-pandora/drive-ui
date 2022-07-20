@@ -54,3 +54,10 @@ export const getRootPath = (file: any) => {
     }
     return `shared`;
 };
+
+export const getFileType = (file: any) => {
+    if (file.type === 'file') {
+        return file.name.split('.').at(-1) === file.name ? 'file' : file.name.split('.').at(-1);
+    }
+    return file.type;
+};
