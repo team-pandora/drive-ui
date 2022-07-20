@@ -1,7 +1,7 @@
 import { Box, Button, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { handleErrorMsg } from '../../../api/error';
 import { deleteFile, getTrashFiles } from '../../../api/files';
 import { filesActions } from '../../../store/files';
 import { notificationsActions } from '../../../store/notifications';
@@ -37,24 +37,22 @@ const RemoveBody: React.FC = () => {
     };
 
     const onSubmit = async () => {
-        try {
-            await Promise.all(selectedFiles.map(deleteFile));
+        const errorMessage =
+            selectedFiles.length === 1
+                ? `${i18next.t('messages.FailedDeletingFile')}`
+                : `${i18next.t('messages.FailedDeletingFiles')}`;
+        const successMessage =
+            selectedFiles.length === 1
+                ? `${i18next.t('messages.FileDeletedSuccessfully')}`
+                : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
 
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                    : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-            dispatch(filesActions.setFiles(await getTrashFiles()));
-            dispatch(notificationsActions.setSimpleOpen(message));
-        } catch (error) {
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FailedDeletingFile')}`
-                    : `${i18next.t('messages.FailedDeletingFiles')}`;
-            toast.error(message);
-        } finally {
-            handleClose();
-        }
+        Promise.all(selectedFiles.map(deleteFile))
+            .then(async () => {
+                dispatch(filesActions.setFiles(await getTrashFiles()));
+                dispatch(notificationsActions.setSimpleOpen(successMessage));
+            })
+            .catch(handleErrorMsg(errorMessage, 'trash'))
+            .finally(() => handleClose());
     };
 
     const content =

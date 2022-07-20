@@ -64,7 +64,7 @@ const ShareLink: React.FC<props> = ({ isOpen, handleChange }) => {
             .then((res) => {
                 setLink(`localhost/api/users/fs/${fsObjectId}/permission/token?token=${res.data.token}`);
             })
-            .catch(handleErrorMsg('Failed creating link'));
+            .catch(handleErrorMsg('Failed creating link', window.location.pathname.slice(1)));
     };
 
     const handleFinish = () => {

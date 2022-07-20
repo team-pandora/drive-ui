@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import { handleErrorMsg } from './api/error';
 import { getFiles } from './api/files';
 import { getCurrentUser } from './api/users';
 import Sidebar from './components/layout/sideNav';
@@ -27,12 +28,11 @@ function App() {
     };
 
     const { isLoading: isLoadingFiles } = useQuery('getFiles', () => getFiles('null'), {
-        onError: (error) => {
-            console.log('error:', error);
-        },
+        onError: handleErrorMsg('Failed loading files', window.location.pathname.slice(1)),
         onSuccess: (data) => {
             dispatch(filesActions.setFiles(data));
         },
+        retry: false,
     });
 
     useEffect(() => {

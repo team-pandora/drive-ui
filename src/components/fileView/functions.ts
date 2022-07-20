@@ -62,7 +62,7 @@ export const handleContextMenuClick = (
     dispatch(globalActions.setContextMenuPosition({ x: event.clientX, y: event.clientY }));
 };
 
-export const handleDoubleClick = (event: any, file: any, history: any, dispatch: any) => {
+export const handleDoubleClick = async (event: any, file: any, history: any, dispatch: any) => {
     if (file.type === 'folder') {
         history.push(`/folder/${file.fsObjectId}`);
         dispatch(filesActions.setHierarchy({ type: 'push', content: { id: file.fsObjectId, name: file.name } }));
