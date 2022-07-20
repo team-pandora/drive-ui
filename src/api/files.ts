@@ -211,22 +211,12 @@ export const getUser = async () => {
 };
 
 export const getPermittedUsers = async (fsObjectId: string) => {
-    try {
-        const response = await Axios.get(`/api/users/fs/${fsObjectId}/shared`);
-        const data = await response.data;
-        return data;
-    } catch (error: any) {
-        handleError(error, 'my-drive');
-    }
+    const { data } = await Axios.get(`/api/users/fs/${fsObjectId}/shared`);
+    return data;
 };
 
 export const shareFile = async (fsObjectId: string, userId: string, permission: string) => {
-    try {
-        const response = await Axios.post(`http://localhost/api/users/fs/${fsObjectId}/share`, { userId, permission });
-        return response.data;
-    } catch (error: any) {
-        handleError(error, 'my-drive');
-    }
+    await Axios.post(`http://localhost/api/users/fs/${fsObjectId}/share`, { userId, permission });
 };
 
 export const getQuota = async () => {

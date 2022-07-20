@@ -111,7 +111,8 @@
     "FilesRestoredSuccessfully": "Files restored successfully",
     "FailedRestoreFile": "Failed restoring the file",
     "FailedRestoreFiles": "Failed restoring the files",
-    "SearchHelp": "Search for users by name, mail or T"
+    "SearchHelp": "Search for users by name, mail or T",
+    "PermissionChanged": "Access updated"
   },
   "alerts": {
     "ShareLinkWarning": "The link will be available for 24 hours. After that, it will be deleted"

@@ -1,6 +1,6 @@
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { MyDriveI } from '../../../data/fakedata';
@@ -25,6 +25,9 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
     const locales = i18next.dir(i18next.language) === 'ltr' ? 'en-US' : 'he-IL';
     const selectedFiles = useSelector((state: any) => state.files.selected);
     const backgroundMenu = useSelector((state: any) => state.global.backgroundMenu);
+    // let startIndex = 0;
+    // let endIndex = 22;
+    const bring = 22;
 
     const [order, setOrder] = useState<Order>('asc');
     const [orderBy, setOrderBy] = useState<keyof MyDriveI>('owner');
@@ -51,7 +54,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
         dispatch(globalActions.setBackgroundMenu());
     };
 
-    const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
+    const rowFiles = stableSort(filesArray.slice(0, 22), getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file: any, index) => {
             const isItemSelected = isSelected(file, selectedFiles);
@@ -96,19 +99,17 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
             );
         });
 
-    // TODO: scroll
-    const listInnerRef = useRef();
-    const onScroll = () => {
-        if (listInnerRef.current) {
-            const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-            if (scrollTop + clientHeight === scrollHeight) {
-                console.log('reached bottom');
-            }
-        }
+    const onScroll = (event: any) => {
+        console.log(event.currentTarget.scrollTop, event.currentTarget.clientHeight);
+        // if (event.currentTarget.scrollTop >= 300) {
+        //     startIndex = endIndex;
+        //     endIndex += bring;
+        //     setPls(filesArray.slice(0, endIndex));
+        // }
     };
 
     return (
-        <Box sx={{ width: '100%', height: '100%' }} onContextMenu={backgroundMainMenuClick} ref={listInnerRef}>
+        <Box sx={{ width: '100%', height: '100%' }} onContextMenu={backgroundMainMenuClick}>
             <Paper elevation={0} sx={{ mb: 2 }} onContextMenu={tableRowRightClick}>
                 <TableContainer
                     onScroll={onScroll}
