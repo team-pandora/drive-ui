@@ -183,3 +183,7 @@ export const getFullPath = async (fsObjectId: string) => {
 export const generateShareLink = async (fsObjectId: string, permission: string, expirationInSec: number) => {
     return Axios.post(`/api/users/fs/${fsObjectId}/share/token`, { permission, expirationInSec });
 };
+
+export const getOwnerOfFile = async (fsObjectId: string) => {
+    return Axios.get(`/api/users/fs/${fsObjectId}/owner`);
+};

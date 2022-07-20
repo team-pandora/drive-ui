@@ -16,6 +16,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { handleErrorMsg } from '../../../api/error';
+import { getOwnerOfFile } from '../../../api/files';
 import { SharedI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
@@ -39,7 +40,7 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
     const [orderBy, setOrderBy] = React.useState<keyof SharedI>('name');
     const [page, setPage] = React.useState(0);
     const [fileOwner, setFileOwner] = React.useState(null);
-
+    const [owner, setOwner] = React.useState('');
     const rowsPerPage = 100;
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
@@ -48,13 +49,21 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
         setOrderBy(property);
     };
 
+    const getOwner = async (fsObjectId: string) => {
+        getOwnerOfFile(fsObjectId)
+            .then((res) => {
+                setOwner(res.data.fullName);
+            })
+            .catch(handleErrorMsg('Failed creating link'));
+    };
+
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file: any, index) => {
             const isItemSelected = isSelected(file, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.stateCreatedAt, locales);
-            // getOwnerOfFile(file.fsObjectId);
+            getOwner(file.fsObjectId);
             return (
                 <TableRow
                     hover
@@ -68,7 +77,9 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
                     key={file.fsObjectUpdatedAt}
                     selected={isItemSelected}
                 >
-                    <TableCell padding="checkbox">{FileType(file.type)}</TableCell>
+                    <TableCell padding="checkbox">
+                        {FileType(file.type === 'folder' ? 'shared-folder' : file.type)}
+                    </TableCell>
                     <TableCell
                         component="th"
                         id={labelId}
@@ -89,16 +100,29 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
                                 width: '115px',
                             }}
                         >
-                            <Tooltip title="user name">
+                            {/* <Tooltip
+                                // TransitionComponent={Zoom}
+                                title={<Typography variant="subtitle2">{owner}</Typography>}
+                                // placement="bottom"
+                            >
+                                <AvatarHoverDetails
+                                    name={'maya'}
+                                    mail={'user.mail'}
+                                    color={'user.color'}
+                                    isDisabled={false}
+                                />
+                            </Tooltip> */}
+
+                            {/* <Tooltip TransitionComponent={Zoom} title="user name">
                                 <Avatar
                                     sx={{
                                         width: '23px',
                                         height: '23px',
                                     }}
                                 />
-                            </Tooltip>
+                            </Tooltip> */}
 
-                            <Typography variant="body2">{'maya fisher'}</Typography>
+                            <Typography variant="body2">{owner}</Typography>
                         </Stack>
                     </TableCell>
 

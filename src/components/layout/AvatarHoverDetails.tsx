@@ -1,9 +1,9 @@
-import { Avatar, IconButton, ListItem, Menu, styled, Typography } from '@mui/material';
-import { Fragment, useState } from 'react';
+import { Avatar, styled } from '@mui/material';
+import { useState } from 'react';
 
 const AvatarIcon = styled(Avatar)({
-    width: '32px',
-    height: '32px',
+    width: '26px',
+    height: '26px',
 });
 
 const AvatarIconFull = styled(Avatar)({
@@ -28,7 +28,7 @@ type props = {
     isDisabled: boolean;
 };
 
-const UserAvatar: React.FC<props> = ({ name, mail, color, isDisabled }) => {
+const AvatarHoverDetails: React.FC<props> = ({ name, mail, color, isDisabled }) => {
     const [showAvatarMenu, setShowAvatarMenu] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -43,11 +43,18 @@ const UserAvatar: React.FC<props> = ({ name, mail, color, isDisabled }) => {
     };
 
     return (
-        <Fragment>
-            <IconButton disabled={isDisabled} onClick={handleClick}>
-                <AvatarIcon {...stringAvatar(name, color)} />
-            </IconButton>
-            <Menu
+        <>
+            <Avatar
+                {...stringAvatar(name, color)}
+                sx={{
+                    width: '28px',
+                    height: '28px',
+                }}
+            />
+            {/* </Tooltip> */}
+            {/* <AvatarIcon {...stringAvatar(name, color)} /> */}
+            {/* </IconButton> */}
+            {/* <Menu
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={showAvatarMenu}
@@ -62,16 +69,13 @@ const UserAvatar: React.FC<props> = ({ name, mail, color, isDisabled }) => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <ListItem>
-                    <AvatarIconFull {...stringAvatar(name, color)} sx={{ margin: 'auto', bgcolor: color }} />
-                </ListItem>
                 <ListItem sx={{ display: 'block', textAlign: 'center' }}>
                     <Typography sx={{ fontWeight: '500', color: '#202124' }}>{name}</Typography>
                     <Typography sx={{ fontSize: 'small', color: '#5f6368' }}>{mail}</Typography>
                 </ListItem>
-            </Menu>
-        </Fragment>
+            </Menu> */}
+        </>
     );
 };
 
-export default UserAvatar;
+export default AvatarHoverDetails;

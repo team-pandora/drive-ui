@@ -19,7 +19,7 @@ const ToolBarIcons = () => {
         <Icons>
             <Settings />
             <Help />
-            <UserAvatar name={currentUser.fullName} color={userColor} isDisabled={false} />
+            <UserAvatar name={currentUser.fullName} mail={currentUser.mail} color={userColor} isDisabled={false} />
         </Icons>
     );
 };

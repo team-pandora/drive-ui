@@ -14,17 +14,17 @@ const InfoDialog = () => {
     return (
         <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
             <InfoBody
-                owner={{ name: 'Owner', color: 'turquoise' }}
+                owner={{ name: 'Owner', mail: 'maya.fisher@gmail.com', color: 'turquoise' }}
                 users={[
-                    { name: 'C', color: '#48a1ab' },
-                    { name: 'F', color: '#52b2bb' },
-                    { name: 'Test', color: '#0c7684' },
-                    { name: 'Maya', color: '#1290b3' },
-                    { name: 'A', color: '#14678d' },
-                    { name: 'Test', color: '#124663' },
-                    { name: 'B', color: 'purple' },
-                    { name: 'Test', color: 'orange' },
-                    { name: 'N', color: 'purple' },
+                    { name: 'C', mail: 'maya.fisher@gmail.com', color: '#48a1ab' },
+                    { name: 'F', mail: 'maya.fisher@gmail.com', color: '#52b2bb' },
+                    { name: 'Test', mail: 'maya.fisher@gmail.com', color: '#0c7684' },
+                    { name: 'Maya', mail: 'maya.fisher@gmail.com', color: '#1290b3' },
+                    { name: 'A', mail: 'maya.fisher@gmail.com', color: '#14678d' },
+                    { name: 'Test', mail: 'maya.fisher@gmail.com', color: '#124663' },
+                    { name: 'B', mail: 'maya.fisher@gmail.com', color: 'purple' },
+                    { name: 'Test', mail: 'maya.fisher@gmail.com', color: 'orange' },
+                    { name: 'N', mail: 'maya.fisher@gmail.com', color: 'purple' },
                 ]}
             />
         </GenericDialog>

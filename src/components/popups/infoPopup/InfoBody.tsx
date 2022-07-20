@@ -75,10 +75,12 @@ const options: any = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-
 type props = {
     owner: {
         name: string;
+        mail: string;
         color: string;
     };
     users: {
         name: string;
+        mail: string;
         color: string;
     }[];
 };
@@ -108,10 +110,10 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
             <Divider />
             <InfoText>{`${i18next.t('titles.PeopleWithAccess')}`}</InfoText>
             <InfoAccess>
-                <UserAvatar name={owner.name} color={owner.color} isDisabled={false}></UserAvatar>
+                <UserAvatar name={owner.name} mail={owner.mail} color={owner.color} isDisabled={false}></UserAvatar>
                 <Divider orientation="vertical" flexItem sx={{ borderRightWidth: 2, marginRight: '5px' }} />
-                {users.slice(0, sharedUserLimit).map((user: { name: string; color: string }) => {
-                    return <UserAvatar name={user.name} color={user.color} isDisabled={false} />;
+                {users.slice(0, sharedUserLimit).map((user: { name: string; mail: string; color: string }) => {
+                    return <UserAvatar name={user.name} mail={user.mail} color={user.color} isDisabled={false} />;
                 })}
                 {<AvatarList name={`+`} color={''} extraUsers={users.slice(8, users.length)} />}
             </InfoAccess>

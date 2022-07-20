@@ -17,7 +17,7 @@ const UserDetail: React.FC<props> = ({ user }) => {
     const dir = i18next.dir(i18next.language);
     return (
         <UserTab sx={{ direction: dir }}>
-            <UserAvatar name={user.fullName} color={user.color} isDisabled={false} />
+            <UserAvatar name={user.fullName} mail={user.mail} color={user.color} isDisabled={false} />
             <ListItemText sx={{}}>
                 <Typography variant="body2">{user.fullName}</Typography>
                 <Typography variant="caption">{user.mail}</Typography>

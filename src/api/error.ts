@@ -14,7 +14,7 @@ export const handleErrorMsg = (message: string, relayState: string) => (error: a
     console.log('hhhhhh');
     if (error.request?.status === StatusCodes.UNAUTHORIZED) {
         document.location.href = `/auth/login?relayState=/${relayState}`;
-        return null;
+        return;
     }
     console.log(`${message}. error: ${error}`);
     toast.error(`${message}`);

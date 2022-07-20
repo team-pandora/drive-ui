@@ -40,6 +40,7 @@ type props = {
     color: string;
     extraUsers: {
         name: string;
+        mail: string;
         color: string;
     }[];
 };
@@ -84,14 +85,14 @@ const AvatarList: React.FC<props> = ({ name, color, extraUsers }) => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                {extraUsers.map((user: { name: string; color: string }, index) => {
+                {extraUsers.map((user: { name: string; mail: string; color: string }, index) => {
                     return (
                         <SBox>
                             <TextBoxStyle>
                                 <Typography sx={{ fontWeight: '500', color: '#202124' }}>{user.name}</Typography>
                                 <Typography sx={{ fontSize: 'small', color: '#5f6368' }}>יכול/ה לערוך</Typography>
                             </TextBoxStyle>
-                            <UserAvatar name={user.name} color={user.color} isDisabled={true} />
+                            <UserAvatar name={user.name} mail={user.mail} color={user.color} isDisabled={true} />
                         </SBox>
                     );
                 })}
