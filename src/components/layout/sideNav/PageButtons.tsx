@@ -34,7 +34,7 @@ const PagesButtons = () => {
 
     return (
         <SBox>
-            <List>
+            <List onDragStart={(event) => event.preventDefault()}>
                 <NavButton path="my-drive" label={i18next.t('sideBar.myDrive')}>
                     <Home />
                 </NavButton>

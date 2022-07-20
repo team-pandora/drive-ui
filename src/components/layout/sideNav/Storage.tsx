@@ -58,7 +58,7 @@ const Storage: React.FC<props> = ({ used, limit }) => {
                     <QuotaOutlineBox>
                         <QuotaFillBox sx={{ width: `${quotaUsed}%` }} />
                     </QuotaOutlineBox>
-                    <Typography variant="caption" color={'#5f6368'}>
+                    <Typography variant="caption" color={'#5f6368'} sx={{ userSelect: 'none' }}>
                         {`${i18next.t('messages.Quota', { used, limit })}`}
                     </Typography>
                     <IncreaseQuotaButton>{`${i18next.t('buttons.Increase')}`}</IncreaseQuotaButton>

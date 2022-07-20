@@ -11,12 +11,14 @@ const SToolbar = styled(Toolbar)({
 const SLogo = styled('img')({
     height: '75px',
     width: '75px',
+    userSelect: 'none',
 });
 
 const Title = styled('img')({
     height: '48px',
     width: '130px',
     margin: 'auto',
+    userSelect: 'none',
 });
 
 const SLogoBox = styled(Box)({
@@ -35,12 +37,12 @@ const SAppBar = styled(AppBar)({
 
 const TopBar = () => {
     return (
-        <SAppBar>
+        <SAppBar onDragStart={(event) => event.preventDefault()}>
             <SToolbar>
                 <SLogoBox>
-                    <SLogo src={Logo} alt="drive-logo" />
+                    <SLogo src={Logo} alt="drive-logo" onDragStart={(event) => event.preventDefault()} />
                     <Box width="100%" height="100%">
-                        <Title src={title} alt="drive logo" />
+                        <Title src={title} alt="drive logo" onDragStart={(event) => event.preventDefault()} />
                     </Box>
                 </SLogoBox>
                 <SearchBar />

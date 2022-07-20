@@ -14,6 +14,7 @@ const Search = styled('div')(() => ({
     padding: '0 10px',
     borderRadius: 8,
     width: '100%',
+    userSelect: 'none',
 }));
 
 const PlaceHolderAndIcon = styled(Box)(() => ({

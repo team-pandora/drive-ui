@@ -96,6 +96,7 @@ const MyDrive = () => {
     return (
         <>
             <Box
+                sx={{ userSelect: 'none' }}
                 flex={4}
                 p={2}
                 style={{

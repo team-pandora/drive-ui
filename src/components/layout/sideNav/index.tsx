@@ -32,7 +32,7 @@ const Sidebar = () => {
     }, []);
 
     return (
-        <SBox onClick={ResetFileSelection}>
+        <SBox onClick={ResetFileSelection} onDragStart={(event) => event.preventDefault()}>
             <MainButton />
             <PageButtons />
             {used && limit && <Storage used={used} limit={limit} />}
