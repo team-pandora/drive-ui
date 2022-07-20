@@ -8,12 +8,14 @@ import {
     TableCell,
     TableContainer,
     TableRow,
+    Tooltip,
     Typography,
 } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { handleErrorMsg } from '../../../api/error';
 import { SharedI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
@@ -36,6 +38,8 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof SharedI>('name');
     const [page, setPage] = React.useState(0);
+    const [fileOwner, setFileOwner] = React.useState(null);
+
     const rowsPerPage = 100;
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
@@ -50,6 +54,7 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
             const isItemSelected = isSelected(file, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.stateCreatedAt, locales);
+            // getOwnerOfFile(file.fsObjectId);
             return (
                 <TableRow
                     hover
@@ -84,12 +89,14 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
                                 width: '115px',
                             }}
                         >
-                            <Avatar
-                                sx={{
-                                    width: '23px',
-                                    height: '23px',
-                                }}
-                            />
+                            <Tooltip title="user name">
+                                <Avatar
+                                    sx={{
+                                        width: '23px',
+                                        height: '23px',
+                                    }}
+                                />
+                            </Tooltip>
 
                             <Typography variant="body2">{'maya fisher'}</Typography>
                         </Stack>

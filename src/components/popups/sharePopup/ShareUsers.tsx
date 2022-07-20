@@ -15,7 +15,9 @@ import i18next from 'i18next';
 import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { handleErrorMsg } from '../../../api/error';
 import { shareFile } from '../../../api/files';
+import { notificationsActions } from '../../../store/notifications';
 import { popupActions } from '../../../store/popups';
 import { usersActions } from '../../../store/users';
 import Owners from './Owners';
@@ -58,14 +60,12 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
     const { isLoading, mutateAsync } = useMutation(
         (shareObject: any) => shareFile(shareObject.fsObjectId, shareObject.userId, shareObject.permission),
         {
-            onSuccess: (data: any) => {
-                toast.success('Successfully shared users to file');
+            onSuccess: () => {
+                toast.success(`${i18next.t('messages.PermissionChanged')}`);
+                dispatch(notificationsActions.setContent('message'));
                 dispatch(usersActions.setSelectedUsers([]));
             },
-            onError: (error: any) => {
-                toast.error(`Failed sharing files `);
-                // dispatch(usersActions.setSelectedUsers([]));
-            },
+            onError: handleErrorMsg('Failed sharing files'),
         },
     );
 

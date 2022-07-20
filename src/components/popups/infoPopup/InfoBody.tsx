@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFullPath } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
-import { fileSizeFormatter } from '../../../utils/files';
+import { fileSizeFormatter, getFileType } from '../../../utils/files';
 import UserAvatar from '../../layout/Avatar';
 import AvatarList from '../../layout/AvatarList';
 import { InfoProperties } from './InfoProperties';
@@ -128,7 +128,7 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
             <InfoBox>
                 <InfoProperties isDeleted={false}></InfoProperties>
                 <InfoValues
-                    type={file.type === 'file' ? file.name.split('.').at(-1) : file.type}
+                    type={getFileType(file)}
                     size={fileSizeFormatter(file.size)}
                     permission={file.permission}
                     modified={new Date(file.stateUpdatedAt).toLocaleString('en-GB', options).replace(' at', ',')}

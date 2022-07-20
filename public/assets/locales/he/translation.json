@@ -111,7 +111,8 @@
     "FilesRestoredSuccessfully": "הקבצים שוחזרו בהצלחה",
     "FailedRestoreFile": "שגיאה בשחזור הקובץ",
     "FailedRestoreFiles": "שגיאה בשחזור הקבצים",
-    "SearchHelp": "T חיפוש אנשים לפי שם, מייל או "
+    "SearchHelp": "T חיפוש אנשים לפי שם, מייל או ",
+    "PermissionChanged": "הרשאת הגישה עודכנה"
   },
   "alerts": {
     "ShareLinkWarning": "קישור לקבצים זהים לקישורים של מחשבים אחרים שלך ולא יכול לעזור לך לגשת"
