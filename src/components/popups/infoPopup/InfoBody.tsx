@@ -85,13 +85,13 @@ type props = {
 
 const InfoPopup: React.FC<props> = ({ owner, users }) => {
     const dir = i18next.dir(i18next.language);
-    const selectedFiles = useSelector((state: any) => state.files.selected);
+    const file = useSelector((state: any) => state.files.selected)[0];
     const dispatch = useDispatch();
     const [path, setPath] = useState<string | undefined | null>(undefined);
 
     useEffect(() => {
         const fetchData = async () => {
-            setPath(await getFullPath(selectedFiles[0].fsObjectId));
+            setPath(await getFullPath(file.fsObjectId));
         };
         fetchData();
     }, []);
@@ -99,7 +99,7 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
     return (
         <Info dir={dir}>
             <InfoHeader>
-                <Typography>{selectedFiles[0].name}</Typography>
+                <Typography>{file.name}</Typography>
             </InfoHeader>
             <Divider />
             <ImageBox>
@@ -128,15 +128,11 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
             <InfoBox>
                 <InfoProperties isDeleted={false}></InfoProperties>
                 <InfoValues
-                    type={selectedFiles[0].type}
-                    size={fileSizeFormatter(selectedFiles[0].size)}
-                    permission={selectedFiles[0].permission}
-                    modified={new Date(selectedFiles[0].stateUpdatedAt)
-                        .toLocaleString('en-GB', options)
-                        .replace(' at', ',')}
-                    created={new Date(selectedFiles[0].stateCreatedAt)
-                        .toLocaleString('en-GB', options)
-                        .replace(' at', ',')}
+                    type={file.type === 'file' ? file.name.split('.').at(-1) : file.type}
+                    size={fileSizeFormatter(file.size)}
+                    permission={file.permission}
+                    modified={new Date(file.stateUpdatedAt).toLocaleString('en-GB', options).replace(' at', ',')}
+                    created={new Date(file.stateCreatedAt).toLocaleString('en-GB', options).replace(' at', ',')}
                     parent={path}
                 ></InfoValues>
             </InfoBox>
