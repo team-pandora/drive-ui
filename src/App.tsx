@@ -50,10 +50,18 @@ function App() {
         document.addEventListener('contextmenu', handleContextMenu);
     }, []);
 
-    if (isLoadingUser || isLoadingFiles) {
+    if (isLoadingUser || isLoadingFiles || true) {
         return (
             // TODO: center icon
-            <div style={{ display: 'flex', justifyContent: 'center', width: '1500px', height: '500px' }}>
+            <div
+                style={{
+                    display: 'flex',
+                    height: '100vh',
+                    width: '50vw',
+                    marginLeft: '25%',
+                    justifyContent: 'center',
+                }}
+            >
                 <DriveAnimatedLogo />
             </div>
         );

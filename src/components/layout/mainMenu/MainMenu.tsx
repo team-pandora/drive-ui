@@ -84,7 +84,7 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
                 }}
                 dir={dir}
             >
-                <MenuList sx={{ width: 300 }} dense>
+                <MenuList sx={{ width: 300, outline: 'none', border: 'none' }} dense>
                     <Button onClick={handleNewFolderDialog} text={`${i18next.t('mainMenu.Folder')}`}>
                         <CreateNewFolderOutlined />
                     </Button>

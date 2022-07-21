@@ -37,6 +37,14 @@ const MyDrive = () => {
 
     const isLoading = useFiles('my-drive', folderId, getFiles);
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            console.log('asdasasdasd');
+
+            event.preventDefault();
+        }
+    };
+
     useEffect(() => {
         return history.listen((location) => {
             if (history.action === 'PUSH') {
@@ -95,7 +103,13 @@ const MyDrive = () => {
 
     return (
         <>
-            <Box sx={{ userSelect: 'none' }} flex={4} p={2} style={{}} {...getRootProps()}>
+            <Box
+                sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+                flex={4}
+                p={2}
+                style={{}}
+                {...getRootProps()}
+            >
                 <input {...getInputProps()} />
                 <TableMenuHeader title={i18next.t('titles.MyDrive')} />
                 {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
