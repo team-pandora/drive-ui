@@ -26,7 +26,7 @@ const Owners = () => {
             setPermittedUsers(data);
             setMyPermission(permittedUsers.find((user: any) => user.state.userId === currentUser.id).state.permission);
         },
-        onError: handleErrorMsg('Failed loading shared users'),
+        onError: handleErrorMsg('Failed loading shared users', 'my-drive'),
     });
 
     return (

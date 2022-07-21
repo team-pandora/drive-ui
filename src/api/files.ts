@@ -12,6 +12,11 @@ export const getFiles = async (parent: string) => {
     return (await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`)).data;
 };
 
+export const fetchFiles = async (parent: string, limit: number, pageParam: number) => {
+    const files = await getFiles(parent);
+    return files.slice(pageParam, pageParam + limit);
+};
+
 export const getSharedFiles = async (parent: string) => {
     return (
         await Axios.get(

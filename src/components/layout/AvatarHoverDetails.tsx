@@ -15,7 +15,7 @@ const AvatarIconFull = styled(Avatar)({
 function stringAvatar(name: string, color: string) {
     return {
         sx: {
-            bgcolor: `${color}`,
+            bgcolor: `${'pink'}`,
         },
         children: name[0],
     };
@@ -23,12 +23,10 @@ function stringAvatar(name: string, color: string) {
 
 type props = {
     name: string;
-    mail: string;
     color: string;
-    isDisabled: boolean;
 };
 
-const AvatarHoverDetails: React.FC<props> = ({ name, mail, color, isDisabled }) => {
+const AvatarHoverDetails: React.FC<props> = ({ name, color }) => {
     const [showAvatarMenu, setShowAvatarMenu] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -47,33 +45,10 @@ const AvatarHoverDetails: React.FC<props> = ({ name, mail, color, isDisabled }) 
             <Avatar
                 {...stringAvatar(name, color)}
                 sx={{
-                    width: '28px',
-                    height: '28px',
+                    width: '23px',
+                    height: '23px',
                 }}
             />
-            {/* </Tooltip> */}
-            {/* <AvatarIcon {...stringAvatar(name, color)} /> */}
-            {/* </IconButton> */}
-            {/* <Menu
-                anchorEl={anchorEl}
-                id="account-menu"
-                open={showAvatarMenu}
-                onClose={handleClose}
-                PaperProps={{
-                    elevation: 0,
-                    sx: {
-                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                        mt: 1.5,
-                    },
-                }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
-                <ListItem sx={{ display: 'block', textAlign: 'center' }}>
-                    <Typography sx={{ fontWeight: '500', color: '#202124' }}>{name}</Typography>
-                    <Typography sx={{ fontSize: 'small', color: '#5f6368' }}>{mail}</Typography>
-                </ListItem>
-            </Menu> */}
         </>
     );
 };

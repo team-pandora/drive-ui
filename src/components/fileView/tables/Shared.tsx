@@ -10,9 +10,11 @@ import {
     TableRow,
     Tooltip,
     Typography,
+    Zoom,
 } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
+import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { handleErrorMsg } from '../../../api/error';
@@ -41,6 +43,7 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
     const [page, setPage] = React.useState(0);
     const [fileOwner, setFileOwner] = React.useState(null);
     const [owner, setOwner] = React.useState('');
+    const [ownerMail, setOwnerMail] = React.useState('');
     const rowsPerPage = 100;
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
@@ -53,8 +56,9 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
         getOwnerOfFile(fsObjectId)
             .then((res) => {
                 setOwner(res.data.fullName);
+                setOwnerMail(res.data.mail);
             })
-            .catch(handleErrorMsg('Failed creating link'));
+            .catch(handleErrorMsg('Failed creating link', 'my-drive'));
     };
 
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
@@ -63,7 +67,6 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
             const isItemSelected = isSelected(file, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.stateCreatedAt, locales);
-            getOwner(file.fsObjectId);
             return (
                 <TableRow
                     hover
@@ -113,14 +116,31 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
                                 />
                             </Tooltip> */}
 
-                            {/* <Tooltip TransitionComponent={Zoom} title="user name">
+                            <Tooltip
+                                title={
+                                    <>
+                                        <Typography dir={i18next.dir(i18next.language)} variant="subtitle2">
+                                            {owner}
+                                        </Typography>
+                                        <Typography variant="subtitle2">{ownerMail}</Typography>
+                                    </>
+                                }
+                                placement="bottom"
+                                TransitionComponent={Zoom}
+                                // title="user name"
+                            >
                                 <Avatar
+                                    // {...stringAvatar(name, color)}
+                                    // children={owner[0]}
                                     sx={{
                                         width: '23px',
                                         height: '23px',
+                                        bgcolor: 'pink',
                                     }}
-                                />
-                            </Tooltip> */}
+                                >
+                                    <Typography variant="body1">{owner[0]}</Typography>
+                                </Avatar>
+                            </Tooltip>
 
                             <Typography variant="body2">{owner}</Typography>
                         </Stack>
