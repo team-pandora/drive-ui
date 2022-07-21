@@ -14,14 +14,13 @@ import {
 } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
-import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { handleErrorMsg } from '../../../api/error';
 import { getOwnerOfFile } from '../../../api/files';
 import { SharedI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
-import { ISOStringToDateString } from '../../../utils/time';
+import getRandomColor, { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
@@ -41,9 +40,9 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof SharedI>('name');
     const [page, setPage] = React.useState(0);
-    const [fileOwner, setFileOwner] = React.useState(null);
     const [owner, setOwner] = React.useState('');
     const [ownerMail, setOwnerMail] = React.useState('');
+    const [color, setColor] = React.useState('');
     const rowsPerPage = 100;
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
@@ -57,6 +56,7 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
             .then((res) => {
                 setOwner(res.data.fullName);
                 setOwnerMail(res.data.mail);
+                setColor(getRandomColor(owner));
             })
             .catch(handleErrorMsg('Failed creating link', 'my-drive'));
     };
@@ -67,6 +67,7 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
             const isItemSelected = isSelected(file, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.stateCreatedAt, locales);
+            getOwner(file.fsObjectId);
             return (
                 <TableRow
                     hover
@@ -103,19 +104,6 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
                                 width: '115px',
                             }}
                         >
-                            {/* <Tooltip
-                                // TransitionComponent={Zoom}
-                                title={<Typography variant="subtitle2">{owner}</Typography>}
-                                // placement="bottom"
-                            >
-                                <AvatarHoverDetails
-                                    name={'maya'}
-                                    mail={'user.mail'}
-                                    color={'user.color'}
-                                    isDisabled={false}
-                                />
-                            </Tooltip> */}
-
                             <Tooltip
                                 title={
                                     <>
@@ -127,15 +115,12 @@ const SharedTable: React.FC<props> = ({ filesArray }) => {
                                 }
                                 placement="bottom"
                                 TransitionComponent={Zoom}
-                                // title="user name"
                             >
                                 <Avatar
-                                    // {...stringAvatar(name, color)}
-                                    // children={owner[0]}
                                     sx={{
                                         width: '23px',
                                         height: '23px',
-                                        bgcolor: 'pink',
+                                        bgcolor: `${color}`,
                                     }}
                                 >
                                     <Typography variant="body1">{owner[0]}</Typography>
