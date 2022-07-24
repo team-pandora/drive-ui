@@ -81,7 +81,7 @@ const GridObject: React.FC<props> = ({
 
     return (
         // on key down not working
-        <Grid item xs={2} sm={2} md={2} key={index}>
+        <Grid item width="200px" key={index}>
             <ItemComponent
                 onClick={handleClick}
                 onContextMenu={handleContextMenu}

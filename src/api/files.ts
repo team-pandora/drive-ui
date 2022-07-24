@@ -54,7 +54,7 @@ export const getFavoriteFiles = async (parent: string) => {
 };
 
 export const getTrashFiles = async () => {
-    return (await Axios.get(`http://localhost/api/users/fs/query?trash=true`)).data;
+    return (await Axios.get(`http://localhost/api/users/fs/query?trash=true&trashRoot=true`)).data;
 };
 
 export const getStorageFiles = async () => {

@@ -8,7 +8,7 @@ const SBox = styled(Box)({
     height: '50px',
     maxHeight: '200px',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
 });
 
 const SearchUsers = () => {

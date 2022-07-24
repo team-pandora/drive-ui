@@ -9,7 +9,7 @@ export const getUser = async () => {
 };
 
 export const getSharedUsers = async (name: string) => {
-    if (name.length !== 0) {
+    if (name.length >= 2) {
         const res = await Axios.get(`api/users/users?query=${name}&source=es_name`);
         const data = await res.data;
         return data;
