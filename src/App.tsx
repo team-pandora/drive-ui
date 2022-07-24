@@ -50,7 +50,7 @@ function App() {
         document.addEventListener('contextmenu', handleContextMenu);
     }, []);
 
-    if (isLoadingUser || isLoadingFiles || true) {
+    if (isLoadingUser || isLoadingFiles) {
         return (
             // TODO: center icon
             <div
