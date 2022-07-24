@@ -25,6 +25,7 @@ import { ISOStringToDateString } from '../../../utils/time';
 import TrashContextMenu from '../../contextMenu/TrashContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
+import { NoFilesHeader } from '../NoFilesHeader';
 import TableHeader from '../tableHeaders/TrashHeader';
 
 type Order = 'asc' | 'desc';
@@ -40,9 +41,12 @@ const SBox = styled(Box)(() => ({
     borderRadius: '4px',
 }));
 
-type props = { filesArray: any[] };
+type props = {
+    filesArray: any[];
+    isLoading: boolean;
+};
 
-const TrashTable: React.FC<props> = ({ filesArray }) => {
+const TrashTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
@@ -118,6 +122,10 @@ const TrashTable: React.FC<props> = ({ filesArray }) => {
                 </TableRow>
             );
         });
+
+    if (!isLoading && !filesArray.length) {
+        return <NoFilesHeader />;
+    }
 
     return (
         <Box sx={{ width: '100%' }}>

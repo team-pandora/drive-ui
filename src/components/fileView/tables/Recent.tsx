@@ -9,13 +9,17 @@ import { getComparator, stableSort } from '../../../utils/sort';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
+import { NoFilesHeader } from '../NoFilesHeader';
 import TableHeader from '../tableHeaders/RecentlyHeader';
 
 type Order = 'asc' | 'desc';
 
-type props = { filesArray: any[] };
+type props = {
+    filesArray: any[];
+    isLoading: boolean;
+};
 
-const RecentsTable: React.FC<props> = ({ filesArray }) => {
+const RecentsTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedFiles = useSelector((state: any) => state.files.selected);
@@ -75,6 +79,10 @@ const RecentsTable: React.FC<props> = ({ filesArray }) => {
                 </TableRow>
             );
         });
+
+    if (!isLoading && !filesArray.length) {
+        return <NoFilesHeader />;
+    }
 
     return (
         <Box>

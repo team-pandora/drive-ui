@@ -108,11 +108,15 @@ const MyDrive = () => {
                 flex={4}
                 p={2}
                 style={{}}
-                {...getRootProps()}
+                {...getRootProps()} // causes browser to crash on enter/space when focused on my drive
             >
                 <input {...getInputProps()} />
                 <TableMenuHeader title={i18next.t('titles.MyDrive')} />
-                {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                {isGridView ? (
+                    <Grid filesArray={files} isLoading={isLoading} />
+                ) : (
+                    <Table filesArray={files} isLoading={isLoading} />
+                )}
                 <ToastContainer position="bottom-right" />
                 {isDragActive && (
                     <Snackbar

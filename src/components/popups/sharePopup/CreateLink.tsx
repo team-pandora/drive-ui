@@ -1,7 +1,7 @@
 import { Box, Button, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useState } from 'react';
-import { EnTimeLimitObject, HeTimeLimitObject } from '../../../constance/index';
+import { EnTimeLimitObject, HeTimeLimitObject } from '../../../constants/index';
 import SelectMenus from './SelectMenu';
 
 type props = { handleCreate: (time: string, permission: string) => void };
