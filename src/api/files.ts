@@ -25,6 +25,23 @@ export const getSharedFiles = async (parent: string) => {
     ).data;
 };
 
+export const getOwnerOfFile = async (fsObjectId: string) => {
+    return Axios.get(`/api/users/fs/${fsObjectId}/owner`);
+};
+
+export const getSharedFilesTest = async (parent: string) => {
+    const res = await Axios.get(
+        `http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`,
+    );
+    const ownerPromisses = res.data.map(async (state: any) => ({
+        state,
+        owner: (await getOwnerOfFile(state.fsObjectId)).data,
+    }));
+
+    const sharedFiles = await Promise.all(ownerPromisses);
+    return sharedFiles;
+};
+
 export const getRecentFiles = async (parent: string) => {
     const myDriveFiles = await getFiles(parent);
     const sharedFiles = await getSharedFiles(parent);
@@ -187,8 +204,4 @@ export const getFullPath = async (fsObjectId: string) => {
 
 export const generateShareLink = async (fsObjectId: string, permission: string, expirationInSec: number) => {
     return Axios.post(`/api/users/fs/${fsObjectId}/share/token`, { permission, expirationInSec });
-};
-
-export const getOwnerOfFile = async (fsObjectId: string) => {
-    return Axios.get(`/api/users/fs/${fsObjectId}/owner`);
 };
