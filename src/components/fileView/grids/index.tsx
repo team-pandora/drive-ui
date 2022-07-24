@@ -2,8 +2,10 @@ import { Box, Grid, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useFiles } from '../../../hooks/useFiles';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
+import { NoFilesHeader } from '../NoFilesHeader';
 import GridHeader from './GridHeader';
 import GridObject from './GridObject';
 
@@ -18,9 +20,10 @@ const SBox = styled(Box)(() => ({
 
 type props = {
     filesArray: any[];
+    isLoading: boolean;
 };
 
-const MyDriveGrid: React.FC<props> = ({ filesArray }) => {
+const MyDriveGrid: React.FC<props> = ({ filesArray, isLoading }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const selectedFiles = useSelector((state: any) => state.files.selected);
@@ -41,6 +44,9 @@ const MyDriveGrid: React.FC<props> = ({ filesArray }) => {
             );
         return <></>;
     });
+    if (!isLoading && !filesArray.length) {
+        return <NoFilesHeader />;
+    }
 
     const files = filesArray.map((file, index) => {
         const isItemSelected = isSelected(file, selectedFiles);

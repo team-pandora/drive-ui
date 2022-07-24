@@ -11,11 +11,10 @@ import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
+import { NoFilesHeader } from '../NoFilesHeader';
 import TableHeader from '../tableHeaders/FavoritesHeader';
 
 type Order = 'asc' | 'desc';
-
-type props = { filesArray: any[] };
 
 const SBox = styled(Box)({
     width: '45%',
@@ -25,7 +24,12 @@ const SBox = styled(Box)({
     flexWrap: 'wrap',
 });
 
-const FavoritesTable: React.FC<props> = ({ filesArray }) => {
+type props = {
+    filesArray: any[];
+    isLoading: boolean;
+};
+
+const FavoritesTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
@@ -94,6 +98,10 @@ const FavoritesTable: React.FC<props> = ({ filesArray }) => {
                 </TableRow>
             );
         });
+
+    if (!isLoading && !filesArray.length) {
+        return <NoFilesHeader />;
+    }
 
     return (
         <Box>

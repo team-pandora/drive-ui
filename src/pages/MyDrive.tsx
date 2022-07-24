@@ -112,7 +112,11 @@ const MyDrive = () => {
             >
                 <input {...getInputProps()} />
                 <TableMenuHeader title={i18next.t('titles.MyDrive')} />
-                {isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                {isGridView ? (
+                    <Grid filesArray={files} isLoading={isLoading} />
+                ) : (
+                    <Table filesArray={files} isLoading={isLoading} />
+                )}
                 <ToastContainer position="bottom-right" />
                 {isDragActive && (
                     <Snackbar

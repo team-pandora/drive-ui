@@ -12,13 +12,17 @@ import ContextMenu from '../../contextMenu/ContextMenu';
 import BackgroundMainMenu from '../../layout/mainMenu/BackgroundMainMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
+import { NoFilesHeader } from '../NoFilesHeader';
 import TableHeader from '../tableHeaders/MyDriveHeader';
 
 type Order = 'asc' | 'desc';
 
-type props = { filesArray: any[] };
+type props = {
+    filesArray: any[];
+    isLoading: boolean;
+};
 
-const MyDriveTable: React.FC<props> = ({ filesArray }) => {
+const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
@@ -107,6 +111,10 @@ const MyDriveTable: React.FC<props> = ({ filesArray }) => {
         //     setPls(filesArray.slice(0, endIndex));
         // }
     };
+
+    if (!isLoading && !filesArray.length) {
+        return <NoFilesHeader />;
+    }
 
     return (
         <Box sx={{ width: '100%', height: '100%' }} onContextMenu={backgroundMainMenuClick}>

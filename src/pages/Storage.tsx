@@ -60,7 +60,13 @@ const Storage = () => {
         <>
             <Box flex={4} paddingTop={2} padding={2}>
                 <TableMenuHeader title={i18next.t('titles.Storage')} />
-                {isLoading ? loadingAnimation : isGridView ? <Grid filesArray={files} /> : <Table filesArray={files} />}
+                {isLoading ? (
+                    loadingAnimation
+                ) : isGridView ? (
+                    <Grid filesArray={files} isLoading={isLoading} />
+                ) : (
+                    <Table filesArray={files} isLoading={isLoading} />
+                )}
                 <ToastContainer position="bottom-right" />
             </Box>
             <SimpleSnackbar />
