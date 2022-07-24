@@ -108,7 +108,7 @@ const MyDrive = () => {
                 flex={4}
                 p={2}
                 style={{}}
-                {...getRootProps()}
+                {...getRootProps()} // causes browser to crash on enter/space when focused on my drive
             >
                 <input {...getInputProps()} />
                 <TableMenuHeader title={i18next.t('titles.MyDrive')} />
