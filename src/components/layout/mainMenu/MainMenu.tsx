@@ -66,9 +66,6 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
 
     const handleUploadFolder = () => {
         uploadFolderRef?.current?.click();
-        // console.log(uploadFolderRef.current);
-
-        handleClose();
     };
 
     const handleNewFolderDialog = () => {
@@ -109,7 +106,13 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
                         }}
                         text={`${i18next.t('mainMenu.UploadFolder')}`}
                     >
-                        <input ref={uploadFolderRef} type="file" {...folderInputAttributes} hidden />
+                        <input
+                            onClick={handleClose}
+                            ref={uploadFolderRef}
+                            type="file"
+                            {...folderInputAttributes}
+                            hidden
+                        />
                         <DriveFolderUpload />
                     </Button>
 
