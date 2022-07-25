@@ -100,7 +100,6 @@ const MyDrive = () => {
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });
-
     return (
         <>
             <Box

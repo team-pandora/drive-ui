@@ -3,7 +3,7 @@
 import { CreateNewFolderOutlined, DriveFolderUpload, UploadFile } from '@mui/icons-material';
 import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -26,8 +26,9 @@ type props = {
 const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-
     const dir = i18next.dir(i18next.language);
+    const folderInputAttributes: any = { directory: '', webkitdirectory: '' };
+    const uploadFolderRef = useRef<any>();
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
         const params = window.location.pathname.split('/');
@@ -63,6 +64,13 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
         handleClose();
     };
 
+    const handleUploadFolder = () => {
+        uploadFolderRef?.current?.click();
+        // console.log(uploadFolderRef.current);
+
+        handleClose();
+    };
+
     const handleNewFolderDialog = () => {
         handleClose();
         dispatch(popupActions.setNewFolder());
@@ -95,7 +103,13 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
                         <UploadFile />
                     </Button>
 
-                    <Button onClick={handleClose} text={`${i18next.t('mainMenu.UploadFolder')}`}>
+                    <Button
+                        onClick={() => {
+                            handleUploadFolder();
+                        }}
+                        text={`${i18next.t('mainMenu.UploadFolder')}`}
+                    >
+                        <input ref={uploadFolderRef} type="file" {...folderInputAttributes} hidden />
                         <DriveFolderUpload />
                     </Button>
 
