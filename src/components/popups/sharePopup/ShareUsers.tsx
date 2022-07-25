@@ -67,6 +67,10 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
         },
     );
 
+    const handleClose = () => {
+        dispatch(popupActions.setShare());
+    };
+
     const handleClick = async () => {
         selectedFiles.forEach(async (file: any) => {
             selectedUsers.forEach(async (user: any) => {
@@ -121,7 +125,7 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
                 {selectedUsers.length === 0 && <Owners />}
                 {selectedUsers.length > 0 && (
                     <SBox>
-                        <SButton variant="text">{`${i18next.t('buttons.Cancel')}`}</SButton>
+                        <SButton onClick={handleClose} variant="text">{`${i18next.t('buttons.Cancel')}`}</SButton>
                         <SButton onClick={handleClick} variant="contained">{`${i18next.t('buttons.Share')}`}</SButton>
                     </SBox>
                 )}
