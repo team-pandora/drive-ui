@@ -6,12 +6,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
 import i18next from 'i18next';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { getCurrentUser } from '../../../../api/users';
 import { filesActions } from '../../../../store/files';
-import { IServerError } from '../../../../utils/types';
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -75,13 +71,14 @@ const GivePermission: React.FC<props> = ({ permission }) => {
     };
 
     return (
-        <Box>
-            <FormControl hiddenLabel variant="filled" sx={{ m: 1, width: 150, height: 40, top: '4px' }} size="small">
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <FormControl hiddenLabel variant="filled" sx={{ mx: 1, width: 150 }} size="medium">
                 <Select
                     disabled={permission === 'owner'}
                     labelId="demo-simple-select-filled-label"
                     id="demo-simple-select-filled"
                     value={value}
+                    sx={{ '& .MuiSelect-select ': { top: '10px', padding: '14px 32px 18px 12px' } }}
                     onChange={handleChange}
                 >
                     <MenuItem dir={dir} value={permissions[0]}>

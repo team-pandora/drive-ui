@@ -72,8 +72,9 @@ const MyDriveGrid: React.FC<props> = ({ filesArray, isLoading }) => {
                 <Grid
                     onKeyDown={(event) => handleKeyDown(event, filesArray, selectedFiles, dispatch)}
                     container
-                    spacing={{ xs: 2, md: 2 }}
-                    columns={{ xs: 0, sm: 8, md: 15.5 }}
+                    spacing={3}
+                    gap={3}
+                    wrap="wrap"
                 >
                     {folders}
                 </Grid>
@@ -84,8 +85,9 @@ const MyDriveGrid: React.FC<props> = ({ filesArray, isLoading }) => {
                 <Grid
                     onKeyDown={(event) => handleKeyDown(event, filesArray, selectedFiles, dispatch)}
                     container
-                    spacing={{ xs: 2, md: 2 }}
-                    columns={{ xs: 0, sm: 8, md: 15.5 }}
+                    spacing={3}
+                    gap={3}
+                    wrap="wrap"
                 >
                     {files}
                 </Grid>

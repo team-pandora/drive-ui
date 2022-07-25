@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import i18next from 'i18next';
 import { useState } from 'react';
 import { useMutation } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getSharedUsers as searchUsers } from '../../../api/users';
 import { usersActions } from '../../../store/users';
@@ -18,9 +18,10 @@ const AutoCompleteStyle = {
     alignItems: 'center',
     '.MuiFilledInput-root': {
         padding: '0px',
+        paddingLeft: '10px',
     },
     '.MuiFilledInput-input': {
-        height: '40px',
+        height: '41px',
     },
 };
 
@@ -29,7 +30,7 @@ const SearchAutoComplete = () => {
     const dir = i18next.dir(i18next.language);
     const [searchedUsers, setSearchedUsers] = useState([]);
 
-    const { isLoading, mutateAsync } = useMutation((query: string) => searchUsers(query), {
+    const { mutateAsync } = useMutation((query: string) => searchUsers(query), {
         onSuccess: (data: any) => {
             setSearchedUsers(data);
         },

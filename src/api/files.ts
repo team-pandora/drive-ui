@@ -6,10 +6,9 @@ import { checkIfRecent } from '../utils/time';
 
 export const getFiles = async (parent: string) => {
     if (parent === 'null') {
-        return (await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=owner`))
-            .data;
+        return (await Axios.get(`/api/users/fs/query?parent=${parent}&trash=false&permission=owner`)).data;
     }
-    return (await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false`)).data;
+    return (await Axios.get(`/api/users/fs/query?parent=${parent}&trash=false`)).data;
 };
 
 export const fetchFiles = async (parent: string, limit: number, pageParam: number) => {
@@ -18,11 +17,7 @@ export const fetchFiles = async (parent: string, limit: number, pageParam: numbe
 };
 
 export const getSharedFiles = async (parent: string) => {
-    return (
-        await Axios.get(
-            `http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`,
-        )
-    ).data;
+    return (await Axios.get(`/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`)).data;
 };
 
 export const getOwnerOfFile = async (fsObjectId: string) => {
@@ -30,9 +25,7 @@ export const getOwnerOfFile = async (fsObjectId: string) => {
 };
 
 export const getSharedFilesTest = async (parent: string) => {
-    const res = await Axios.get(
-        `http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`,
-    );
+    const res = await Axios.get(`/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`);
     const ownerPromisses = res.data.map(async (state: any) => ({
         state,
         owner: (await getOwnerOfFile(state.fsObjectId)).data,
@@ -50,58 +43,54 @@ export const getRecentFiles = async (parent: string) => {
 };
 
 export const getFavoriteFiles = async (parent: string) => {
-    return (await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&favorite=true&trash=false`)).data;
+    return (await Axios.get(`/api/users/fs/query?parent=${parent}&favorite=true&trash=false`)).data;
 };
 
 export const getTrashFiles = async () => {
-    return (await Axios.get(`http://localhost/api/users/fs/query?trash=true`)).data;
+    return (await Axios.get(`/api/users/fs/query?trash=true&trashRoot=true`)).data;
 };
 
 export const getStorageFiles = async () => {
-    return (await Axios.get(`http://localhost/api/users/fs/query?trash=false&permission=owner&type=file`)).data;
+    return (await Axios.get(`/api/users/fs/query?trash=false&permission=owner&type=file`)).data;
 };
 
 export const getSubfolders = async (parent: string | null) => {
     if (parent === 'shared') {
         return (
-            await Axios.get(
-                `http://localhost/api/users/fs/query?trash=false&type=folder&root=true&permission=read&permission=write`,
-            )
+            await Axios.get(`/api/users/fs/query?trash=false&type=folder&root=true&permission=read&permission=write`)
         ).data;
     }
     if (!parent) {
-        return (
-            await Axios.get(`http://localhost/api/users/fs/query?parent=null&trash=false&permission=owner&type=folder`)
-        ).data;
+        return (await Axios.get(`/api/users/fs/query?parent=null&trash=false&permission=owner&type=folder`)).data;
     }
 
-    return (await Axios.get(`http://localhost/api/users/fs/query?parent=${parent}&trash=false&type=folder`)).data;
+    return (await Axios.get(`/api/users/fs/query?parent=${parent}&trash=false&type=folder`)).data;
 };
 
 export const addToFavorite = async (file: any) => {
-    await Axios.post(`http://localhost/api/users/fs/${file.fsObjectId}/favorite`);
+    await Axios.post(`/api/users/fs/${file.fsObjectId}/favorite`);
 };
 
 export const removeFromFavorite = async (file: any) => {
-    await Axios.delete(`http://localhost/api/users/fs/${file.fsObjectId}/favorite`);
+    await Axios.delete(`/api/users/fs/${file.fsObjectId}/favorite`);
 };
 
 export const getFile = async (fsOjbectId: string) => {
-    return (await Axios.get(`http://localhost/api/users/fs/query/${fsOjbectId}`)).data;
+    return (await Axios.get(`/api/users/fs/query/${fsOjbectId}`)).data;
 };
 
 export const download = async (file: any) => {
     // TODO: handle error
     try {
-        Axios.get(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/download`);
-        window.location.href = `http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/download`;
+        Axios.get(`/api/users/fs/${file.type}/${file.fsObjectId}/download`);
+        window.location.href = `/api/users/fs/${file.type}/${file.fsObjectId}/download`;
     } catch (error) {
-        window.location.href = `http://localhost/my-drive`;
+        window.location.href = `/my-drive`;
     }
 };
 
 // export const createFile = async (file: any) => {
-//     const response = await Axios.post('http://localhost:8000/api/users/62655a5dd681ae7e5f9eafe0/fs/file', {
+//     const response = await Axios.post(':8000/api/users/62655a5dd681ae7e5f9eafe0/fs/file', {
 //         name: 'alive4',
 //         parent: null,
 //         key: 'string',
@@ -114,20 +103,20 @@ export const download = async (file: any) => {
 // };
 
 export const createFolder = async (name: string, parent: string | null | undefined) => {
-    await Axios.post('http://localhost/api/users/fs/folder', {
+    await Axios.post('/api/users/fs/folder', {
         name,
         parent,
     });
 };
 
 export const RenameFile = async (file: any, newName: string) => {
-    await Axios.patch(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}`, { name: newName });
+    await Axios.patch(`/api/users/fs/${file.type}/${file.fsObjectId}`, { name: newName });
 };
 
 export const uploadFile = async (file: any, parent: string) => {
     const formData = new FormData();
     formData.append('file', file);
-    await Axios.post(`http://localhost/api/users/fs/file`, formData, {
+    await Axios.post(`/api/users/fs/file`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         params: {
             name: file.name,
@@ -140,19 +129,19 @@ export const uploadFile = async (file: any, parent: string) => {
 };
 
 export const moveToTrash = async (file: any) => {
-    await Axios.post(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/trash`);
+    await Axios.post(`/api/users/fs/${file.type}/${file.fsObjectId}/trash`);
 };
 
 export const restoreFile = async (file: any) => {
-    await Axios.post(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/restore`);
+    await Axios.post(`/api/users/fs/${file.type}/${file.fsObjectId}/restore`);
 };
 
 export const deleteFile = async (file: any) => {
-    await Axios.delete(`http://localhost/api/users/fs/${file.type}/${file.fsObjectId}/trash`);
+    await Axios.delete(`/api/users/fs/${file.type}/${file.fsObjectId}/trash`);
 };
 
 export const getUser = async () => {
-    return (await Axios.get(`http://localhost/api/users/info`)).data;
+    return (await Axios.get(`/api/users/info`)).data;
 };
 
 export const getPermittedUsers = async (fsObjectId: string) => {
@@ -160,15 +149,15 @@ export const getPermittedUsers = async (fsObjectId: string) => {
 };
 
 export const shareFile = async (fsObjectId: string, userId: string, permission: string) => {
-    return (await Axios.post(`http://localhost/api/users/fs/${fsObjectId}/share`, { userId, permission })).data;
+    return (await Axios.post(`/api/users/fs/${fsObjectId}/share`, { userId, permission })).data;
 };
 
 export const getQuota = async () => {
-    return (await Axios.get(`http://localhost/api/users/quota`)).data;
+    return (await Axios.get(`/api/users/quota`)).data;
 };
 
 export const createShortcut = async (fsObjectId: string, name: string, parent: string) => {
-    const response = await Axios.post('http://localhost/api/users/fs/shortcut', {
+    const response = await Axios.post('/api/users/fs/shortcut', {
         ref: fsObjectId,
         parent,
         name,
@@ -177,14 +166,14 @@ export const createShortcut = async (fsObjectId: string, name: string, parent: s
 };
 
 export const move = async (fsObjectId: string, newParent: string, fileType: 'file' | 'folder' | 'shortcut') => {
-    const response = await Axios.patch(`http://localhost/api/users/fs/${fileType}/${fsObjectId}`, {
+    const response = await Axios.patch(`/api/users/fs/${fileType}/${fsObjectId}`, {
         parent: newParent,
     });
     return response.data;
 };
 
 export const copy = async (fsObjectId: string, name: string, parent: string) => {
-    const response = await Axios.post(`http://localhost/api/users/fs/file/${fsObjectId}/duplicate`, {
+    const response = await Axios.post(`/api/users/fs/file/${fsObjectId}/duplicate`, {
         name,
         parent,
         client: 'Driveclient',
@@ -193,12 +182,12 @@ export const copy = async (fsObjectId: string, name: string, parent: string) => 
 };
 
 export const getFullPath = async (fsObjectId: string) => {
-    const hierarchy = (await Axios.get(`http://localhost/api/users/fs/${fsObjectId}/hierarchy`)).data;
+    const hierarchy = (await Axios.get(`/api/users/fs/${fsObjectId}/hierarchy`)).data;
     if (hierarchy.length === 0) {
-        const file: any = (await Axios.get(`http://localhost/api/users/fs/query/${fsObjectId}`)).data;
+        const file: any = (await Axios.get(`/api/users/fs/query/${fsObjectId}`)).data;
         return getRootPath(file);
     }
-    const file = (await Axios.get(`http://localhost/api/users/fs/query/${hierarchy[0]._id}`)).data;
+    const file = (await Axios.get(`/api/users/fs/query/${hierarchy[0]._id}`)).data;
     return `${getRootPath(file)}/${hierarchy.map((currFile: any) => currFile.name).join('/')}`;
 };
 
