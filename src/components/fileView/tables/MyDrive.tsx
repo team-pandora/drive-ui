@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { scrollStyle } from '../../../constants/index';
 import { MyDriveI } from '../../../data/fakedata';
 import { globalActions } from '../../../store/global';
 import { fileSizeFormatter } from '../../../utils/files';
@@ -104,12 +105,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
         });
 
     const onScroll = (event: any) => {
-        console.log(event.currentTarget.scrollTop, event.currentTarget.clientHeight);
-        // if (event.currentTarget.scrollTop >= 300) {
-        //     startIndex = endIndex;
-        //     endIndex += bring;
-        //     setPls(filesArray.slice(0, endIndex));
-        // }
+        // console.log(event.currentTarget.scrollTop, event.currentTarget.clientHeight);
     };
 
     if (!isLoading && !filesArray.length) {
@@ -119,39 +115,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
     return (
         <Box sx={{ width: '100%', height: '100%' }} onContextMenu={backgroundMainMenuClick}>
             <Paper elevation={0} sx={{ mb: 2 }} onContextMenu={tableRowRightClick}>
-                <TableContainer
-                    onScroll={onScroll}
-                    sx={{
-                        maxHeight: '87vh',
-                        '&::-webkit-scrollbar': {
-                            height: '16px',
-                            overflow: 'visible',
-                            width: '16px',
-                        },
-                        '&::-webkit-scrollbar-button': {
-                            height: 0,
-                            width: 0,
-                        },
-                        '&::-webkit-scrollbar-corner': {
-                            background: 'transparent',
-                        },
-                        '&::-webkit-scrollbar-thumb': {
-                            backgroundColor: 'rgba(0,0,0,.2)',
-                            backgroundClip: 'padding-box',
-                            border: 'solid transparent',
-                            borderWidth: '1px 6px 1px 1px',
-                            minHeight: '28px',
-                            padding: '100px 0 0',
-                            '-webkit-box-shadow': 'inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%)',
-                            boxShadow: 'inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%)',
-                        },
-                        '&::-webkit-scrollbar-track': {
-                            backgroundClip: 'padding-box',
-                            border: 'solid transparent',
-                            borderWidth: '0 4px 0 0',
-                        },
-                    }}
-                >
+                <TableContainer onScroll={onScroll} sx={scrollStyle}>
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
                         <TableBody>{rowFiles}</TableBody>

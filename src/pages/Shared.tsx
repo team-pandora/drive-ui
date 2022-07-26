@@ -1,16 +1,15 @@
 import { Box } from '@mui/material';
 import i18next from 'i18next';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { getFiles, getSharedFiles } from '../api/files';
+import { getSharedFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
 import Table from '../components/fileView/tables/Shared';
 import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
-import { SharedData } from '../data/fakedata';
 import { useFiles } from '../hooks/useFiles';
 import { filesActions } from '../store/files';
 
@@ -22,9 +21,8 @@ const Shared = () => {
     const folderId: string = params.folderId ? params.folderId : 'null';
     const [locationKeys, setLocationKeys] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
-    const files = useSelector((state: any) => state.files.files);
-
     const isLoading = useFiles('shared', folderId, getSharedFiles);
+    const files = useSelector((state: any) => state.files.files);
 
     if (folderId === 'null') {
         dispatch(filesActions.setHierarchy({ type: 'clear' }));

@@ -3,9 +3,11 @@
 import { CreateNewFolderOutlined, DriveFolderUpload, UploadFile } from '@mui/icons-material';
 import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
-import { useQueryClient } from 'react-query';
+import { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import { handleDropFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
 import Word from '../../../assets/Word.png';
@@ -21,14 +23,24 @@ type props = {
 
 const BackgroundMainMenu: React.FC<props> = ({ handleClose, showMenu }) => {
     const dispatch = useDispatch();
-    const queryClient = useQueryClient();
+    const history = useHistory();
     const dir = i18next.dir(i18next.language);
-    const params: { folderId: string } = useParams();
-    const folderId: string = params.folderId ? params.folderId : 'null';
     const backgroundMenuPosition = useSelector((state: any) => state.global.backgroundMenuPosition);
+    const parentFolderId = useSelector((state: any) => state.files.parentFolderId);
+    const onDrop = useCallback(
+        async (acceptedFiles: any) => {
+            handleDropFile(parentFolderId, dispatch, acceptedFiles, history);
+        },
+        [parentFolderId],
+    );
+
+    const { open } = useDropzone({
+        onDrop,
+        noClick: false,
+    });
 
     const handleDialog = () => {
-        // TODO: onDrop of file
+        open();
         dispatch(globalActions.setBackgroundMenu());
     };
 
@@ -51,7 +63,7 @@ const BackgroundMainMenu: React.FC<props> = ({ handleClose, showMenu }) => {
                 open={showMenu}
                 keepMounted={true}
                 anchorEl={null}
-                onClose={handleDialog}
+                onClose={handleClose}
                 anchorReference="anchorPosition"
                 anchorPosition={{
                     top: backgroundMenuPosition.y,

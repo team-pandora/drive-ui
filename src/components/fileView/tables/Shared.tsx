@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { handleErrorMsg } from '../../../api/error';
 import { getOwnerOfFile } from '../../../api/files';
+import { scrollStyle } from '../../../constants/index';
 import { SharedI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
 import getRandomColor, { ISOStringToDateString } from '../../../utils/time';
@@ -44,9 +45,6 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof SharedI>('name');
     const [page, setPage] = React.useState(0);
-    const [owner, setOwner] = React.useState('');
-    const [ownerMail, setOwnerMail] = React.useState('');
-    const [color, setColor] = React.useState('');
     const rowsPerPage = 100;
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof SharedI) => {
@@ -55,38 +53,27 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
         setOrderBy(property);
     };
 
-    const getOwner = async (fsObjectId: string) => {
-        getOwnerOfFile(fsObjectId)
-            .then((res) => {
-                setOwner(res.data.fullName);
-                setOwnerMail(res.data.mail);
-                setColor(getRandomColor(owner));
-            })
-            .catch(handleErrorMsg('Failed creating link', 'my-drive'));
-    };
-
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file: any, index) => {
-            const isItemSelected = isSelected(file, selectedFiles);
+            const isItemSelected = isSelected(file.state, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
-            const stringDate = ISOStringToDateString(file.stateCreatedAt, locales);
-            getOwner(file.fsObjectId);
+            const stringDate = ISOStringToDateString(file.state.stateCreatedAt, locales);
             return (
                 <TableRow
                     hover
-                    onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
-                    onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
+                    onClick={(event) => handleClick(event, file.state, selectedFiles, dispatch)}
+                    onContextMenu={(event) => handleContextMenuClick(event, file.state, selectedFiles, dispatch)}
                     onKeyDown={(event) => handleKeyDown(event, filesArray, selectedFiles, dispatch)}
-                    onDoubleClick={(event) => handleDoubleClick(event, file, history, dispatch)}
+                    onDoubleClick={(event) => handleDoubleClick(event, file.state, history, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={file.fsObjectUpdatedAt}
+                    key={file.state.fsObjectId}
                     selected={isItemSelected}
                 >
                     <TableCell padding="checkbox">
-                        {FileType(file.type === 'folder' ? 'shared-folder' : file.type)}
+                        {FileType(file.state.type === 'folder' ? 'shared-folder' : file.state.type)}
                     </TableCell>
                     <TableCell
                         component="th"
@@ -97,7 +84,7 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                         }}
                         align={dir}
                     >
-                        {file.name}
+                        {file.state.name}
                     </TableCell>
 
                     <TableCell align={dir}>
@@ -112,9 +99,9 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                                 title={
                                     <>
                                         <Typography dir={i18next.dir(i18next.language)} variant="subtitle2">
-                                            {owner}
+                                            {file.owner.fullName}
                                         </Typography>
-                                        <Typography variant="subtitle2">{ownerMail}</Typography>
+                                        <Typography variant="subtitle2">{file.owner.mail}</Typography>
                                     </>
                                 }
                                 placement="bottom"
@@ -124,14 +111,14 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                                     sx={{
                                         width: '23px',
                                         height: '23px',
-                                        bgcolor: `${color}`,
+                                        bgcolor: `${getRandomColor(file.owner.fullName)}`,
                                     }}
                                 >
-                                    <Typography variant="body1">{owner[0]}</Typography>
+                                    <Typography variant="body1">{file.owner.fullName[0]}</Typography>
                                 </Avatar>
                             </Tooltip>
 
-                            <Typography variant="body2">{owner}</Typography>
+                            <Typography variant="body2">{file.owner.fullName}</Typography>
                         </Stack>
                     </TableCell>
 
@@ -152,13 +139,9 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
     }
 
     return (
-        <Box>
-            <Paper elevation={0}>
-                <TableContainer
-                    sx={{
-                        maxHeight: 800,
-                    }}
-                >
+        <Box sx={{ width: '100%', height: '100%' }}>
+            <Paper elevation={0} sx={{ mb: 2 }}>
+                <TableContainer sx={scrollStyle}>
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
                         <TableBody>{rowFiles}</TableBody>

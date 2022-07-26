@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import Axios from 'axios';
+import { filesActions } from '../store/files';
+import { notificationsActions } from '../store/notifications';
 import { getRootPath } from '../utils/files';
 import { checkIfRecent } from '../utils/time';
 /* eslint-disable consistent-return */
@@ -16,16 +18,14 @@ export const fetchFiles = async (parent: string, limit: number, pageParam: numbe
     return files.slice(pageParam, pageParam + limit);
 };
 
-export const getSharedFiles = async (parent: string) => {
-    return (await Axios.get(`/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`)).data;
-};
-
 export const getOwnerOfFile = async (fsObjectId: string) => {
     return Axios.get(`/api/users/fs/${fsObjectId}/owner`);
 };
 
-export const getSharedFilesTest = async (parent: string) => {
-    const res = await Axios.get(`/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`);
+export const getSharedFiles = async (parent: string) => {
+    const res = await Axios.get(
+        `http://localhost/api/users/fs/query?parent=${parent}&trash=false&permission=write&permission=read`,
+    );
     const ownerPromisses = res.data.map(async (state: any) => ({
         state,
         owner: (await getOwnerOfFile(state.fsObjectId)).data,
@@ -193,4 +193,25 @@ export const getFullPath = async (fsObjectId: string) => {
 
 export const generateShareLink = async (fsObjectId: string, permission: string, expirationInSec: number) => {
     return Axios.post(`/api/users/fs/${fsObjectId}/share/token`, { permission, expirationInSec });
+};
+
+export const handleDropFile = (parentFolderId: string, dispatch: any, acceptedFiles: string[], history: any) => {
+    if (parentFolderId === 'null') history.push('/my-drive');
+    const filesWithStatus = acceptedFiles.map((file: any) => {
+        return { name: file.name, status: 'uploading' };
+    });
+
+    dispatch(filesActions.setUploaded(filesWithStatus));
+    dispatch(notificationsActions.setUploadOpen());
+
+    for (const file of acceptedFiles) {
+        uploadFile(file, parentFolderId)
+            .then(async () => {
+                dispatch(filesActions.setFiles(await getFiles(parentFolderId)));
+                dispatch(filesActions.setUploadedDone(file));
+            })
+            .catch(() => {
+                dispatch(filesActions.setUploadedFailed(file));
+            });
+    }
 };
