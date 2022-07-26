@@ -5,14 +5,12 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useCallback, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getFiles, uploadFile } from '../../../api/files';
+import { handleDropFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
 import Word from '../../../assets/Word.png';
-import { filesActions } from '../../../store/files';
-import { notificationsActions } from '../../../store/notifications';
 import { popupActions } from '../../../store/popups';
 import NewFolderPopup from '../../popups/newFolderPopup';
 import Button from './Button';
@@ -26,35 +24,17 @@ type props = {
 const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const parentFolderId = useSelector((state: any) => state.files.parentFolderId);
+
     const dir = i18next.dir(i18next.language);
     const folderInputAttributes: any = { directory: '', webkitdirectory: '' };
     const uploadFolderRef = useRef<any>();
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
-        const params = window.location.pathname.split('/');
-        const folderId: string = params[1] === 'folder' ? params[2] : 'null';
-        console.log(folderId);
-        if (folderId === 'null') history.push(`/my-drive`);
-        const filesWithStatus = acceptedFiles.map((file: any) => {
-            return { name: file.name, status: 'uploading' };
-        });
-
-        dispatch(filesActions.setUploaded(filesWithStatus));
-        dispatch(notificationsActions.setUploadOpen());
-
-        for (const file of acceptedFiles) {
-            uploadFile(file, folderId)
-                .then(async () => {
-                    dispatch(filesActions.setFiles(await getFiles(folderId)));
-                    dispatch(filesActions.setUploadedDone(file));
-                })
-                .catch(() => {
-                    dispatch(filesActions.setUploadedFailed(file));
-                });
-        }
+        handleDropFile(parentFolderId, dispatch, acceptedFiles, history);
     }, []);
 
-    const { getRootProps, getInputProps, open } = useDropzone({
+    const { open } = useDropzone({
         onDrop,
         noClick: false,
     });

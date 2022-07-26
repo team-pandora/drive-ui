@@ -10,6 +10,7 @@ const filesSlice = createSlice({
         lastPopped: {},
         uploaded: <any>[],
         selectedPermission: 'write',
+        parentFolderId: 'null',
     },
     reducers: {
         setFiles: (state, action) => {
@@ -44,6 +45,9 @@ const filesSlice = createSlice({
         },
         setPermission: (state, action) => {
             state.selectedPermission = action.payload;
+        },
+        setParentFolderId: (state, action) => {
+            state.parentFolderId = action.payload;
         },
     },
 });
