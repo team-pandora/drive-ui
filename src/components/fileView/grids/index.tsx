@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { useFiles } from '../../../hooks/useFiles';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import { NoFilesHeader } from '../NoFilesHeader';
 import GridHeader from './GridHeader';
 import GridObject from './GridObject';
 
@@ -44,9 +43,6 @@ const MyDriveGrid: React.FC<props> = ({ filesArray, isLoading }) => {
             );
         return <></>;
     });
-    if (!isLoading && !filesArray.length) {
-        return <NoFilesHeader />;
-    }
 
     const files = filesArray.map((file, index) => {
         const isItemSelected = isSelected(file, selectedFiles);

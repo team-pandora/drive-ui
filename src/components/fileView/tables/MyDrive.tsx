@@ -13,8 +13,9 @@ import ContextMenu from '../../contextMenu/ContextMenu';
 import BackgroundMainMenu from '../../layout/mainMenu/BackgroundMainMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import { NoFilesHeader } from '../NoFilesHeader';
+import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/MyDriveHeader';
+import { MyDriveIcon, NoFilesBox } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 
@@ -109,7 +110,16 @@ const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
     };
 
     if (!isLoading && !filesArray.length) {
-        return <NoFilesHeader />;
+        return (
+            <NoFilesBox>
+                <NoFiles
+                    message={i18next.t('noFilesMessages.myDrive.message')}
+                    subMessage={i18next.t('noFilesMessages.myDrive.subMessage')}
+                >
+                    <MyDriveIcon />
+                </NoFiles>
+            </NoFilesBox>
+        );
     }
 
     return (

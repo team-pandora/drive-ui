@@ -9,8 +9,9 @@ import { getComparator, stableSort } from '../../../utils/sort';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import { NoFilesHeader } from '../NoFilesHeader';
+import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/RecentlyHeader';
+import { NoFilesBox, RecentIcon } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 
@@ -81,7 +82,16 @@ const RecentsTable: React.FC<props> = ({ filesArray, isLoading }) => {
         });
 
     if (!isLoading && !filesArray.length) {
-        return <NoFilesHeader />;
+        return (
+            <NoFilesBox>
+                <NoFiles
+                    message={i18next.t('noFilesMessages.recent.message')}
+                    subMessage={i18next.t('noFilesMessages.recent.subMessage')}
+                >
+                    <RecentIcon />
+                </NoFiles>
+            </NoFilesBox>
+        );
     }
 
     return (

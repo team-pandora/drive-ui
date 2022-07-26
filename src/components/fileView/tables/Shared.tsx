@@ -16,8 +16,6 @@ import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { handleErrorMsg } from '../../../api/error';
-import { getOwnerOfFile } from '../../../api/files';
 import { scrollStyle } from '../../../constants/index';
 import { SharedI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
@@ -25,8 +23,9 @@ import getRandomColor, { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import { NoFilesHeader } from '../NoFilesHeader';
+import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/SharedHeader';
+import { NoFilesBox, SharedWithMeIcon } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 
@@ -135,7 +134,16 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
         });
 
     if (!isLoading && !filesArray.length) {
-        return <NoFilesHeader />;
+        return (
+            <NoFilesBox>
+                <NoFiles
+                    message={i18next.t('noFilesMessages.shared.message')}
+                    subMessage={i18next.t('noFilesMessages.shared.subMessage')}
+                >
+                    <SharedWithMeIcon />
+                </NoFiles>
+            </NoFilesBox>
+        );
     }
 
     return (
