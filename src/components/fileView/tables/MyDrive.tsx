@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { scrollStyle } from '../../../constance/index';
+import { scrollStyle } from '../../../constants/index';
 import { MyDriveI } from '../../../data/fakedata';
 import { globalActions } from '../../../store/global';
 import { fileSizeFormatter } from '../../../utils/files';

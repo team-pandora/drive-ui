@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { handleErrorMsg } from '../../../api/error';
 import { getOwnerOfFile } from '../../../api/files';
-import { scrollStyle } from '../../../constance';
+import { scrollStyle } from '../../../constants/index';
 import { SharedI } from '../../../data/fakedata';
 import { getComparator, stableSort } from '../../../utils/sort';
 import getRandomColor, { ISOStringToDateString } from '../../../utils/time';
