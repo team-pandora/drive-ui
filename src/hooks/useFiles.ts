@@ -11,6 +11,7 @@ export const useFiles = (pageKey: string, folderId: string, getFilesFunc: any): 
             dispatch(filesActions.setFiles(data));
         },
         retry: false,
+        // refetchOnWindowFocus: true,
     });
 
     return isFetching;

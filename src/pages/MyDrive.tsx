@@ -37,6 +37,10 @@ const MyDrive = () => {
 
     const isLoading = useFiles('my-drive', folderId, getFiles);
 
+    if (folderId === 'null') {
+        dispatch(filesActions.setHierarchy({ type: 'clear' }));
+    }
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             console.log('asdasasdasd');

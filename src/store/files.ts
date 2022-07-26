@@ -6,7 +6,7 @@ const filesSlice = createSlice({
     initialState: {
         files: [],
         selected: [],
-        hierarchy: <any>[],
+        hierarchy: <any>JSON.parse(localStorage.getItem('hierarchy')!) || [],
         lastPopped: {},
         uploaded: <any>[],
         selectedPermission: 'write',
@@ -30,6 +30,7 @@ const filesSlice = createSlice({
             } else if (action.payload.type === 'replace') {
                 state.hierarchy.splice(current(state).hierarchy.indexOf(action.payload.content) + 1);
             }
+            localStorage.setItem('hierarchy', JSON.stringify(state.hierarchy));
         },
         setUploaded: (state, action) => {
             state.uploaded = action.payload;

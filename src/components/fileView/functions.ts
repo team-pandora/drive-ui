@@ -32,6 +32,7 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
 };
 
 export const handleKeyDown = (event: any, files: any, selectedFiles: any, dispatch: any) => {
+    alert('afdaf');
     if (event.key === 'Delete') {
         // await delete files
         const message =

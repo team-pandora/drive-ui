@@ -26,6 +26,10 @@ const Shared = () => {
 
     const isLoading = useFiles('shared', folderId, getSharedFiles);
 
+    if (folderId === 'null') {
+        dispatch(filesActions.setHierarchy({ type: 'clear' }));
+    }
+
     useEffect(() => {
         return history.listen((location) => {
             if (history.action === 'PUSH') {

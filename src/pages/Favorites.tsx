@@ -25,6 +25,10 @@ const Favorites = () => {
 
     const isLoading = useFiles('favorites', folderId, getFavoriteFiles);
 
+    if (folderId === 'null') {
+        dispatch(filesActions.setHierarchy({ type: 'clear' }));
+    }
+
     useEffect(() => {
         return history.listen((location) => {
             if (history.action === 'PUSH') {
