@@ -10,7 +10,10 @@ const filesSlice = createSlice({
         lastPopped: {},
         uploaded: <any>[],
         selectedPermission: 'write',
-        parentFolderId: 'null',
+        parentFolderId:
+            window.location.pathname.slice(1).split('/')[0] === 'folder'
+                ? window.location.pathname.slice(1).split('/')[1]
+                : 'null',
     },
     reducers: {
         setFiles: (state, action) => {

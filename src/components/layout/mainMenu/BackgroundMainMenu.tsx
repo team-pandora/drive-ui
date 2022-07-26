@@ -6,7 +6,7 @@ import i18next from 'i18next';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { handleDropFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
@@ -26,7 +26,10 @@ const BackgroundMainMenu: React.FC<props> = ({ handleClose, showMenu }) => {
     const history = useHistory();
     const dir = i18next.dir(i18next.language);
     const backgroundMenuPosition = useSelector((state: any) => state.global.backgroundMenuPosition);
-    const parentFolderId = useSelector((state: any) => state.files.parentFolderId);
+    const parentFolderId =
+        window.location.pathname.slice(1).split('/')[0] === 'folder'
+            ? window.location.pathname.slice(1).split('/')[1]
+            : 'null';
     const onDrop = useCallback(
         async (acceptedFiles: any) => {
             handleDropFile(parentFolderId, dispatch, acceptedFiles, history);

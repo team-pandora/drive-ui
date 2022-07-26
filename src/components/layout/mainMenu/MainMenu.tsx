@@ -5,7 +5,7 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useCallback, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { handleDropFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
@@ -24,8 +24,10 @@ type props = {
 const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const parentFolderId = useSelector((state: any) => state.files.parentFolderId);
-
+    const parentFolderId =
+        window.location.pathname.slice(1).split('/')[0] === 'folder'
+            ? window.location.pathname.slice(1).split('/')[1]
+            : 'null';
     const dir = i18next.dir(i18next.language);
     const folderInputAttributes: any = { directory: '', webkitdirectory: '' };
     const uploadFolderRef = useRef<any>();

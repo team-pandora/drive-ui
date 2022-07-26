@@ -28,14 +28,15 @@ const MyDrive = () => {
     document.title = `Drive – ${i18next.t('sideBar.myDrive')}`;
     const history = useHistory();
     const dispatch = useDispatch();
+    const params: { folderId: string } = useParams();
+    const parentFolderId: string = params.folderId ? params.folderId : 'null';
     const [locationKeys, setLocationKeys] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.files);
-    const parentFolderId = useSelector((state: any) => state.files.parentFolderId);
 
     const isLoading = useFiles('my-drive', parentFolderId, getFiles);
 
-    if (folderId === 'null') {
+    if (parentFolderId === 'null') {
         dispatch(filesActions.setHierarchy({ type: 'clear' }));
     }
 
