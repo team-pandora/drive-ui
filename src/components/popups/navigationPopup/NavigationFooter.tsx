@@ -58,7 +58,8 @@ const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectId }) =>
             break;
     }
 
-    const folderId = useSelector((state: any) => state.popups.navigationSelectedFolder);
+    const storeFolderId = useSelector((state: any) => state.popups.navigationSelectedFolder);
+    const [folderId, setFolderId] = useState<any>('');
 
     const handleClick = async () => {
         const file = await getFile(fsObjectId);
@@ -77,6 +78,10 @@ const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectId }) =>
     const handleNewFolderClick = () => {
         dispatch(popupActions.setNavigationNewFolder());
     };
+
+    useEffect(() => {
+        setFolderId(storeFolderId);
+    }, [storeFolderId]);
 
     return (
         <>

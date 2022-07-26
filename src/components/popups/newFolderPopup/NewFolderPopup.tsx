@@ -37,7 +37,7 @@ const NewFolderPopup: React.FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [value, setValue] = useState('Untitled folder');
+    const [value, setValue] = useState(`${i18next.t('placeholders.UntitledFolder')}`);
     const selectedFiles = useSelector((state: any) => state.files.selected);
     const params = window.location.pathname.slice(1).split('/');
     const parentFolder: string | null = params[0] === 'folder' ? params[1] : null;

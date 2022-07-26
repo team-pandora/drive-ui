@@ -37,7 +37,6 @@ const NavigationDialog: React.FC<props> = ({ initialParent, fsObjectId }) => {
     };
 
     const [files, setFiles] = useState<any>([]);
-    if (files.length) dispatch(popupActions.setNavigationSelectedFolder(files[0]?.fsObjectId));
 
     const fetchData = async () => {
         if (parent !== undefined) setFiles(await getSubfolders(parent));
