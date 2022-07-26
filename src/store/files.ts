@@ -6,10 +6,14 @@ const filesSlice = createSlice({
     initialState: {
         files: [],
         selected: [],
-        hierarchy: <any>[],
+        hierarchy: <any>JSON.parse(localStorage.getItem('hierarchy')!) || [],
         lastPopped: {},
         uploaded: <any>[],
         selectedPermission: 'write',
+        parentFolderId:
+            window.location.pathname.slice(1).split('/')[0] === 'folder'
+                ? window.location.pathname.slice(1).split('/')[1]
+                : 'null',
     },
     reducers: {
         setFiles: (state, action) => {
@@ -30,6 +34,7 @@ const filesSlice = createSlice({
             } else if (action.payload.type === 'replace') {
                 state.hierarchy.splice(current(state).hierarchy.indexOf(action.payload.content) + 1);
             }
+            localStorage.setItem('hierarchy', JSON.stringify(state.hierarchy));
         },
         setUploaded: (state, action) => {
             state.uploaded = action.payload;
@@ -44,6 +49,9 @@ const filesSlice = createSlice({
         },
         setPermission: (state, action) => {
             state.selectedPermission = action.payload;
+        },
+        setParentFolderId: (state, action) => {
+            state.parentFolderId = action.payload;
         },
     },
 });

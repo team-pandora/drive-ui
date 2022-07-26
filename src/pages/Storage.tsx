@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { getStorageFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
@@ -17,11 +17,17 @@ const Storage = () => {
     document.title = `Drive – ${i18next.t('sideBar.Storage')}`;
     const history = useHistory();
     const dispatch = useDispatch();
+    const params: { folderId: string } = useParams();
+    const folderId: string = params.folderId ? params.folderId : 'null';
     const [locationKeys, setLocationKeys] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
     const files = useSelector((state: any) => state.files.files);
 
     const isLoading = useFiles('storage', 'null', getStorageFiles);
+
+    if (folderId === 'null') {
+        dispatch(filesActions.setHierarchy({ type: 'clear' }));
+    }
 
     useEffect(() => {
         return history.listen((location) => {

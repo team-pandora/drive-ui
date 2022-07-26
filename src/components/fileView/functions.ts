@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import { download } from '../../api/files';
 // import { useDispatch } from 'react-redux';
 import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
@@ -32,6 +31,7 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
 };
 
 export const handleKeyDown = (event: any, files: any, selectedFiles: any, dispatch: any) => {
+    alert('afdaf');
     if (event.key === 'Delete') {
         // await delete files
         const message =
@@ -64,11 +64,10 @@ export const handleContextMenuClick = (
 
 export const handleDoubleClick = async (event: any, file: any, history: any, dispatch: any) => {
     if (file.type === 'folder') {
-        history.push(`/folder/${file.fsObjectId}`);
         dispatch(filesActions.setHierarchy({ type: 'push', content: { id: file.fsObjectId, name: file.name } }));
+        dispatch(filesActions.setParentFolderId(file.fsObjectId));
+        history.push(`/folder/${file.fsObjectId}`);
         dispatch(filesActions.setSelected([]));
-    } else {
-        download(file);
     }
 };
 

@@ -25,6 +25,10 @@ const Recently = () => {
 
     const isLoading = useFiles('recents', folderId, getRecentFiles);
 
+    if (folderId === 'null') {
+        dispatch(filesActions.setHierarchy({ type: 'clear' }));
+    }
+
     useEffect(() => {
         return history.listen((location) => {
             if (history.action === 'PUSH') {
