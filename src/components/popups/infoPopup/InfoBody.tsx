@@ -99,7 +99,7 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
     }, []);
 
     return (
-        <Info dir={dir}>
+        <Info onDragStart={(event) => event.preventDefault()} dir={dir}>
             <InfoHeader>
                 <Typography>{file.name}</Typography>
             </InfoHeader>

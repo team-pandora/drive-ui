@@ -8,6 +8,7 @@ const PropertyList = styled(List)({
     gap: '1rem',
     alignItems: 'start',
     margin: '0px 1vw 1px 1vw',
+    caretColor: 'transparent',
 });
 
 type props = {
@@ -20,7 +21,7 @@ const SValues = styled(Typography)({
 
 export const InfoProperties: React.FC<props> = ({ isDeleted }) => {
     return (
-        <PropertyList>
+        <PropertyList onDragStart={(event) => event.preventDefault()}>
             <SValues>{`${i18next.t('info.Type')}`}</SValues>
             <SValues>{`${i18next.t('info.Size')}`}</SValues>
             <SValues>{`${i18next.t('info.Location')}`}</SValues>

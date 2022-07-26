@@ -6,6 +6,7 @@ export const NoFilesBox = styled(Box)({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    userSelect: 'none',
 });
 
 export const SLogo = styled('img')({
