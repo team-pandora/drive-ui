@@ -1,6 +1,7 @@
 import { Box, List, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import i18next from 'i18next';
 import { getFile } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
 import { NavigationListItem } from './NavigationListItem';
@@ -25,6 +26,7 @@ type props = {
 };
 
 const NavigationBody: React.FC<props> = ({ parent, setParent, files }) => {
+    const dir = i18next.dir(i18next.language);
     if (parent === undefined) return <NavigationRootBody setParent={setParent}></NavigationRootBody>;
 
     const dispatch = useDispatch();
@@ -81,7 +83,7 @@ const NavigationBody: React.FC<props> = ({ parent, setParent, files }) => {
     });
 
     return (
-        <NavigationBodyBox>
+        <NavigationBodyBox dir={dir}>
             <List
                 sx={{
                     padding: '0',

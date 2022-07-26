@@ -73,7 +73,7 @@
     "Remove": "הסרה",
     "Download": "הורדה",
     "Share": "שיתוף",
-    "MoveTo": "העבר אל",
+    "MoveTo": "העבר",
     "Copy": "צור עותק",
     "Info": "פרטים",
     "ExternalTransfer": "העברה למרחב חיצוני",
@@ -137,6 +137,9 @@
     "ExternalTransferIncomingName": "התקבל ממרחב {{networkName}}",
     "ExternalTransferOutgoingName": "אישורים למרחב {{networkName}}",
     "PeopleWithAccess": "אנשים עם גישה"
+  },
+  "placeholders": {
+    "UntitledFolder": "תיקייה ללא שם"
   },
   "info": {
     "Type": "סוג",

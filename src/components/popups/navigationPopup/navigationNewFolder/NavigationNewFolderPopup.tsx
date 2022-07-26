@@ -34,7 +34,7 @@ type props = {
 const NewFolderPopup: React.FC<props> = ({ parent, fetchFunc }) => {
     const dir = i18next.dir(i18next.language);
 
-    const [value, setValue] = useState('Untitled folder');
+    const [value, setValue] = useState(`${i18next.t('placeholders.UntitledFolder')}`);
     const dispatch = useDispatch();
 
     const textRef = useRef<HTMLInputElement>(null);
@@ -78,7 +78,9 @@ const NewFolderPopup: React.FC<props> = ({ parent, fetchFunc }) => {
                 <Avatar sx={{ backgroundColor: '#4285f4', width: '32px', height: '32px' }}>
                     <CreateNewFolderIcon />
                 </Avatar>
-                <Typography sx={{ margin: '0 10px', fontSize: '22px' }}>New folder</Typography>
+                <Typography sx={{ margin: '0 10px', fontSize: '22px' }}>{`${i18next.t(
+                    'messages.NewFolder',
+                )}`}</Typography>
             </Box>
             <NewFolderBody>
                 <TextField

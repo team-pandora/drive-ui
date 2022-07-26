@@ -6,6 +6,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import StarIcon from '@mui/icons-material/Star';
 import { ListItem, ListItemIcon, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import i18next from 'i18next';
 import { popupActions } from '../../../store/popups';
 
 type props = {
@@ -27,9 +28,18 @@ export const NavigationListItem: React.FC<props> = ({
     setParent,
     id,
 }) => {
+    const dir = i18next.dir(i18next.language);
+    const arrowForwardMargin = dir === 'ltr' ? '0 0 0 auto' : '0 auto 0 0';
+
     const isSelected = index === selectedIndex;
     const selectedColor = isSelected ? 'white' : '#757575';
+
+    const DirectedArrowForward = styled(ArrowForwardIosIcon)({
+        transform: dir === 'ltr' ? undefined : 'scaleX(-1)',
+    });
     const dispatch = useDispatch();
+
+    //
 
     let Icon: any;
     switch (iconType) {
@@ -56,6 +66,9 @@ export const NavigationListItem: React.FC<props> = ({
                 },
                 '&:hover': {
                     backgroundColor: '#f8f4f4',
+                    '& .MuiSvgIcon-root': {
+                        color: selectedColor,
+                    },
                 },
             }}
             selected={isSelected}
@@ -65,11 +78,11 @@ export const NavigationListItem: React.FC<props> = ({
             }}
         >
             <ListItemIcon>{Icon}</ListItemIcon>
-            <Typography sx={{ marginLeft: '10px', userSelect: 'none', color: selectedColor, fontWeight: '500' }}>
+            <Typography sx={{ margin: '0 10px', userSelect: 'none', color: selectedColor, fontWeight: '500' }}>
                 {children}
             </Typography>
-            <ArrowForwardIosIcon
-                sx={{ cursor: 'pointer', marginLeft: 'auto', color: selectedColor }}
+            <DirectedArrowForward
+                sx={{ cursor: 'pointer', margin: arrowForwardMargin, color: 'white' }}
                 onClick={() => {
                     setParent(id);
                 }}

@@ -137,6 +137,9 @@
     "ExternalTransferOutgoingName": "Approvals to {{networkName}}",
     "PeopleWithAccess": "People with access"
   },
+  "placeholders": {
+    "UntitledFolder": "Untitled folder"
+  },
   "info": {
     "Type": "Type",
     "Size": "size",

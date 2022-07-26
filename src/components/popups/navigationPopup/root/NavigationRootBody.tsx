@@ -1,6 +1,7 @@
 import { Box, List, styled } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import i18next from 'i18next';
 import { NavigationListItem } from '../NavigationListItem';
 
 const NavigationBodyBox = styled(Box)({
@@ -18,6 +19,7 @@ type props = {
 };
 
 const NavigationRootBody: React.FC<props> = ({ setParent }) => {
+    const dir = i18next.dir(i18next.language);
     const dispatch = useDispatch();
     const [selectedIndex, setSelectedIndex] = useState(0);
     const handleListItemClick = (event: React.MouseEvent, index: number) => {
@@ -60,6 +62,7 @@ const NavigationRootBody: React.FC<props> = ({ setParent }) => {
                         '& .MuiListItem-root.Mui-selected:hover': {
                             backgroundColor: '#4d90fe',
                         },
+                        dir,
                     }}
                 >
                     <NavigationListItem
@@ -70,7 +73,7 @@ const NavigationRootBody: React.FC<props> = ({ setParent }) => {
                         setParent={setParent}
                         id={null}
                     >
-                        My Drive
+                        {i18next.t('titles.MyDrive')}
                     </NavigationListItem>
                     <NavigationListItem
                         index={1}
@@ -80,7 +83,7 @@ const NavigationRootBody: React.FC<props> = ({ setParent }) => {
                         setParent={setParent}
                         id={'shared'}
                     >
-                        Shared with me
+                        {i18next.t('titles.SharedWithMe')}
                     </NavigationListItem>
                 </List>
             </NavigationBodyBox>
