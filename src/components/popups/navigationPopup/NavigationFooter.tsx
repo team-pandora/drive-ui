@@ -33,10 +33,10 @@ const NewFolderButton = styled(CreateNewFolderIcon)({
 type props = {
     parent: string | null;
     fetchFunc: any;
-    fsObjectId: string;
+    fsObjectIds: string[];
 };
 
-const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectId }) => {
+const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectIds }) => {
     const dir = i18next.dir(i18next.language);
     const dispatch = useDispatch();
     const displayNewFolder = parent === undefined || parent === 'shared';
@@ -62,11 +62,15 @@ const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectId }) =>
     const [folderId, setFolderId] = useState<any>('');
 
     const handleClick = async () => {
-        const file = await getFile(fsObjectId);
-        if (action === 'shortcut')
-            createShortcut(fsObjectId, `Shortcut to ${file.name}`, folderId === null ? parent : folderId);
-        else if (action === 'move') move(fsObjectId, folderId === null ? parent : folderId, file.type);
-        else if (action === 'copy') copy(fsObjectId, `Copy of ${file.name}`, folderId === null ? parent : folderId);
+        for await (const fsObjectId of fsObjectIds) {
+            console.log(fsObjectId);
+
+            const file = await getFile(fsObjectId);
+            if (action === 'shortcut')
+                createShortcut(fsObjectId, `Shortcut to ${file.name}`, folderId === null ? parent : folderId);
+            else if (action === 'move') move(fsObjectId, folderId === null ? parent : folderId, file.type);
+            else if (action === 'copy') copy(fsObjectId, `Copy of ${file.name}`, folderId === null ? parent : folderId);
+        }
 
         dispatch(popupActions.setNavigation());
     };

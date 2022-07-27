@@ -31,7 +31,6 @@
     "material-ui-flags": "^1.2.4",
     "randomcolor": "^0.6.2",
     "react": "^18.1.0",
-    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^18.0.0",
     "react-dropzone": "^14.2.1",
     "react-i18next": "^11.16.7",

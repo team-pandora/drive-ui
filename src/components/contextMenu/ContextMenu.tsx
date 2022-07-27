@@ -7,7 +7,7 @@ import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
 import { popupActions } from '../../store/popups';
-import { selectGetFilesFunc } from '../../utils/files';
+import { getSelectedFilesIds, selectGetFilesFunc } from '../../utils/files';
 import { Copy } from './buttons/Copy';
 import Download from './buttons/Download';
 import Favorite from './buttons/Favorite';
@@ -169,15 +169,15 @@ const ContextMenu: React.FC<props> = ({ page }) => {
         >
             <MenuList sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px' }} dense>
                 <Share handleClick={handleShare} />
-                <Shortcut handleClick={handleShortcut} fsObjectId={selectedFiles[0]?.fsObjectId} />
-                <MoveTo handleClick={handleMove} fsObjectId={selectedFiles[0]?.fsObjectId} />
+                <Shortcut handleClick={handleShortcut} fsObjectIds={getSelectedFilesIds(selectedFiles)} />
+                <MoveTo handleClick={handleMove} fsObjectIds={getSelectedFilesIds(selectedFiles)} />
                 {/* TODO */}
                 {selectedFiles[0]?.favorite ? (
                     <Unfavorite handleClose={handleRemoveFavorite} />
                 ) : (
                     <Favorite handleClose={handleAddFavorite} />
                 )}
-                <Copy handleClick={handleCopy} fsObjectId={selectedFiles[0]?.fsObjectId} />
+                <Copy handleClick={handleCopy} fsObjectIds={getSelectedFilesIds(selectedFiles)} />
                 {selectedFiles.length === 1 && <Rename handleClick={handleRename} />}
                 <Divider />
                 {selectedFiles.length === 1 && <Info handleClose={handleClose} />}

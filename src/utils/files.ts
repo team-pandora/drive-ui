@@ -59,3 +59,9 @@ export const getFileType = (file: any) => {
     }
     return file.type;
 };
+
+export const getSelectedFilesIds = (files: any) => {
+    return files.map((file: any) => {
+        return file.fsObjectId;
+    });
+};

@@ -22,7 +22,6 @@ type props = {
     parent: string | undefined | null;
     setParent: any;
     files: any;
-    fsObjectId: string;
 };
 
 const NavigationBody: React.FC<props> = ({ parent, setParent, files }) => {

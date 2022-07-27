@@ -1,16 +1,14 @@
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import i18next from 'i18next';
-import { useDispatch } from 'react-redux';
-import { popupActions } from '../../../store/popups';
 import MovePopup from '../../popups/navigationPopup';
 
 type props = {
     handleClick: () => void;
-    fsObjectId: string;
+    fsObjectIds: string[];
 };
 
-const MoveTo: React.FC<props> = ({ handleClick, fsObjectId }) => {
+const MoveTo: React.FC<props> = ({ handleClick, fsObjectIds }) => {
     return (
         <>
             <MenuItem onClick={handleClick}>
@@ -19,7 +17,7 @@ const MoveTo: React.FC<props> = ({ handleClick, fsObjectId }) => {
                 </ListItemIcon>
                 <ListItemText>{`${i18next.t('contextMenu.MoveTo')}`}</ListItemText>
             </MenuItem>
-            <MovePopup fsObjectId={fsObjectId}></MovePopup>
+            <MovePopup fsObjectIds={fsObjectIds}></MovePopup>
         </>
     );
 };
