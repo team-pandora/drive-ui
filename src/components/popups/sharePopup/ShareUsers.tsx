@@ -104,7 +104,11 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
                         </Typography>
                         <Tooltip
                             TransitionComponent={Zoom}
-                            title={<Typography variant="subtitle2">{`${i18next.t('messages.SearchHelp')}`}</Typography>}
+                            title={
+                                <Typography sx={{ userSelect: 'none' }} variant="subtitle2">{`${i18next.t(
+                                    'messages.SearchHelp',
+                                )}`}</Typography>
+                            }
                             placement={dir === 'rtl' ? 'bottom' : 'bottom'}
                         >
                             <QuestionMarkOutlined

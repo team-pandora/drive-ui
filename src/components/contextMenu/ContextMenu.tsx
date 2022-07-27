@@ -167,7 +167,10 @@ const ContextMenu: React.FC<props> = ({ page }) => {
             }}
             dir={dir}
         >
-            <MenuList sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px' }} dense>
+            <MenuList
+                sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px', border: 'none', outline: 'none' }}
+                dense
+            >
                 <Share handleClick={handleShare} />
                 <Shortcut handleClick={handleShortcut} fsObjectIds={getSelectedFilesIds(selectedFiles)} />
                 <MoveTo handleClick={handleMove} fsObjectIds={getSelectedFilesIds(selectedFiles)} />

@@ -22,7 +22,7 @@ const SelectMenu: React.FC<props> = ({ label, menuItems, selectClick }) => {
 
     return (
         <div>
-            <FormControl sx={{ width: '160px', direction: dir }} size="small">
+            <FormControl sx={{ width: '160px', direction: dir, userSelect: 'none' }} size="small">
                 <InputLabel dir={dir} id="demo-simple-select-helper-label">
                     {label}
                 </InputLabel>

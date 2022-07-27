@@ -90,6 +90,7 @@ const MyDrive = () => {
         <>
             <Box
                 sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+                onDragStart={(event) => event.preventDefault()}
                 flex={4}
                 p={2}
                 style={{}}

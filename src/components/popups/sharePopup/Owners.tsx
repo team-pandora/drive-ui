@@ -31,7 +31,7 @@ const Owners = () => {
 
     return (
         <>
-            <Typography fontSize={'18px'} m={'2%'}>
+            <Typography fontSize={'18px'} m={'2%'} sx={{ userSelect: ' none' }}>
                 {`${i18next.t('titles.PeopleWithAccess')}`}
             </Typography>
             <OwnersBox sx={{ overflowY: `${permittedUsers.length > 3 ? 'scroll' : 'hidden'}` }}>
