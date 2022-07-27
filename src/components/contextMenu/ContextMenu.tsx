@@ -2,7 +2,7 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { addToFavorite, download, moveToTrash, removeFromFavorite } from '../../api/files';
+import { download, moveToTrash } from '../../api/files';
 import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
@@ -17,7 +17,6 @@ import Remove from './buttons/Remove';
 import Rename from './buttons/Rename';
 import Share from './buttons/Share';
 import Shortcut from './buttons/Shortcut';
-import Unfavorite from './buttons/Unfavorite';
 
 type props = {
     page: string;
@@ -37,48 +36,6 @@ const ContextMenu: React.FC<props> = ({ page }) => {
     const handleRemove = async () => {
         try {
             await Promise.all(selectedFiles.map(moveToTrash));
-
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                    : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-            dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
-            dispatch(notificationsActions.setSimpleOpen(message));
-        } catch (error) {
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FailedDeletingFile')}`
-                    : `${i18next.t('messages.FailedDeletingFiles')}`;
-            toast.error(message);
-        } finally {
-            handleClose();
-        }
-    };
-
-    const handleAddFavorite = async () => {
-        try {
-            await Promise.all(selectedFiles.map(addToFavorite));
-
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                    : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-            dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
-            dispatch(notificationsActions.setSimpleOpen(message));
-        } catch (error) {
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FailedDeletingFile')}`
-                    : `${i18next.t('messages.FailedDeletingFiles')}`;
-            toast.error(message);
-        } finally {
-            handleClose();
-        }
-    };
-
-    const handleRemoveFavorite = async () => {
-        try {
-            await Promise.all(selectedFiles.map(removeFromFavorite));
 
             const message =
                 selectedFiles.length === 1
@@ -146,6 +103,10 @@ const ContextMenu: React.FC<props> = ({ page }) => {
         handleClose();
     };
 
+    const checkFavorites = () => {
+        return selectedFiles.every((file: any) => file.favorite === selectedFiles[0].favorite);
+    };
+
     return (
         <Menu
             sx={{
@@ -167,20 +128,21 @@ const ContextMenu: React.FC<props> = ({ page }) => {
             }}
             dir={dir}
         >
-            <MenuList sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px' }} dense>
+            <MenuList
+                sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px', outline: 'none', border: 'none' }}
+                dense
+            >
                 <Share handleClick={handleShare} />
                 <Shortcut handleClick={handleShortcut} fsObjectId={selectedFiles[0]?.fsObjectId} />
                 <MoveTo handleClick={handleMove} fsObjectId={selectedFiles[0]?.fsObjectId} />
-                {/* TODO */}
-                {selectedFiles[0]?.favorite ? (
-                    <Unfavorite handleClose={handleRemoveFavorite} />
-                ) : (
-                    <Favorite handleClose={handleAddFavorite} />
-                )}
+                <Favorite
+                    action={selectedFiles[0]?.favorite ? 'Unfavorite' : 'Favorite'}
+                    disabled={!checkFavorites()}
+                />
                 <Copy handleClick={handleCopy} fsObjectId={selectedFiles[0]?.fsObjectId} />
                 {selectedFiles.length === 1 && <Rename handleClick={handleRename} />}
                 <Divider />
-                {selectedFiles.length === 1 && <Info handleClose={handleClose} />}
+                <Info handleClose={handleClose} disabled={selectedFiles.length !== 1} />
                 <Download handleClose={handleDownload} />
                 <Divider />
                 <Remove handleClick={handleRemove} />

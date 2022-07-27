@@ -1,8 +1,12 @@
 import i18next from 'i18next';
+import { toast } from 'react-toastify';
+import { moveToTrash } from '../../api/files';
 // import { useDispatch } from 'react-redux';
 import { filesActions } from '../../store/files';
 import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
+import { popupActions } from '../../store/popups';
+import { selectGetFilesFunc } from '../../utils/files';
 
 // const dispatch = useDispatch();
 
@@ -30,15 +34,31 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
     }
 };
 
-export const handleKeyDown = (event: any, files: any, selectedFiles: any, dispatch: any) => {
-    alert('afdaf');
+export const handleKeyDown = async (event: any, files: any, selectedFiles: any, dispatch: any) => {
     if (event.key === 'Delete') {
+        alert('guy the gay');
         // await delete files
-        const message =
-            selectedFiles.length === 1
-                ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-        dispatch(notificationsActions.setSimpleOpen(message));
+        const url = window.location.pathname.split('/')[1];
+        if (url === 'trash') {
+            dispatch(popupActions.setRemove());
+        } else {
+            try {
+                await Promise.all(selectedFiles.map(moveToTrash));
+
+                const message =
+                    selectedFiles.length === 1
+                        ? `${i18next.t('messages.FileDeletedSuccessfully')}`
+                        : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
+                dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
+                dispatch(notificationsActions.setSimpleOpen(message));
+            } catch (error) {
+                const message =
+                    selectedFiles.length === 1
+                        ? `${i18next.t('messages.FailedDeletingFile')}`
+                        : `${i18next.t('messages.FailedDeletingFiles')}`;
+                toast.error(message);
+            }
+        }
     } else if (event.key === 'Escape') {
         dispatch(filesActions.setSelected([]));
     } else if (event.key === 'a' && event.ctrlKey) {

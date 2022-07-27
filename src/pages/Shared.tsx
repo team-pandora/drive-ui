@@ -21,12 +21,13 @@ const Shared = () => {
     const folderId: string = params.folderId ? params.folderId : 'null';
     const [locationKeys, setLocationKeys] = useState<any[]>([]);
     const isGridView = useSelector((state: any) => state.global.isGridView);
-    const isLoading = useFiles('shared', folderId, getSharedFiles);
     const files = useSelector((state: any) => state.files.files);
 
     if (folderId === 'null') {
         dispatch(filesActions.setHierarchy({ type: 'clear' }));
     }
+
+    const isLoading = useFiles('shared', folderId, getSharedFiles);
 
     useEffect(() => {
         return history.listen((location) => {
