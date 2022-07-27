@@ -14,6 +14,9 @@ import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { deleteFile, getTrashFiles } from '../../../api/files';
+import Logo from '../../../assets/empty.svg';
 import { TrashI } from '../../../data/fakedata';
 import { filesActions } from '../../../store/files';
 import { popupActions } from '../../../store/popups';
@@ -23,8 +26,9 @@ import { ISOStringToDateString } from '../../../utils/time';
 import TrashContextMenu from '../../contextMenu/TrashContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import { NoFilesHeader } from '../NoFilesHeader';
+import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/TrashHeader';
+import { NoFilesBox, SLogo } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 
@@ -125,7 +129,16 @@ const TrashTable: React.FC<props> = ({ filesArray, isLoading }) => {
         });
 
     if (!isLoading && !filesArray.length) {
-        return <NoFilesHeader />;
+        return (
+            <NoFilesBox>
+                <NoFiles
+                    message={i18next.t('noFilesMessages.bin.message')}
+                    subMessage={i18next.t('noFilesMessages.bin.subMessage')}
+                >
+                    <SLogo src={Logo} alt="empty" onDragStart={(event) => event.preventDefault()} />
+                </NoFiles>
+            </NoFilesBox>
+        );
     }
 
     return (

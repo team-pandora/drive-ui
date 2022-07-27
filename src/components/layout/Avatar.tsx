@@ -62,7 +62,7 @@ const UserAvatar: React.FC<props> = ({ name, mail, color, isDisabled }) => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <ListItem>
+                <ListItem sx={{ border: 'none', outline: 'none' }}>
                     <AvatarIconFull {...stringAvatar(name, color)} sx={{ margin: 'auto', bgcolor: color }} />
                 </ListItem>
                 <ListItem sx={{ display: 'block', textAlign: 'center' }}>

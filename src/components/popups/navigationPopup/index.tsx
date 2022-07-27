@@ -2,12 +2,12 @@ import { Box, Divider, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { getSubfolders } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
 import { GenericDialog } from '../Dialog';
 import NavigationBody from './NavigationBody';
 import NavigationFooter from './NavigationFooter';
 import NavigationHeader from './NavigationHeader';
-import { getFile, getFiles, getSubfolders } from '../../../api/files';
 
 const SBox = styled(Box)({
     width: '100%',
@@ -21,10 +21,10 @@ const SBox = styled(Box)({
 
 type props = {
     initialParent?: string | undefined | null;
-    fsObjectId: string;
+    fsObjectIds: string[];
 };
 
-const NavigationDialog: React.FC<props> = ({ initialParent, fsObjectId }) => {
+const NavigationDialog: React.FC<props> = ({ initialParent, fsObjectIds }) => {
     const dir = i18next.dir(i18next.language);
 
     const [parent, setParent] = useState<string | undefined | null>(initialParent);
@@ -37,7 +37,6 @@ const NavigationDialog: React.FC<props> = ({ initialParent, fsObjectId }) => {
     };
 
     const [files, setFiles] = useState<any>([]);
-    if (files.length) dispatch(popupActions.setNavigationSelectedFolder(files[0]?.fsObjectId));
 
     const fetchData = async () => {
         if (parent !== undefined) setFiles(await getSubfolders(parent));
@@ -51,9 +50,9 @@ const NavigationDialog: React.FC<props> = ({ initialParent, fsObjectId }) => {
         <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
             <SBox sx={{ dir }}>
                 <NavigationHeader parent={parent} setParent={setParent} />
-                <NavigationBody parent={parent} setParent={setParent} files={files} fsObjectId={fsObjectId} />
+                <NavigationBody parent={parent} setParent={setParent} files={files} />
                 <Divider />
-                <NavigationFooter parent={parent!} fetchFunc={fetchData} fsObjectId={fsObjectId} />
+                <NavigationFooter parent={parent!} fetchFunc={fetchData} fsObjectIds={fsObjectIds} />
             </SBox>
         </GenericDialog>
     );

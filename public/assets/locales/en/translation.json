@@ -115,6 +115,32 @@
     "PermissionChanged": "Access updated",
     "DragFilesHere": "Files that are released here will be immediately optimized here"
   },
+  "noFilesMessages": {
+    "myDrive": {
+      "message": "You can release files here",
+      "subMessage": "or use button New"
+    },
+    "shared": {
+      "message": "what a loser",
+      "subMessage": "you have no friends"
+    },
+    "recent": {
+      "message": "You have not opened any files recently",
+      "subMessage": ""
+    },
+    "starred": {
+      "message": "There are no starred folders or files",
+      "subMessage": "access easily in the future"
+    },
+    "bin": {
+      "message": "No files or folders",
+      "subMessage": "Items that will be moved to the bin will appear here"
+    },
+    "storage": {
+      "message": "You have no files that takes storage space",
+      "subMessage": "Files can be uploaded through My-drive"
+    }
+  },
   "alerts": {
     "ShareLinkWarning": "The link will be available for 24 hours. After that, it will be deleted"
   },
@@ -137,6 +163,9 @@
     "ExternalTransferIncomingName": "Received from {{networkName}}",
     "ExternalTransferOutgoingName": "Approvals to {{networkName}}",
     "PeopleWithAccess": "People with access"
+  },
+  "placeholders": {
+    "UntitledFolder": "Untitled folder"
   },
   "info": {
     "Type": "Type",

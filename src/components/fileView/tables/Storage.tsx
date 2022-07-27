@@ -1,3 +1,4 @@
+import { InsertDriveFile } from '@mui/icons-material';
 import { Box, Paper, styled, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
@@ -10,7 +11,7 @@ import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import { NoFilesHeader } from '../NoFilesHeader';
+import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/FavoritesHeader';
 
 type Order = 'asc' | 'desc';
@@ -26,6 +27,12 @@ const SBox = styled(Box)({
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
+});
+
+const SIcon = styled(InsertDriveFile)({
+    color: '#cce4fc',
+    width: '180px',
+    height: '200px',
 });
 
 const StorageTable: React.FC<props> = ({ filesArray, isLoading }) => {
@@ -89,7 +96,23 @@ const StorageTable: React.FC<props> = ({ filesArray, isLoading }) => {
         });
 
     if (!isLoading && !filesArray.length) {
-        return <NoFilesHeader />;
+        return (
+            <Box
+                sx={{
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <NoFiles
+                    message={i18next.t('noFilesMessages.storage.message')}
+                    subMessage={i18next.t('noFilesMessages.storage.subMessage')}
+                >
+                    <SIcon />
+                </NoFiles>
+            </Box>
+        );
     }
 
     return (

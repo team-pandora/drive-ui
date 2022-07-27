@@ -3,6 +3,7 @@ import { Box, styled, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import i18next from 'i18next';
 import { getFile } from '../../../api/files';
 import { popupActions } from '../../../store/popups';
 import { NavigationRootHeader } from './root/NavigationRootHeader';
@@ -20,6 +21,13 @@ type props = {
 };
 
 const NavigationHeader: React.FC<props> = ({ parent, setParent }) => {
+    const dir = i18next.dir(i18next.language);
+    const headerMargin = dir === 'ltr' ? '0 auto 0 0' : '0 0 0 auto';
+
+    const DirectedArrowForward = styled(ArrowBackIosIcon)({
+        transform: dir === 'ltr' ? undefined : 'scaleX(-1)',
+    });
+
     if (parent === undefined) return <NavigationRootHeader></NavigationRootHeader>;
 
     const [parentName, setParentName] = useState<string>();
@@ -27,8 +35,8 @@ const NavigationHeader: React.FC<props> = ({ parent, setParent }) => {
     const dispatch = useDispatch();
 
     const fetchData = async () => {
-        if (parent === 'shared') setParentName('Shared');
-        else if (parent === null) setParentName('My Drive');
+        if (parent === 'shared') setParentName(i18next.t('titles.SharedWithMe'));
+        else if (parent === null) setParentName(i18next.t('titles.MyDrive'));
         else setParentName((await getFile(parent)).name);
     };
 
@@ -56,27 +64,29 @@ const NavigationHeader: React.FC<props> = ({ parent, setParent }) => {
                 display: 'flex',
                 backgroundColor: '#f1f1f1',
                 height: '60px',
+                dir,
             }}
         >
-            <HeaderContent>
-                <ArrowBackIosIcon
-                    sx={{ alignSelf: 'center', color: '#757575', cursor: 'pointer' }}
+            <HeaderContent sx={{ dir }}>
+                <DirectedArrowForward
+                    sx={{ alignSelf: 'center', color: '#757575', cursor: 'pointer', dir }}
                     onClick={handleBack}
                 />
                 <Typography
                     sx={{
+                        dir,
                         fontSize: '16px',
                         color: '#777',
                         width: '250px',
                         fontWeight: 'bold',
                         alignSelf: 'center',
                         userSelect: 'none',
-                        marginRight: 'auto',
+                        margin: headerMargin,
                     }}
                 >
                     {parentName}
                 </Typography>
-                <CloseIcon onClick={handleNavigationClose} sx={{ cursor: 'pointer', color: 'gray' }} />
+                <CloseIcon onClick={handleNavigationClose} sx={{ cursor: 'pointer', color: 'gray', dir }} />
             </HeaderContent>
         </Box>
     );

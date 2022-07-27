@@ -23,8 +23,9 @@ import getRandomColor, { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import { NoFilesHeader } from '../NoFilesHeader';
+import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/SharedHeader';
+import { NoFilesBox, SharedWithMeIcon } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 
@@ -134,7 +135,16 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
         });
 
     if (!isLoading && !filesArray.length) {
-        return <NoFilesHeader />;
+        return (
+            <NoFilesBox>
+                <NoFiles
+                    message={i18next.t('noFilesMessages.shared.message')}
+                    subMessage={i18next.t('noFilesMessages.shared.subMessage')}
+                >
+                    <SharedWithMeIcon />
+                </NoFiles>
+            </NoFilesBox>
+        );
     }
 
     return (

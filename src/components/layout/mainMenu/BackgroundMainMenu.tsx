@@ -60,6 +60,8 @@ const BackgroundMainMenu: React.FC<props> = ({ handleClose, showMenu }) => {
                         padding: 0,
                         borderRadius: '8px',
                     },
+                    outline: 'none',
+                    border: 'none',
                 }}
                 id="demo-positioned-menu"
                 aria-labelledby="demo-positioned-button"
