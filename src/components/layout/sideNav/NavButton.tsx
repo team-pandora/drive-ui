@@ -39,6 +39,7 @@ const NavButton: React.FC<props> = ({ path, label, children }) => {
 
     const handleClick = (event: any) => {
         dispatch(filesActions.setHierarchy({ type: 'clear' }));
+        dispatch(filesActions.setFiles([]));
     };
 
     return (

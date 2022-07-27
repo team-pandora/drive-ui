@@ -55,9 +55,10 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file: any, index) => {
+            console.log(file);
             const isItemSelected = isSelected(file.state, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
-            const stringDate = ISOStringToDateString(file.state.stateCreatedAt, locales);
+            const stringDate = ISOStringToDateString(file.state?.stateCreatedAt, locales);
             return (
                 <TableRow
                     hover
@@ -68,11 +69,11 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={file.state.fsObjectId}
+                    key={file.state?.fsObjectId}
                     selected={isItemSelected}
                 >
                     <TableCell padding="checkbox">
-                        {FileType(file.state.type === 'folder' ? 'shared-folder' : file.state.type)}
+                        {FileType(file.state?.type === 'folder' ? 'shared-folder' : file.state?.type)}
                     </TableCell>
                     <TableCell
                         component="th"
@@ -83,7 +84,7 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                         }}
                         align={dir}
                     >
-                        {file.state.name}
+                        {file.state?.name}
                     </TableCell>
 
                     <TableCell align={dir}>
@@ -98,9 +99,9 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                                 title={
                                     <>
                                         <Typography dir={i18next.dir(i18next.language)} variant="subtitle2">
-                                            {file.owner.fullName}
+                                            {file.owner?.fullName}
                                         </Typography>
-                                        <Typography variant="subtitle2">{file.owner.mail}</Typography>
+                                        <Typography variant="subtitle2">{file.owner?.mail}</Typography>
                                     </>
                                 }
                                 placement="bottom"
@@ -110,14 +111,14 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                                     sx={{
                                         width: '23px',
                                         height: '23px',
-                                        bgcolor: `${getRandomColor(file.owner.fullName)}`,
+                                        bgcolor: `${getRandomColor(file.owner?.fullName)}`,
                                     }}
                                 >
-                                    <Typography variant="body1">{file.owner.fullName[0]}</Typography>
+                                    <Typography variant="body1">{file.owner?.fullName[0]}</Typography>
                                 </Avatar>
                             </Tooltip>
 
-                            <Typography variant="body2">{file.owner.fullName}</Typography>
+                            <Typography variant="body2">{file.owner?.fullName}</Typography>
                         </Stack>
                     </TableCell>
 

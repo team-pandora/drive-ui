@@ -78,7 +78,7 @@ const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
                     onDoubleClick={(event) => handleDoubleClick(event, file, history, dispatch)}
                     // role="checkbox"
                     // aria-checked={isItemSelected}
-                    // tabIndex={-1}
+                    tabIndex={-1}
                     key={file.fsObjectUpdatedAt}
                     selected={isItemSelected}
                 >

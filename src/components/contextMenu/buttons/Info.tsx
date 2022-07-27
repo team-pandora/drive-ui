@@ -7,9 +7,10 @@ import InfoPopup from '../../popups/infoPopup';
 
 type props = {
     handleClose: () => void;
+    disabled?: boolean;
 };
 
-const Info: React.FC<props> = ({ handleClose }) => {
+const Info: React.FC<props> = ({ handleClose, disabled }) => {
     const dispatch = useDispatch();
 
     const handleOpen = () => {
@@ -19,7 +20,7 @@ const Info: React.FC<props> = ({ handleClose }) => {
 
     return (
         <>
-            <MenuItem onClick={handleOpen} disabled={false}>
+            <MenuItem onClick={handleOpen} disabled={disabled}>
                 <ListItemIcon>
                     <InfoOutlinedIcon />
                 </ListItemIcon>

@@ -19,7 +19,7 @@ import { deleteFile, getTrashFiles } from '../../../api/files';
 import Logo from '../../../assets/empty.svg';
 import { TrashI } from '../../../data/fakedata';
 import { filesActions } from '../../../store/files';
-import { notificationsActions } from '../../../store/notifications';
+import { popupActions } from '../../../store/popups';
 import { fileSizeFormatter } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
@@ -67,17 +67,20 @@ const TrashTable: React.FC<props> = ({ filesArray, isLoading }) => {
     };
 
     const emptyTrash = async () => {
-        try {
-            await Promise.all(filesArray.map(deleteFile));
+        dispatch(filesActions.setSelected(filesArray));
+        dispatch(popupActions.setRemove());
 
-            const message = `${i18next.t('messages.BinEmpty')}`;
+        // try {
+        //     await Promise.all(filesArray.map(deleteFile));
 
-            dispatch(filesActions.setFiles(await getTrashFiles()));
-            dispatch(notificationsActions.setSimpleOpen(message));
-        } catch (error) {
-            const message = selectedFiles.length === `${i18next.t('messages.BinEmptyFailed')}`;
-            toast.error(message);
-        }
+        //     const message = `${i18next.t('messages.BinEmpty')}`;
+
+        //     dispatch(filesActions.setFiles(await getTrashFiles()));
+        //     dispatch(notificationsActions.setSimpleOpen(message));
+        // } catch (error) {
+        //     const message = selectedFiles.length === `${i18next.t('messages.BinEmptyFailed')}`;
+        //     toast.error(message);
+        // }
     };
 
     // Avoid a layout jump when reaching the last page with empty rows.
