@@ -8,6 +8,7 @@ import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
 import { popupActions } from '../../store/popups';
 import { getSelectedFilesIds, selectGetFilesFunc } from '../../utils/files';
+import RenamePopup from '../popups/renamePopup';
 import { Copy } from './buttons/Copy';
 import Download from './buttons/Download';
 import Favorite from './buttons/Favorite';
@@ -129,7 +130,14 @@ const ContextMenu: React.FC<props> = ({ page }) => {
             dir={dir}
         >
             <MenuList
-                sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px', outline: 'none', border: 'none' }}
+                sx={{
+                    width: 300,
+                    paddingTop: '4px',
+                    paddingBottom: '4px',
+                    outline: 'none',
+                    border: 'none',
+                    caretColor: 'transparent',
+                }}
                 dense
             >
                 <Share handleClick={handleShare} />

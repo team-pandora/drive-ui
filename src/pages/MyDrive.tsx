@@ -12,6 +12,7 @@ import { getFiles, handleDropFile } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids/index';
 import Table from '../components/fileView/tables/MyDrive';
+import RenamePopup from '../components/popups/renamePopup/RenamePopup';
 import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
@@ -42,8 +43,6 @@ const MyDrive = () => {
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            console.log('asdasasdasd');
-
             event.preventDefault();
         }
     };
@@ -90,6 +89,7 @@ const MyDrive = () => {
         <>
             <Box
                 sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+                onDragStart={(event) => event.preventDefault()}
                 flex={4}
                 p={2}
                 style={{}}

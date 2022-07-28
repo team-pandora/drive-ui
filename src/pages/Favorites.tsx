@@ -64,7 +64,13 @@ const Favorites = () => {
 
     return (
         <>
-            <Box flex={4} paddingTop={2} padding={2}>
+            <Box
+                flex={4}
+                paddingTop={2}
+                padding={2}
+                sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+                onDragStart={(event) => event.preventDefault()}
+            >
                 <TableMenuHeader title={i18next.t('titles.Favorites')} />
                 {isLoading ? (
                     loadingAnimation

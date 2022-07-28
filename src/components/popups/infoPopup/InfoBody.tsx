@@ -21,6 +21,7 @@ const Info = styled(Box)({
     display: 'flex',
     flexFlow: 'column nowrap',
     overflow: 'hidden',
+    caretColor: 'transparent',
 });
 
 const InfoHeader = styled(Box)({
@@ -88,6 +89,7 @@ type props = {
 const InfoPopup: React.FC<props> = ({ owner, users }) => {
     const dir = i18next.dir(i18next.language);
     const file = useSelector((state: any) => state.files.selected)[0];
+
     const dispatch = useDispatch();
     const [path, setPath] = useState<string | undefined | null>(undefined);
 

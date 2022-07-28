@@ -36,7 +36,6 @@ export const handleClick = (event: React.MouseEvent<unknown>, file: any, selecte
 
 export const handleKeyDown = async (event: any, files: any, selectedFiles: any, dispatch: any) => {
     if (event.key === 'Delete') {
-        alert('guy the gay');
         // await delete files
         const url = window.location.pathname.split('/')[1];
         if (url === 'trash') {
@@ -61,10 +60,17 @@ export const handleKeyDown = async (event: any, files: any, selectedFiles: any, 
         }
     } else if (event.key === 'Escape') {
         dispatch(filesActions.setSelected([]));
-    } else if (event.key === 'a' && event.ctrlKey) {
+    } else if ((event.key === 'a' || event.key === 'ש') && event.ctrlKey) {
         event.preventDefault();
         const allRowsNames = files.map((file: any) => file);
         dispatch(filesActions.setSelected(allRowsNames));
+    } else if (event.key === 'ArrowUp') {
+        const newIndex = files.indexOf(selectedFiles[0]) - 1 >= 0 ? files.indexOf(selectedFiles[0]) - 1 : 0;
+        dispatch(filesActions.setSelected([files[newIndex]]));
+    } else if (event.key === 'ArrowDown') {
+        const newIndex =
+            files.indexOf(selectedFiles[0]) + 1 < files.length ? files.indexOf(selectedFiles[0]) + 1 : files.length - 1;
+        dispatch(filesActions.setSelected([files[newIndex]]));
     }
 };
 

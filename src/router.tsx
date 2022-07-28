@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { OpenPopup } from './components/popups/popupRoute';
 import Favorites from './pages/Favorites';
 import IncomingCargo from './pages/IncomingCargo';
 import IncomingTomcal from './pages/IncomingTomcal';
@@ -46,6 +47,9 @@ export const Router: React.FC = () => {
             </Route>
             <Route path="/statusTransferred">
                 <StatusTransferred />
+            </Route>
+            <Route path="/:fsObjectId/:action">
+                <OpenPopup></OpenPopup>
             </Route>
             <Route path="*">
                 <Redirect to="/my-drive" />

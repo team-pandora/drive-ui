@@ -84,6 +84,7 @@ const SearchAutoComplete = () => {
             getOptionLabel={(option) => option.fullName}
             renderInput={(params) => (
                 <TextField
+                    sx={{ userSelect: 'none' }}
                     onChange={handleChange}
                     {...params}
                     variant="filled"

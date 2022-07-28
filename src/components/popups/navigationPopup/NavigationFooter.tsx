@@ -63,8 +63,6 @@ const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectIds }) =
 
     const handleClick = async () => {
         for await (const fsObjectId of fsObjectIds) {
-            console.log(fsObjectId);
-
             const file = await getFile(fsObjectId);
             if (action === 'shortcut')
                 createShortcut(fsObjectId, `Shortcut to ${file.name}`, folderId === null ? parent : folderId);
