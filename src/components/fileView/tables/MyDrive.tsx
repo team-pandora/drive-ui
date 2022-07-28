@@ -35,8 +35,8 @@ const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
     // let endIndex = 22;
     const bring = 22;
 
-    const [order, setOrder] = useState<Order>('asc');
-    const [orderBy, setOrderBy] = useState<keyof MyDriveI>('owner');
+    const [order, setOrder] = useState<Order>('desc');
+    const [orderBy, setOrderBy] = useState<keyof MyDriveI>('fsObjectUpdatedAt');
     const [page, setPage] = useState(0);
     const rowsPerPage = 100;
 

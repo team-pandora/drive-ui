@@ -4,15 +4,13 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Logo from '../assets/empty.svg';
 import { getTrashFiles } from '../api/files';
+import Logo from '../assets/empty.svg';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
 import NoFiles from '../components/fileView/NoFiles';
 import { NoFilesBox, SLogo } from '../components/fileView/tables/NoFilesElements';
 import Table from '../components/fileView/tables/Trash';
-import SimpleSnackbar from '../components/snackbars/simple';
-import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
 import { filesActions } from '../store/files';
 
@@ -89,27 +87,23 @@ const Trash = () => {
     }
 
     return (
-        <>
-            <Box
-                flex={4}
-                paddingTop={2}
-                padding={2}
-                sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
-                // onDragStart={(event) => event.preventDefault()}
-            >
-                <TableMenuHeader title={i18next.t('titles.Trash')} />
-                {isLoading ? (
-                    loadingAnimation
-                ) : isGridView ? (
-                    <Grid filesArray={files} isLoading={isLoading} />
-                ) : (
-                    <Table filesArray={files} isLoading={isLoading} />
-                )}
-                <ToastContainer position="bottom-right" />
-            </Box>
-            <SimpleSnackbar />
-            <StatusSnackbar />
-        </>
+        <Box
+            flex={4}
+            paddingTop={2}
+            padding={2}
+            sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+            // onDragStart={(event) => event.preventDefault()}
+        >
+            <TableMenuHeader title={i18next.t('titles.Trash')} />
+            {isLoading ? (
+                loadingAnimation
+            ) : isGridView ? (
+                <Grid filesArray={files} isLoading={isLoading} />
+            ) : (
+                <Table filesArray={files} isLoading={isLoading} />
+            )}
+            <ToastContainer position="bottom-right" />
+        </Box>
     );
 };
 

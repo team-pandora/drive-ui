@@ -131,8 +131,6 @@ const MyDrive = () => {
                     message={`${i18next.t('messages.DragFilesHere')}`}
                 ></Snackbar>
             )}
-            <SimpleSnackbar />
-            <StatusSnackbar />
         </Box>
     );
 };
