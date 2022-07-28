@@ -130,7 +130,14 @@ const ContextMenu: React.FC<props> = ({ page }) => {
             dir={dir}
         >
             <MenuList
-                sx={{ width: 300, paddingTop: '4px', paddingBottom: '4px', outline: 'none', border: 'none' }}
+                sx={{
+                    width: 300,
+                    paddingTop: '4px',
+                    paddingBottom: '4px',
+                    outline: 'none',
+                    border: 'none',
+                    caretColor: 'transparent',
+                }}
                 dense
             >
                 <Share handleClick={handleShare} />

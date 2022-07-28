@@ -64,6 +64,13 @@ export const handleKeyDown = async (event: any, files: any, selectedFiles: any, 
         event.preventDefault();
         const allRowsNames = files.map((file: any) => file);
         dispatch(filesActions.setSelected(allRowsNames));
+    } else if (event.key === 'ArrowUp') {
+        const newIndex = files.indexOf(selectedFiles[0]) - 1 >= 0 ? files.indexOf(selectedFiles[0]) - 1 : 0;
+        dispatch(filesActions.setSelected([files[newIndex]]));
+    } else if (event.key === 'ArrowDown') {
+        const newIndex =
+            files.indexOf(selectedFiles[0]) + 1 < files.length ? files.indexOf(selectedFiles[0]) + 1 : files.length - 1;
+        dispatch(filesActions.setSelected([files[newIndex]]));
     }
 };
 

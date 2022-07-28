@@ -21,6 +21,7 @@ const Info = styled(Box)({
     display: 'flex',
     flexFlow: 'column nowrap',
     overflow: 'hidden',
+    caretColor: 'transparent',
 });
 
 const InfoHeader = styled(Box)({
