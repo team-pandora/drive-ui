@@ -60,7 +60,7 @@ export const handleKeyDown = async (event: any, files: any, selectedFiles: any, 
         }
     } else if (event.key === 'Escape') {
         dispatch(filesActions.setSelected([]));
-    } else if (event.key === 'a' && event.ctrlKey) {
+    } else if ((event.key === 'a' || event.key === 'ש') && event.ctrlKey) {
         event.preventDefault();
         const allRowsNames = files.map((file: any) => file);
         dispatch(filesActions.setSelected(allRowsNames));

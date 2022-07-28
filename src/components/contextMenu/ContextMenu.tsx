@@ -8,6 +8,7 @@ import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
 import { popupActions } from '../../store/popups';
 import { getSelectedFilesIds, selectGetFilesFunc } from '../../utils/files';
+import RenamePopup from '../popups/renamePopup';
 import { Copy } from './buttons/Copy';
 import Download from './buttons/Download';
 import Favorite from './buttons/Favorite';

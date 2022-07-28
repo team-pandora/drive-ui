@@ -88,6 +88,7 @@ type props = {
 const InfoPopup: React.FC<props> = ({ owner, users }) => {
     const dir = i18next.dir(i18next.language);
     const file = useSelector((state: any) => state.files.selected)[0];
+
     const dispatch = useDispatch();
     const [path, setPath] = useState<string | undefined | null>(undefined);
 
