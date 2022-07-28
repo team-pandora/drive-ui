@@ -23,9 +23,7 @@ import getRandomColor, { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/SharedHeader';
-import { NoFilesBox, SharedWithMeIcon } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 
@@ -55,7 +53,6 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const rowFiles = stableSort(filesArray, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((file: any, index) => {
-            console.log(file);
             const isItemSelected = isSelected(file.state, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.state?.stateCreatedAt, locales);
@@ -133,19 +130,6 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                 </TableRow>
             );
         });
-
-    if (!isLoading && !filesArray.length) {
-        return (
-            <NoFilesBox>
-                <NoFiles
-                    message={i18next.t('noFilesMessages.shared.message')}
-                    subMessage={i18next.t('noFilesMessages.shared.subMessage')}
-                >
-                    <SharedWithMeIcon />
-                </NoFiles>
-            </NoFilesBox>
-        );
-    }
 
     return (
         <Box sx={{ width: '100%', height: '100%' }}>

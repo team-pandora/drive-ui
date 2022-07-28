@@ -7,7 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import { getFavoriteFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
+import NoFiles from '../components/fileView/NoFiles';
 import Table from '../components/fileView/tables/Favorites';
+import { NoFilesBox, StarredIcon } from '../components/fileView/tables/NoFilesElements';
 import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
@@ -60,8 +62,30 @@ const Favorites = () => {
         >
             <CircularProgress />
         </Stack>
-        // <></>
     );
+
+    if (!isLoading && !files.length) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxHeight: 800,
+                }}
+            >
+                <NoFilesBox>
+                    <NoFiles
+                        message={i18next.t('noFilesMessages.starred.message')}
+                        subMessage={i18next.t('noFilesMessages.starred.subMessage')}
+                    >
+                        <StarredIcon />
+                    </NoFiles>
+                </NoFilesBox>
+            </Box>
+        );
+    }
 
     return (
         <>
@@ -70,7 +94,7 @@ const Favorites = () => {
                 paddingTop={2}
                 padding={2}
                 sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
-                onDragStart={(event) => event.preventDefault()}
+                // onDragStart={(event) => event.preventDefault()}
             >
                 <TableMenuHeader title={i18next.t('titles.Favorites')} />
                 {isLoading ? (

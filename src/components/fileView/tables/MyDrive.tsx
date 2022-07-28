@@ -109,19 +109,6 @@ const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
         // console.log(event.currentTarget.scrollTop, event.currentTarget.clientHeight);
     };
 
-    if (!isLoading && !filesArray.length) {
-        return (
-            <NoFilesBox>
-                <NoFiles
-                    message={i18next.t('noFilesMessages.myDrive.message')}
-                    subMessage={i18next.t('noFilesMessages.myDrive.subMessage')}
-                >
-                    <MyDriveIcon />
-                </NoFiles>
-            </NoFilesBox>
-        );
-    }
-
     return (
         <Box sx={{ width: '100%', height: '100%' }} onContextMenu={backgroundMainMenuClick}>
             <Paper elevation={0} sx={{ mb: 2 }} onContextMenu={tableRowRightClick}>

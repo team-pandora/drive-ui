@@ -27,7 +27,7 @@ function App() {
         }
     };
 
-    const { isLoading: isLoadingFiles } = useQuery('getFiles', () => getFiles('null'), {
+    const { isLoading: isLoadingFiles } = useQuery(['my-drive', 'null'], () => getFiles('null'), {
         onError: handleErrorMsg('Failed loading files', window.location.pathname.slice(1)),
         onSuccess: (data) => {
             dispatch(filesActions.setFiles(data));

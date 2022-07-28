@@ -128,19 +128,6 @@ const TrashTable: React.FC<props> = ({ filesArray, isLoading }) => {
             );
         });
 
-    if (!isLoading && !filesArray.length) {
-        return (
-            <NoFilesBox>
-                <NoFiles
-                    message={i18next.t('noFilesMessages.bin.message')}
-                    subMessage={i18next.t('noFilesMessages.bin.subMessage')}
-                >
-                    <SLogo src={Logo} alt="empty" onDragStart={(event) => event.preventDefault()} />
-                </NoFiles>
-            </NoFilesBox>
-        );
-    }
-
     return (
         <Box sx={{ width: '100%' }}>
             <Paper elevation={0} sx={{ width: '100%', mb: 2 }}>

@@ -27,13 +27,13 @@ const SimpleSnackbar: React.FC = () => {
         dispatch(notificationsActions.setSimpleOpen(''));
     };
 
-    const action = (
-        <>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                <CloseIcon fontSize="small" />
-            </IconButton>
-        </>
-    );
+    // const action = (
+    //     <>
+    //         <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+    //             <CloseIcon fontSize="small" />
+    //         </IconButton>
+    //     </>
+    // );
 
     return (
         <Snackbar
@@ -42,7 +42,7 @@ const SimpleSnackbar: React.FC = () => {
             anchorOrigin={{ vertical: 'bottom', horizontal: dir === 'rtl' ? 'left' : 'right' }}
             onClose={handleClose}
         >
-            <SContent message={content} action={action} />
+            <SContent message={content} />
         </Snackbar>
     );
 };

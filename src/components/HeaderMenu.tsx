@@ -34,7 +34,6 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
     const dispatch = useDispatch();
 
     const isGridView = useSelector((state: any) => state.global.isGridView);
-    const files = useSelector((state: any) => state.files.selected);
     const selectedFiles = useSelector((state: any) => state.files.selected);
 
     const MoreVertClick = (event: any) => {
@@ -98,7 +97,7 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
 
     return (
         <Icons>
-            {files.length > 0 && (
+            {selectedFiles.length > 0 && (
                 <Box
                     sx={{
                         display: 'flex',
@@ -106,35 +105,40 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
                 >
                     {page !== i18next.t('titles.Trash') && (
                         <>
-                            <IconButton>
-                                <InsertLink onClick={handleShareOpen} />
+                            <IconButton onClick={handleShareOpen}>
+                                <InsertLink />
                             </IconButton>
-                            <IconButton>
-                                <PersonAddAltOutlined onClick={handleShareOpen} />
+                            <IconButton onClick={handleShareOpen}>
+                                <PersonAddAltOutlined />
                             </IconButton>
                         </>
                     )}
                     {page === i18next.t('titles.Trash') && (
-                        <IconButton>
-                            <RestoreOutlined onClick={handleRestore} />
+                        <IconButton onClick={handleRestore}>
+                            <RestoreOutlined />
                         </IconButton>
                     )}
-                    <IconButton>
-                        <DeleteOutline onClick={handleDelete} />
+                    <IconButton onClick={handleDelete}>
+                        <DeleteOutline />
                     </IconButton>
                     {page !== i18next.t('titles.Trash') && (
-                        <IconButton>
-                            <MoreVert onClick={(event) => MoreVertClick(event)} />
+                        <IconButton onClick={(event) => MoreVertClick(event)}>
+                            <MoreVert />
                         </IconButton>
                     )}
                 </Box>
             )}
-            {files.length > 0 && <Divider orientation="vertical" flexItem />}
-            <IconButton>
-                {!isGridView && <CalendarViewMonth onClick={isGridViewClick} />}
-                {isGridView && <Toc onClick={isGridViewClick} />}
-            </IconButton>
-            <IconButton onClick={handleInfoOpen} disabled={!(selectedFiles.length >= 1)}>
+            {selectedFiles.length > 0 && <Divider orientation="vertical" flexItem />}
+            {isGridView ? (
+                <IconButton onClick={isGridViewClick}>
+                    <CalendarViewMonth />{' '}
+                </IconButton>
+            ) : (
+                <IconButton onClick={isGridViewClick}>
+                    <Toc />
+                </IconButton>
+            )}
+            <IconButton onClick={handleInfoOpen} disabled={!(selectedFiles.length === 1)}>
                 <InfoOutlined />
             </IconButton>
         </Icons>

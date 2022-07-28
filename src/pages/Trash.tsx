@@ -1,12 +1,15 @@
-import { Box, CircularProgress, LinearProgress, Stack } from '@mui/material';
+import { Box, CircularProgress, Stack } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import Logo from '../assets/empty.svg';
 import { getTrashFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
+import NoFiles from '../components/fileView/NoFiles';
+import { NoFilesBox, SLogo } from '../components/fileView/tables/NoFilesElements';
 import Table from '../components/fileView/tables/Trash';
 import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
@@ -60,8 +63,30 @@ const Trash = () => {
         >
             <CircularProgress />
         </Stack>
-        // <></>
     );
+
+    if (!isLoading && !files.length) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxHeight: 800,
+                }}
+            >
+                <NoFilesBox>
+                    <NoFiles
+                        message={i18next.t('noFilesMessages.bin.message')}
+                        subMessage={i18next.t('noFilesMessages.bin.subMessage')}
+                    >
+                        <SLogo src={Logo} alt="empty" onDragStart={(event) => event.preventDefault()} />
+                    </NoFiles>
+                </NoFilesBox>
+            </Box>
+        );
+    }
 
     return (
         <>
@@ -70,7 +95,7 @@ const Trash = () => {
                 paddingTop={2}
                 padding={2}
                 sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
-                onDragStart={(event) => event.preventDefault()}
+                // onDragStart={(event) => event.preventDefault()}
             >
                 <TableMenuHeader title={i18next.t('titles.Trash')} />
                 {isLoading ? (

@@ -81,19 +81,6 @@ const RecentsTable: React.FC<props> = ({ filesArray, isLoading }) => {
             );
         });
 
-    if (!isLoading && !filesArray.length) {
-        return (
-            <NoFilesBox>
-                <NoFiles
-                    message={i18next.t('noFilesMessages.recent.message')}
-                    subMessage={i18next.t('noFilesMessages.recent.subMessage')}
-                >
-                    <RecentIcon />
-                </NoFiles>
-            </NoFilesBox>
-        );
-    }
-
     return (
         <Box>
             <Paper elevation={0}>

@@ -7,7 +7,7 @@ import { checkIfRecent } from '../utils/time';
 /* eslint-disable consistent-return */
 
 export const getFiles = async (parent: string) => {
-    if (parent === 'null') {
+    if (parent === 'null' || !parent) {
         return (await axios.get(`/api/users/fs/query?parent=${parent}&trash=false&permission=owner`)).data;
     }
     return (await axios.get(`/api/users/fs/query?parent=${parent}&trash=false`)).data;
@@ -83,12 +83,15 @@ export const getFile = async (fsOjbectId: string) => {
 };
 
 export const download = async (file: any) => {
-    // TODO: handle error
-    try {
-        axios.get(`/api/users/fs/${file.type}/${file.fsObjectId}/download`);
-        window.location.href = `/api/users/fs/${file.type}/${file.fsObjectId}/download`;
-    } catch (error) {
-        window.location.href = `/my-drive`;
+    // arab
+    if (file) {
+        try {
+            // axios.get(`/api/users/fs/${file.type}/${file.fsObjectId}/download`);
+            window.location.href = `/api/users/fs/${file.type}/${file.fsObjectId}/download`;
+        } catch (error) {
+            console.log(error);
+            window.location.href = `/my-drive`;
+        }
     }
 };
 
@@ -199,6 +202,7 @@ export const generateShareLink = async (fsObjectId: string, permission: string, 
 };
 
 export const handleDropFile = (parentFolderId: string, dispatch: any, acceptedFiles: string[], history: any) => {
+    console.log(parentFolderId);
     if (parentFolderId === 'null') history.push('/my-drive');
     const filesWithStatus = acceptedFiles.map((file: any) => {
         return { name: file.name, status: 'uploading' };

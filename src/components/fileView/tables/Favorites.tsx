@@ -100,19 +100,6 @@ const FavoritesTable: React.FC<props> = ({ filesArray, isLoading }) => {
             );
         });
 
-    if (!isLoading && !filesArray.length) {
-        return (
-            <NoFilesBox>
-                <NoFiles
-                    message={i18next.t('noFilesMessages.starred.message')}
-                    subMessage={i18next.t('noFilesMessages.starred.subMessage')}
-                >
-                    <StarredIcon />
-                </NoFiles>
-            </NoFilesBox>
-        );
-    }
-
     return (
         <Box>
             <Paper elevation={0}>

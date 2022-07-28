@@ -1,4 +1,4 @@
-import { Box, CircularProgress, LinearProgress, Stack } from '@mui/material';
+import { Box, CircularProgress, Stack } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import { getSharedFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
+import NoFiles from '../components/fileView/NoFiles';
+import { NoFilesBox, SharedWithMeIcon } from '../components/fileView/tables/NoFilesElements';
 import Table from '../components/fileView/tables/Shared';
 import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
@@ -60,8 +62,30 @@ const Shared = () => {
         >
             <CircularProgress />
         </Stack>
-        // <></>
     );
+
+    if (!isLoading && !files.length) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxHeight: 800,
+                }}
+            >
+                <NoFilesBox>
+                    <NoFiles
+                        message={i18next.t('noFilesMessages.shared.message')}
+                        subMessage={i18next.t('noFilesMessages.shared.subMessage')}
+                    >
+                        <SharedWithMeIcon />
+                    </NoFiles>
+                </NoFilesBox>
+            </Box>
+        );
+    }
 
     return (
         <>
@@ -70,7 +94,7 @@ const Shared = () => {
                 paddingTop={2}
                 padding={2}
                 sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
-                onDragStart={(event) => event.preventDefault()}
+                // onDragStart={(event) => event.preventDefault()}
             >
                 <TableMenuHeader title={i18next.t('titles.SharedWithMe')} />
                 {isLoading ? (
