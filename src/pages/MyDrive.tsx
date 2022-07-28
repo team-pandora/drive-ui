@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import { Box, Snackbar, styled } from '@mui/material';
+import { Box, CircularProgress, Snackbar, Stack, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
@@ -67,18 +67,18 @@ const MyDrive = () => {
     }, [locationKeys]);
 
     const loadingAnimation = (
-        // <Stack
-        //     sx={{
-        //         width: '85%',
-        //         color: 'grey.500',
-        //         position: 'absolute',
-        //         mt: 1.2,
-        //     }}
-        //     spacing={2}
-        // >
-        //     <LinearProgress color="inherit" />
-        // </Stack>
-        <></>
+        <Stack
+            sx={{
+                width: '85%',
+                color: 'grey.500',
+                position: 'absolute',
+                mt: 1.2,
+            }}
+            spacing={2}
+        >
+            <CircularProgress />
+        </Stack>
+        // <></>
     );
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
@@ -97,7 +97,9 @@ const MyDrive = () => {
             >
                 <input {...getInputProps()} />
                 <TableMenuHeader title={i18next.t('titles.MyDrive')} />
-                {isGridView ? (
+                {isLoading ? (
+                    loadingAnimation
+                ) : isGridView ? (
                     <Grid filesArray={files} isLoading={isLoading} />
                 ) : (
                     <Table filesArray={files} isLoading={isLoading} />

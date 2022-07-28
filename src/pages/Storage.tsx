@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress, LinearProgress, Stack } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -48,18 +48,18 @@ const Storage = () => {
     }, [locationKeys]);
 
     const loadingAnimation = (
-        // <Stack
-        //     sx={{
-        //         width: '85%',
-        //         color: 'grey.500',
-        //         position: 'absolute',
-        //         mt: 1.2,
-        //     }}
-        //     spacing={2}
-        // >
-        //     <LinearProgress color="inherit" />
-        // </Stack>
-        <></>
+        <Stack
+            sx={{
+                width: '85%',
+                color: 'grey.500',
+                position: 'absolute',
+                mt: 1.2,
+            }}
+            spacing={2}
+        >
+            <CircularProgress />
+        </Stack>
+        // <></>
     );
 
     return (

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress, LinearProgress, Stack } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -48,29 +48,33 @@ const Shared = () => {
     }, [locationKeys]);
 
     const loadingAnimation = (
-        // <Stack
-        //     sx={{
-        //         width: '85%',
-        //         color: 'grey.500',
-        //         position: 'absolute',
-        //         mt: 1.2,
-        //     }}
-        //     spacing={2}
-        // >
-        //     <LinearProgress color="inherit" />
-        // </Stack>
-        <></>
+        <Stack
+            sx={{
+                width: '85%',
+                color: 'grey.500',
+                position: 'absolute',
+                mt: 4,
+                mr: 90,
+            }}
+            spacing={2}
+        >
+            <CircularProgress />
+        </Stack>
+        // <></>
     );
 
     return (
         <>
             <Box flex={4} paddingTop={2} padding={2}>
                 <TableMenuHeader title={i18next.t('titles.SharedWithMe')} />
-                {isGridView === true ? (
+                {isLoading ? (
+                    loadingAnimation
+                ) : isGridView ? (
                     <Grid filesArray={files} isLoading={isLoading} />
                 ) : (
                     <Table filesArray={files} isLoading={isLoading} />
                 )}
+
                 <ToastContainer position="bottom-right" />
             </Box>
             <SimpleSnackbar />
