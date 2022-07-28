@@ -68,10 +68,11 @@ const MyDrive = () => {
     const loadingAnimation = (
         <Stack
             sx={{
-                width: '85%',
+                display: 'flex',
+                width: '90%',
                 color: 'grey.500',
-                position: 'absolute',
-                mt: 1.2,
+                alignItems: 'center',
+                mt: 2.5,
             }}
             spacing={2}
         >
