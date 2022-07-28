@@ -13,11 +13,6 @@ export const getFiles = async (parent: string) => {
     return (await axios.get(`/api/users/fs/query?parent=${parent}&trash=false`)).data;
 };
 
-export const fetchFiles = async (parent: string, limit: number, pageParam: number) => {
-    const files = await getFiles(parent);
-    return files.slice(pageParam, pageParam + limit);
-};
-
 export const getOwnerOfFile = async (fsObjectId: string) => {
     return axios.get(`/api/users/fs/${fsObjectId}/owner`);
 };
@@ -34,7 +29,6 @@ export const getSharedFiles = async (parent: string) => {
     }));
 
     const sharedFiles = await Promise.all(ownerPromises);
-    console.log(sharedFiles);
     return sharedFiles;
 };
 
@@ -221,4 +215,9 @@ export const handleDropFile = (parentFolderId: string, dispatch: any, acceptedFi
                 dispatch(filesActions.setUploadedFailed(file));
             });
     }
+};
+
+export const fetchFiles = async (parent: string, limit: number, pageParam: number) => {
+    const files = await getFiles(parent);
+    return files.slice(pageParam, pageParam + limit);
 };
