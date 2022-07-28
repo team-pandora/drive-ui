@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useRef, useState } from 'react';
@@ -5,6 +6,7 @@ import { useInfiniteQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { fetchFiles } from '../../../api/files';
+import { fetchNum, scrollStyle } from '../../../constants/index';
 import { MyDriveI } from '../../../data/fakedata';
 import { globalActions } from '../../../store/global';
 import { fileSizeFormatter } from '../../../utils/files';
@@ -14,13 +16,18 @@ import ContextMenu from '../../contextMenu/ContextMenu';
 import BackgroundMainMenu from '../../layout/mainMenu/BackgroundMainMenu';
 import FileType from '../FileType';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
+import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/MyDriveHeader';
+import { MyDriveIcon, NoFilesBox } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 
-type props = { filesArray: any[] };
+type props = {
+    filesArray: any[];
+    isLoading: boolean;
+};
 
-const MyDriveInfinitiScrollTable: React.FC<props> = ({ filesArray }) => {
+const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const dir = i18next.dir(i18next.language) === 'rtl' ? 'right' : 'left';
@@ -60,16 +67,14 @@ const MyDriveInfinitiScrollTable: React.FC<props> = ({ filesArray }) => {
     const folderId: string = params.folderId ? params.folderId : 'null';
 
     const {
-        data: activityLog,
+        data: fetchedFiles,
         isSuccess,
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
-        error,
-    } = useInfiniteQuery(['fetchFiles', folderId], ({ pageParam = 1 }) => fetchFiles(folderId, 22, pageParam), {
+    } = useInfiniteQuery(['fetchFiles', folderId], ({ pageParam = 0 }) => fetchFiles(folderId, fetchNum, pageParam), {
         getNextPageParam: (lastPage, allPages) => {
-            console.log('heelo');
-            const nextPage = allPages.length * 10 + 1;
+            const nextPage = allPages.length * fetchNum;
             return lastPage.length !== 0 ? nextPage : undefined;
         },
     });
@@ -79,19 +84,10 @@ const MyDriveInfinitiScrollTable: React.FC<props> = ({ filesArray }) => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) =>
-                // eslint-disable-next-line consistent-return
                 entries.forEach((entry) => {
-                    // console.log('entry', entry);
-                    // console.log('maya', entry.isIntersecting);
-                    if (!entry.isIntersecting && !isFetchingNextPage) {
-                        console.log('fetching');
-                        return fetchNextPage();
-                    }
                     if (entry.isIntersecting && !isFetchingNextPage) {
-                        console.log('fetching2');
-                        return fetchNextPage();
+                        fetchNextPage();
                     }
-                    // return entry.isIntersecting && fetchNextPage();
                 }),
             {
                 rootMargin: '0px',
@@ -105,15 +101,14 @@ const MyDriveInfinitiScrollTable: React.FC<props> = ({ filesArray }) => {
             return;
         }
         observer.observe(el);
-        // eslint-disable-next-line consistent-return
         return () => {
             observer.unobserve(el);
         };
-    }, [fetchNextPage, observerElem]);
+    }, [isFetchingNextPage, observerElem]);
 
     let rowFiles: any[] = [];
-    if (activityLog) {
-        rowFiles = stableSort(activityLog.pages.flat(), getComparator(order, orderBy)).map((file: any, index) => {
+    if (fetchedFiles) {
+        rowFiles = stableSort(fetchedFiles.pages.flat(), getComparator(order, orderBy)).map((file: any, index) => {
             const isItemSelected = isSelected(file, selectedFiles);
             const labelId = `enhanced-table-checkbox-${index}`;
             const stringDate = ISOStringToDateString(file.fsObjectUpdatedAt, locales);
@@ -125,12 +120,12 @@ const MyDriveInfinitiScrollTable: React.FC<props> = ({ filesArray }) => {
                     hover
                     onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
-                    onKeyDown={(event) => handleKeyDown(event, activityLog.pages.flat(), selectedFiles, dispatch)}
+                    onKeyDown={(event) => handleKeyDown(event, fetchedFiles!.pages.flat(), selectedFiles, dispatch)}
                     onDoubleClick={(event) => handleDoubleClick(event, file, history, dispatch)}
                     // role="checkbox"
                     // aria-checked={isItemSelected}
-                    // tabIndex={-1}
-                    key={file.fsObjectId}
+                    tabIndex={-1}
+                    key={file.fsObjectUpdatedAt}
                     selected={isItemSelected}
                 >
                     <TableCell padding="checkbox">{FileType(file.type)}</TableCell>
@@ -157,93 +152,30 @@ const MyDriveInfinitiScrollTable: React.FC<props> = ({ filesArray }) => {
         });
     }
 
-    // Old files array
-    const rowFilesTest = stableSort(filesArray.slice(0, 22), getComparator(order, orderBy)).map((file: any, index) => {
-        const isItemSelected = isSelected(file, selectedFiles);
-        const labelId = `enhanced-table-checkbox-${index}`;
-        const stringDate = ISOStringToDateString(file.fsObjectUpdatedAt, locales);
+    if (!isLoading && !filesArray.length) {
         return (
-            <TableRow
-                sx={{
-                    backgroundColor: 'white',
-                }}
-                hover
-                onClick={(event) => handleClick(event, file, selectedFiles, dispatch)}
-                onContextMenu={(event) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
-                onKeyDown={(event) => handleKeyDown(event, filesArray, selectedFiles, dispatch)}
-                onDoubleClick={(event) => handleDoubleClick(event, file, history, dispatch)}
-                // role="checkbox"
-                // aria-checked={isItemSelected}
-                // tabIndex={-1}
-                key={file.fsObjectId}
-                selected={isItemSelected}
-            >
-                <TableCell padding="checkbox">{FileType(file.type)}</TableCell>
-                <TableCell
-                    component="th"
-                    id={labelId}
-                    scope="row"
-                    sx={{
-                        width: '45%',
-                    }}
-                    align={dir}
+            <NoFilesBox>
+                <NoFiles
+                    message={i18next.t('noFilesMessages.myDrive.message')}
+                    subMessage={i18next.t('noFilesMessages.myDrive.subMessage')}
                 >
-                    {file.name}
-                </TableCell>
-                <TableCell sx={{ width: '20%' }} align={dir}>
-                    {'אני'}
-                </TableCell>
-                <TableCell align={dir}>{stringDate}</TableCell>
-                <TableCell sx={{ width: '8%' }} align={dir}>
-                    {file.size ? fileSizeFormatter(file.size) : '-'}
-                </TableCell>
-            </TableRow>
+                    <MyDriveIcon />
+                </NoFiles>
+            </NoFilesBox>
         );
-    });
+    }
 
     return (
         <Box sx={{ width: '100%', height: '100%' }} onContextMenu={backgroundMainMenuClick}>
             <Paper elevation={0} sx={{ mb: 2 }} onContextMenu={tableRowRightClick}>
-                <TableContainer
-                    // onScroll={onScroll}
-                    sx={{
-                        maxHeight: '87vh',
-                        '&::-webkit-scrollbar': {
-                            height: '16px',
-                            overflow: 'visible',
-                            width: '16px',
-                        },
-                        '&::-webkit-scrollbar-button': {
-                            height: 0,
-                            width: 0,
-                        },
-                        '&::-webkit-scrollbar-corner': {
-                            background: 'transparent',
-                        },
-                        '&::-webkit-scrollbar-thumb': {
-                            backgroundColor: 'rgba(0,0,0,.2)',
-                            backgroundClip: 'padding-box',
-                            border: 'solid transparent',
-                            borderWidth: '1px 6px 1px 1px',
-                            minHeight: '28px',
-                            padding: '100px 0 0',
-                            '-webkit-box-shadow': 'inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%)',
-                            boxShadow: 'inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%)',
-                        },
-                        '&::-webkit-scrollbar-track': {
-                            backgroundClip: 'padding-box',
-                            border: 'solid transparent',
-                            borderWidth: '0 4px 0 0',
-                        },
-                    }}
-                >
+                <TableContainer sx={scrollStyle}>
                     <Table stickyHeader>
                         <TableHeader order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
                         {isSuccess && <TableBody>{rowFiles}</TableBody>}
+                        <div ref={observerElem} className="loader">
+                            {isFetchingNextPage && hasNextPage ? 'Loading...' : ''}
+                        </div>
                     </Table>
-                    <div ref={observerElem} className="loader">
-                        {isFetchingNextPage && hasNextPage ? 'Loading...' : ''}
-                    </div>
                 </TableContainer>
                 <ContextMenu page="MyDrive" />
             </Paper>
@@ -252,4 +184,4 @@ const MyDriveInfinitiScrollTable: React.FC<props> = ({ filesArray }) => {
     );
 };
 
-export default MyDriveInfinitiScrollTable;
+export default MyDriveTable;

@@ -12,7 +12,6 @@ import { getFiles, handleDropFile } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids/index';
 import Table from '../components/fileView/tables/MyDrive';
-import RenamePopup from '../components/popups/renamePopup/RenamePopup';
 import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
