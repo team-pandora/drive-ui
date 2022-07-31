@@ -24,16 +24,15 @@ type props = {
 const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    console.log(window.location.pathname.slice(1).split('/')[0]);
-    const parentFolderId =
-        window.location.pathname.slice(1).split('/')[0] === 'folder'
-            ? window.location.pathname.slice(1).split('/')[1]
-            : 'null';
     const dir = i18next.dir(i18next.language);
     const folderInputAttributes: any = { directory: '', webkitdirectory: '' };
     const uploadFolderRef = useRef<any>();
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
+        const parentFolderId =
+            window.location.pathname.slice(1).split('/')[0] === 'folder'
+                ? window.location.pathname.slice(1).split('/')[1]
+                : 'null';
         handleDropFile(parentFolderId, dispatch, acceptedFiles, history);
     }, []);
 

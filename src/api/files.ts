@@ -196,7 +196,6 @@ export const generateShareLink = async (fsObjectId: string, permission: string, 
 };
 
 export const handleDropFile = (parentFolderId: string, dispatch: any, acceptedFiles: string[], history: any) => {
-    console.log(parentFolderId);
     if (parentFolderId === 'null') history.push('/my-drive');
     const filesWithStatus = acceptedFiles.map((file: any) => {
         return { name: file.name, status: 'uploading' };
