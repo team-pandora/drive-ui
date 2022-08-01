@@ -8,6 +8,7 @@ const SBox = styled(Box)({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    caretColor: 'transparent',
 });
 
 const NavigationFooter: React.FC = () => {
@@ -30,17 +31,18 @@ const NavigationFooter: React.FC = () => {
                 sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
+                    caretColor: 'transparent',
                 }}
             >
                 <Button
                     variant="text"
                     onClick={handleSubmission}
-                    sx={{ margin: '0px 1%', textTransform: 'none' }}
+                    sx={{ margin: '0px 1%', textTransform: 'none', caretColor: 'transparent' }}
                 >{`${i18next.t('buttons.Cancel')}`}</Button>
                 <Button
                     variant="contained"
                     onClick={handleCancel}
-                    sx={{ margin: '0px 1%', textTransform: 'none' }}
+                    sx={{ margin: '0px 1%', textTransform: 'none', caretColor: 'transparent' }}
                 >{`${i18next.t('buttons.Submit')}`}</Button>
             </Box>
         </SBox>

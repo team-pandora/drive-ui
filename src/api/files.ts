@@ -177,7 +177,7 @@ export const move = async (fsObjectId: string, newParent: string, fileType: 'fil
     return response.data;
 };
 
-export const copy = async (fsObjectId: string, name: string, parent: string) => {
+export const copy = async (fsObjectId: string, name: string, parent: string, size: string) => {
     const response = await axios.post(`/api/users/fs/file/${fsObjectId}/duplicate`, {
         name,
         parent,

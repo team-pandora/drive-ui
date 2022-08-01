@@ -17,6 +17,7 @@ const SBox = styled(Box)({
     flexDirection: 'column',
     flexWrap: 'nowrap',
     overflow: 'hidden',
+    caretColor: 'transparent',
 });
 
 type props = {
@@ -39,7 +40,12 @@ const NavigationDialog: React.FC<props> = ({ initialParent, fsObjectIds }) => {
     const [files, setFiles] = useState<any>([]);
 
     const fetchData = async () => {
-        if (parent !== undefined) setFiles(await getSubfolders(parent));
+        if (parent !== undefined)
+            setFiles(
+                (await getSubfolders(parent)).filter((file: any) => {
+                    return fsObjectIds.indexOf(file.fsObjectId) === -1;
+                }),
+            );
     };
 
     useEffect(() => {
@@ -50,7 +56,7 @@ const NavigationDialog: React.FC<props> = ({ initialParent, fsObjectIds }) => {
         <GenericDialog selectorFunction={selectorFunction} onClose={handleClose}>
             <SBox sx={{ dir }}>
                 <NavigationHeader parent={parent} setParent={setParent} />
-                <NavigationBody parent={parent} setParent={setParent} files={files} />
+                <NavigationBody parent={parent} setParent={setParent} files={files} fsObjectIds={fsObjectIds} />
                 <Divider />
                 <NavigationFooter parent={parent!} fetchFunc={fetchData} fsObjectIds={fsObjectIds} />
             </SBox>

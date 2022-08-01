@@ -11,12 +11,13 @@ const StorageHeader = () => {
             sx={{
                 display: 'flex',
                 margin: '10px 0',
+                caretColor: 'transparent',
             }}
         >
-            <Avatar sx={{ backgroundColor: '#4285f4', width: '32px', height: '32px' }}>
+            <Avatar sx={{ backgroundColor: '#4285f4', width: '32px', height: '32px', caretColor: 'transparent' }}>
                 <NotesIcon />
             </Avatar>
-            <Typography sx={{ margin: '0 10px', fontSize: '22px' }}>
+            <Typography sx={{ margin: '0 10px', fontSize: '22px', caretColor: 'transparent' }}>
                 {`${i18next.t('messages.RequestStorage')}`}
             </Typography>
         </Box>

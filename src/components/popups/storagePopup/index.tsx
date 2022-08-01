@@ -21,7 +21,7 @@ const SBox = styled(Box)({
     padding: '0 15px',
 });
 
-const InfoDialog = () => {
+const StorageDialog = () => {
     const dir = i18next.dir(i18next.language);
 
     const dispatch = useDispatch();
@@ -42,4 +42,4 @@ const InfoDialog = () => {
     );
 };
 
-export default InfoDialog;
+export default StorageDialog;

@@ -70,6 +70,7 @@ export const NavigationListItem: React.FC<props> = ({
                         color: selectedColor,
                     },
                 },
+                caretColor: 'transparent',
             }}
             selected={isSelected}
             onClick={onClick}
