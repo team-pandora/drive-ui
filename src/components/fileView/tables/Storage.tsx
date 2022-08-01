@@ -29,12 +29,6 @@ const SBox = styled(Box)({
     flexWrap: 'wrap',
 });
 
-const SIcon = styled(InsertDriveFile)({
-    color: '#cce4fc',
-    width: '180px',
-    height: '200px',
-});
-
 const StorageTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -94,26 +88,6 @@ const StorageTable: React.FC<props> = ({ filesArray, isLoading }) => {
                 </TableRow>
             );
         });
-
-    if (!isLoading && !filesArray.length) {
-        return (
-            <Box
-                sx={{
-                    height: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <NoFiles
-                    message={i18next.t('noFilesMessages.storage.message')}
-                    subMessage={i18next.t('noFilesMessages.storage.subMessage')}
-                >
-                    <SIcon />
-                </NoFiles>
-            </Box>
-        );
-    }
 
     return (
         <Box>

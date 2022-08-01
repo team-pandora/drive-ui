@@ -7,15 +7,10 @@ import { checkIfRecent } from '../utils/time';
 /* eslint-disable consistent-return */
 
 export const getFiles = async (parent: string) => {
-    if (parent === 'null') {
+    if (parent === 'null' || !parent) {
         return (await axios.get(`/api/users/fs/query?parent=${parent}&trash=false&permission=owner`)).data;
     }
     return (await axios.get(`/api/users/fs/query?parent=${parent}&trash=false`)).data;
-};
-
-export const fetchFiles = async (parent: string, limit: number, pageParam: number) => {
-    const files = await getFiles(parent);
-    return files.slice(pageParam, pageParam + limit);
 };
 
 export const getOwnerOfFile = async (fsObjectId: string) => {
@@ -82,12 +77,15 @@ export const getFile = async (fsOjbectId: string) => {
 };
 
 export const download = async (file: any) => {
-    // TODO: handle error
-    try {
-        axios.get(`/api/users/fs/${file.type}/${file.fsObjectId}/download`);
-        window.location.href = `/api/users/fs/${file.type}/${file.fsObjectId}/download`;
-    } catch (error) {
-        window.location.href = `/my-drive`;
+    // arab
+    if (file) {
+        try {
+            // axios.get(`/api/users/fs/${file.type}/${file.fsObjectId}/download`);
+            window.location.href = `/api/users/fs/${file.type}/${file.fsObjectId}/download`;
+        } catch (error) {
+            console.log(error);
+            window.location.href = `/my-drive`;
+        }
     }
 };
 
@@ -216,4 +214,9 @@ export const handleDropFile = (parentFolderId: string, dispatch: any, acceptedFi
                 dispatch(filesActions.setUploadedFailed(file));
             });
     }
+};
+
+export const fetchFiles = async (parent: string, limit: number, pageParam: number) => {
+    const files = await getFiles(parent);
+    return files.slice(pageParam, pageParam + limit);
 };

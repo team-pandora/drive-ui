@@ -1,3 +1,5 @@
+export const fetchNum = 15;
+
 export const EnTimeLimitObject: any = {
     300: '5 min',
     900: '15 min',

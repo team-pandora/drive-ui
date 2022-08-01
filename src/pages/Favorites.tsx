@@ -7,9 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import { getFavoriteFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
+import NoFiles from '../components/fileView/NoFiles';
 import Table from '../components/fileView/tables/Favorites';
-import SimpleSnackbar from '../components/snackbars/simple';
-import StatusSnackbar from '../components/snackbars/status';
+import { NoFilesBox, StarredIcon } from '../components/fileView/tables/NoFilesElements';
 import { useFiles } from '../hooks/useFiles';
 import { filesActions } from '../store/files';
 
@@ -60,31 +60,49 @@ const Favorites = () => {
         >
             <CircularProgress />
         </Stack>
-        // <></>
     );
 
-    return (
-        <>
+    if (!isLoading && !files.length) {
+        return (
             <Box
-                flex={4}
-                paddingTop={2}
-                padding={2}
-                sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
-                onDragStart={(event) => event.preventDefault()}
+                sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxHeight: 800,
+                }}
             >
-                <TableMenuHeader title={i18next.t('titles.Favorites')} />
-                {isLoading ? (
-                    loadingAnimation
-                ) : isGridView ? (
-                    <Grid filesArray={files} isLoading={isLoading} />
-                ) : (
-                    <Table filesArray={files} isLoading={isLoading} />
-                )}
-                <ToastContainer position="bottom-right" />
+                <NoFilesBox>
+                    <NoFiles
+                        message={i18next.t('noFilesMessages.starred.message')}
+                        subMessage={i18next.t('noFilesMessages.starred.subMessage')}
+                    >
+                        <StarredIcon />
+                    </NoFiles>
+                </NoFilesBox>
             </Box>
-            <SimpleSnackbar />
-            <StatusSnackbar />
-        </>
+        );
+    }
+
+    return (
+        <Box
+            flex={4}
+            paddingTop={2}
+            padding={2}
+            sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+            // onDragStart={(event) => event.preventDefault()}
+        >
+            <TableMenuHeader title={i18next.t('titles.Favorites')} />
+            {isLoading ? (
+                loadingAnimation
+            ) : isGridView ? (
+                <Grid filesArray={files} isLoading={isLoading} />
+            ) : (
+                <Table filesArray={files} isLoading={isLoading} />
+            )}
+            <ToastContainer position="bottom-right" />
+        </Box>
     );
 };
 

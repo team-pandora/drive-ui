@@ -1,4 +1,5 @@
-import { Box, CircularProgress, LinearProgress, Stack } from '@mui/material';
+import { InsertDriveFile } from '@mui/icons-material';
+import { Box, CircularProgress, Stack, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,11 +8,17 @@ import { ToastContainer } from 'react-toastify';
 import { getStorageFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids';
+import NoFiles from '../components/fileView/NoFiles';
+import { NoFilesBox } from '../components/fileView/tables/NoFilesElements';
 import Table from '../components/fileView/tables/Storage';
-import SimpleSnackbar from '../components/snackbars/simple';
-import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
 import { filesActions } from '../store/files';
+
+const SIcon = styled(InsertDriveFile)({
+    color: '#cce4fc',
+    width: '180px',
+    height: '200px',
+});
 
 const Storage = () => {
     document.title = `Drive – ${i18next.t('sideBar.Storage')}`;
@@ -60,31 +67,49 @@ const Storage = () => {
         >
             <CircularProgress />
         </Stack>
-        // <></>
     );
 
-    return (
-        <>
+    if (!isLoading && !files.length) {
+        return (
             <Box
-                flex={4}
-                paddingTop={2}
-                padding={2}
-                sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
-                onDragStart={(event) => event.preventDefault()}
+                sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxHeight: 800,
+                }}
             >
-                <TableMenuHeader title={i18next.t('titles.Storage')} />
-                {isLoading ? (
-                    loadingAnimation
-                ) : isGridView ? (
-                    <Grid filesArray={files} isLoading={isLoading} />
-                ) : (
-                    <Table filesArray={files} isLoading={isLoading} />
-                )}
-                <ToastContainer position="bottom-right" />
+                <NoFilesBox>
+                    <NoFiles
+                        message={i18next.t('noFilesMessages.storage.message')}
+                        subMessage={i18next.t('noFilesMessages.storage.subMessage')}
+                    >
+                        <SIcon />
+                    </NoFiles>
+                </NoFilesBox>
             </Box>
-            <SimpleSnackbar />
-            <StatusSnackbar />
-        </>
+        );
+    }
+
+    return (
+        <Box
+            flex={4}
+            paddingTop={2}
+            padding={2}
+            sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+            // onDragStart={(event) => event.preventDefault()}
+        >
+            <TableMenuHeader title={i18next.t('titles.Storage')} />
+            {isLoading ? (
+                loadingAnimation
+            ) : isGridView ? (
+                <Grid filesArray={files} isLoading={isLoading} />
+            ) : (
+                <Table filesArray={files} isLoading={isLoading} />
+            )}
+            <ToastContainer position="bottom-right" />
+        </Box>
     );
 };
 

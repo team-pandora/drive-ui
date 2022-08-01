@@ -9,6 +9,8 @@ import { getFiles } from './api/files';
 import { getCurrentUser } from './api/users';
 import Sidebar from './components/layout/sideNav';
 import Topbar from './components/layout/Topbar';
+import SimpleSnackbar from './components/snackbars/simple';
+import StatusSnackbar from './components/snackbars/status';
 import DriveAnimatedLogo from './DriveAnimationLogo.jsx';
 import { Router } from './router';
 import { filesActions } from './store/files';
@@ -27,7 +29,7 @@ function App() {
         }
     };
 
-    const { isLoading: isLoadingFiles } = useQuery('getFiles', () => getFiles('null'), {
+    const { isLoading: isLoadingFiles } = useQuery(['my-drive', 'null'], () => getFiles('null'), {
         onError: handleErrorMsg('Failed loading files', window.location.pathname.slice(1)),
         onSuccess: (data) => {
             dispatch(filesActions.setFiles(data));
@@ -73,6 +75,8 @@ function App() {
             <Stack direction="row">
                 <Sidebar />
                 <Router />
+                <SimpleSnackbar />
+                <StatusSnackbar />
             </Stack>
         </Box>
     );

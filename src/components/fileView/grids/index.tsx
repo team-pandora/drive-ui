@@ -2,7 +2,6 @@ import { Box, Grid, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useFiles } from '../../../hooks/useFiles';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
 import GridHeader from './GridHeader';
@@ -27,16 +26,17 @@ const MyDriveGrid: React.FC<props> = ({ filesArray, isLoading }) => {
     const history = useHistory();
     const selectedFiles = useSelector((state: any) => state.files.selected);
 
-    const folders = filesArray.map((file, index) => {
-        const isItemSelected = isSelected(file, selectedFiles);
-        if (file.type === 'folder')
+    const folders = filesArray.map((tempFolder, index) => {
+        const folder = tempFolder.state ? tempFolder.state : tempFolder;
+        const isItemSelected = isSelected(folder, selectedFiles);
+        if (folder.type === 'folder')
             return (
                 <GridObject
-                    file={file}
-                    handleClick={(event: any) => handleClick(event, file, selectedFiles, dispatch)}
-                    handleContextMenu={(event: any) => handleContextMenuClick(event, file, selectedFiles, dispatch)}
+                    file={folder}
+                    handleClick={(event: any) => handleClick(event, folder, selectedFiles, dispatch)}
+                    handleContextMenu={(event: any) => handleContextMenuClick(event, folder, selectedFiles, dispatch)}
                     onKeyDown={(event: any) => handleKeyDown(event, filesArray, selectedFiles, dispatch)}
-                    onDoubleClick={(event: any) => handleDoubleClick(event, file, history, dispatch)}
+                    onDoubleClick={(event: any) => handleDoubleClick(event, folder, history, dispatch)}
                     index={index}
                     isSelected={isItemSelected}
                 />
@@ -44,7 +44,8 @@ const MyDriveGrid: React.FC<props> = ({ filesArray, isLoading }) => {
         return <></>;
     });
 
-    const files = filesArray.map((file, index) => {
+    const files = filesArray.map((tempFile, index) => {
+        const file = tempFile.state ? tempFile.state : tempFile;
         const isItemSelected = isSelected(file, selectedFiles);
         if (file.type === 'file')
             return (
@@ -60,6 +61,8 @@ const MyDriveGrid: React.FC<props> = ({ filesArray, isLoading }) => {
             );
         return <></>;
     });
+
+    console.log(filesArray);
 
     return (
         <SBox>

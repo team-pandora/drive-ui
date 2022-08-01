@@ -35,8 +35,8 @@ const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
     // let endIndex = 22;
     const bring = 22;
 
-    const [order, setOrder] = useState<Order>('asc');
-    const [orderBy, setOrderBy] = useState<keyof MyDriveI>('owner');
+    const [order, setOrder] = useState<Order>('desc');
+    const [orderBy, setOrderBy] = useState<keyof MyDriveI>('fsObjectUpdatedAt');
     const [page, setPage] = useState(0);
     const rowsPerPage = 100;
 
@@ -108,19 +108,6 @@ const MyDriveTable: React.FC<props> = ({ filesArray, isLoading }) => {
     const onScroll = (event: any) => {
         // console.log(event.currentTarget.scrollTop, event.currentTarget.clientHeight);
     };
-
-    if (!isLoading && !filesArray.length) {
-        return (
-            <NoFilesBox>
-                <NoFiles
-                    message={i18next.t('noFilesMessages.myDrive.message')}
-                    subMessage={i18next.t('noFilesMessages.myDrive.subMessage')}
-                >
-                    <MyDriveIcon />
-                </NoFiles>
-            </NoFilesBox>
-        );
-    }
 
     return (
         <Box sx={{ width: '100%', height: '100%' }} onContextMenu={backgroundMainMenuClick}>

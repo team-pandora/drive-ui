@@ -8,7 +8,6 @@ import { globalActions } from '../../store/global';
 import { notificationsActions } from '../../store/notifications';
 import { popupActions } from '../../store/popups';
 import { getSelectedFilesIds, selectGetFilesFunc } from '../../utils/files';
-import RenamePopup from '../popups/renamePopup';
 import { Copy } from './buttons/Copy';
 import Download from './buttons/Download';
 import Favorite from './buttons/Favorite';
@@ -67,7 +66,7 @@ const ContextMenu: React.FC<props> = ({ page }) => {
                 (function (ind) {
                     setTimeout(function () {
                         download(selectedFiles[ind]);
-                    }, 100 * ind);
+                    }, 500 * ind);
                 })(i);
             }
         } catch (error) {
@@ -151,7 +150,7 @@ const ContextMenu: React.FC<props> = ({ page }) => {
                 {selectedFiles.length === 1 && <Rename handleClick={handleRename} />}
                 <Divider />
                 <Info handleClose={handleClose} disabled={selectedFiles.length !== 1} />
-                <Download handleClose={handleDownload} />
+                <Download handleClick={handleDownload} />
                 <Divider />
                 <Remove handleClick={handleRemove} />
             </MenuList>

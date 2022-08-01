@@ -11,8 +11,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getFiles, handleDropFile } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids/index';
+import NoFiles from '../components/fileView/NoFiles';
 import Table from '../components/fileView/tables/MyDrive';
-import RenamePopup from '../components/popups/renamePopup/RenamePopup';
+import { MyDriveIcon, NoFilesBox } from '../components/fileView/tables/NoFilesElements';
 import SimpleSnackbar from '../components/snackbars/simple';
 import StatusSnackbar from '../components/snackbars/status';
 import { useFiles } from '../hooks/useFiles';
@@ -40,12 +41,6 @@ const MyDrive = () => {
     if (parentFolderId === 'null') {
         dispatch(filesActions.setHierarchy({ type: 'clear' }));
     }
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-        }
-    };
 
     useEffect(() => {
         return history.listen((location) => {
@@ -78,7 +73,6 @@ const MyDrive = () => {
         >
             <CircularProgress />
         </Stack>
-        // <></>
     );
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
@@ -86,37 +80,58 @@ const MyDrive = () => {
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });
-    return (
-        <>
+
+    if (!isLoading && !files.length) {
+        return (
             <Box
-                sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+                sx={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxHeight: 800,
+                }}
                 onDragStart={(event) => event.preventDefault()}
-                flex={4}
-                p={2}
-                style={{}}
-                {...getRootProps()} // causes browser to crash on enter/space when focused on my drive
             >
-                <input {...getInputProps()} />
-                <TableMenuHeader title={i18next.t('titles.MyDrive')} />
-                {isLoading ? (
-                    loadingAnimation
-                ) : isGridView ? (
-                    <Grid filesArray={files} isLoading={isLoading} />
-                ) : (
-                    <Table filesArray={files} isLoading={isLoading} />
-                )}
-                <ToastContainer position="bottom-right" />
-                {isDragActive && (
-                    <Snackbar
-                        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                        open={true}
-                        message={`${i18next.t('messages.DragFilesHere')}`}
-                    ></Snackbar>
-                )}
-                <SimpleSnackbar />
-                <StatusSnackbar />
+                <NoFilesBox>
+                    <NoFiles
+                        message={i18next.t('noFilesMessages.myDrive.message')}
+                        subMessage={i18next.t('noFilesMessages.myDrive.subMessage')}
+                    >
+                        <MyDriveIcon />
+                    </NoFiles>
+                </NoFilesBox>
             </Box>
-        </>
+        );
+    }
+
+    return (
+        <Box
+            sx={{ userSelect: 'none', outline: 'none', border: 'none' }}
+            onDragStart={(event) => event.preventDefault()}
+            flex={4}
+            p={2}
+            style={{}}
+            {...getRootProps()} // causes browser to crash on enter/space when focused on my drive
+        >
+            <input {...getInputProps()} />
+            <TableMenuHeader title={i18next.t('titles.MyDrive')} />
+            {isLoading ? (
+                loadingAnimation
+            ) : isGridView ? (
+                <Grid filesArray={files} isLoading={isLoading} />
+            ) : (
+                <Table filesArray={files} isLoading={isLoading} />
+            )}
+            <ToastContainer position="bottom-right" />
+            {isDragActive && (
+                <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                    open={true}
+                    message={`${i18next.t('messages.DragFilesHere')}`}
+                ></Snackbar>
+            )}
+        </Box>
     );
 };
 
