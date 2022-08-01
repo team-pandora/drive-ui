@@ -12,6 +12,7 @@ const FooterContent = styled(Box)({
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
+    caretColor: 'transparent',
 });
 
 const FooterButton = styled(Button)({
@@ -23,11 +24,13 @@ const FooterButton = styled(Button)({
     '&:hover': {
         backgroundColor: '#1a73e8',
     },
+    caretColor: 'transparent',
 });
 
 const NewFolderButton = styled(CreateNewFolderIcon)({
     color: 'gray',
     cursor: 'pointer',
+    caretColor: 'transparent',
 });
 
 type props = {
@@ -59,15 +62,18 @@ const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectIds }) =
     }
 
     const storeFolderId = useSelector((state: any) => state.popups.navigationSelectedFolder);
+
     const [folderId, setFolderId] = useState<any>('');
 
     const handleClick = async () => {
         for await (const fsObjectId of fsObjectIds) {
             const file = await getFile(fsObjectId);
+
             if (action === 'shortcut')
                 createShortcut(fsObjectId, `Shortcut to ${file.name}`, folderId === null ? parent : folderId);
             else if (action === 'move') move(fsObjectId, folderId === null ? parent : folderId, file.type);
-            else if (action === 'copy') copy(fsObjectId, `Copy of ${file.name}`, folderId === null ? parent : folderId);
+            else if (action === 'copy')
+                copy(fsObjectId, `Copy of ${file.name}`, folderId === null ? parent : folderId, file.size);
         }
 
         dispatch(popupActions.setNavigation());
@@ -92,11 +98,12 @@ const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectIds }) =
                     display: 'flex',
                     height: '60px',
                     padding: '0 10px',
+                    caretColor: 'transparent',
                 }}
             >
                 <FooterContent>
                     {!displayNewFolder && <NewFolderButton onClick={handleNewFolderClick} />}
-                    <FooterButton onClick={handleClick} sx={{ margin: footerButtonMargin }}>
+                    <FooterButton disableRipple onClick={handleClick} sx={{ margin: footerButtonMargin }}>
                         <span style={{ textTransform: 'capitalize' }}>{footerButtonContent}</span>
                     </FooterButton>
                 </FooterContent>

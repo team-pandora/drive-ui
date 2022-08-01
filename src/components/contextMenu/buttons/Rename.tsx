@@ -1,5 +1,5 @@
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import { ListItemIcon, ListItemText, MenuItem } from '@mui/material';
+import { ListItemIcon, ListItemText, MenuItem, Typography } from '@mui/material';
 import i18next from 'i18next';
 import RenamePopup from '../../popups/renamePopup';
 
@@ -13,6 +13,7 @@ const Rename: React.FC<props> = ({ handleClick }) => {
                     <BorderColorOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText>{`${i18next.t('contextMenu.Rename')}`}</ListItemText>
+                <Typography sx={{ color: '#757575', fontWeight: '300', fontSize: '14px' }}>F2</Typography>
             </MenuItem>
             <RenamePopup />
         </>

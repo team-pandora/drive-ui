@@ -11,7 +11,7 @@ import AvatarList from '../../layout/AvatarList';
 import { InfoProperties } from './InfoProperties';
 import { InfoValues } from './InfoValues';
 
-const sharedUserLimit = 6;
+const sharedUserLimit = 7;
 
 const Info = styled(Box)({
     width: '100%',
@@ -117,7 +117,7 @@ const InfoPopup: React.FC<props> = ({ owner, users }) => {
                 {users.slice(0, sharedUserLimit).map((user: { name: string; mail: string; color: string }) => {
                     return <UserAvatar name={user.name} mail={user.mail} color={user.color} isDisabled={false} />;
                 })}
-                {<AvatarList name={`+`} color={''} extraUsers={users.slice(8, users.length)} />}
+                {users.length > 7 && <AvatarList name={`...`} color={''} extraUsers={users.slice(8, users.length)} />}
             </InfoAccess>
             <SButton
                 variant="text"

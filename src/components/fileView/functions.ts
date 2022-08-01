@@ -71,6 +71,8 @@ export const handleKeyDown = async (event: any, files: any, selectedFiles: any, 
         const newIndex =
             files.indexOf(selectedFiles[0]) + 1 < files.length ? files.indexOf(selectedFiles[0]) + 1 : files.length - 1;
         dispatch(filesActions.setSelected([files[newIndex]]));
+    } else if (event.key === 'F2') {
+        dispatch(popupActions.setRename());
     }
 };
 

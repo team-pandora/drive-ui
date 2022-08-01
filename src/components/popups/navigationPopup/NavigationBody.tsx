@@ -14,22 +14,25 @@ const NavigationBodyBox = styled(Box)({
     justifyContent: 'space-between',
     '& .MuiListItem-root': {
         paddingRight: '11px',
+        caretColor: 'transparent',
     },
     overflow: 'auto',
+    caretColor: 'transparent',
 });
 
 type props = {
     parent: string | undefined | null;
     setParent: any;
     files: any;
+    fsObjectIds: string[];
 };
 
-const NavigationBody: React.FC<props> = ({ parent, setParent, files }) => {
+const NavigationBody: React.FC<props> = ({ parent, setParent, files, fsObjectIds }) => {
     const dir = i18next.dir(i18next.language);
     if (parent === undefined) return <NavigationRootBody setParent={setParent}></NavigationRootBody>;
 
     const dispatch = useDispatch();
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(-1);
 
     const handleListItemClick = (event: React.MouseEvent, index: number) => {
         dispatch(popupActions.setNavigationSelectedFolder(files[index].fsObjectId));
@@ -96,6 +99,7 @@ const NavigationBody: React.FC<props> = ({ parent, setParent, files }) => {
                     '& .MuiListItem-root.Mui-selected:hover': {
                         backgroundColor: '#4d90fe',
                     },
+                    caretColor: 'transparent',
                 }}
             >
                 {formattedFiles}
