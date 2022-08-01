@@ -12,7 +12,8 @@ import { Box, Divider, IconButton, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { moveToTrash, restoreFile } from '../api/files';
+import { restoreFile } from '../api/files';
+import { handleRemoveFiles } from '../functions/apiHandlers';
 import { filesActions } from '../store/files';
 import { globalActions } from '../store/global';
 import { notificationsActions } from '../store/notifications';
@@ -57,22 +58,7 @@ const HeaderMenu: React.FC<props> = ({ page }) => {
         if (page === i18next.t('titles.Trash')) {
             dispatch(popupActions.setRemove());
         } else {
-            try {
-                await Promise.all(selectedFiles.map(moveToTrash));
-
-                const message =
-                    selectedFiles.length === 1
-                        ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                        : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-                dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
-                dispatch(notificationsActions.setSimpleOpen(message));
-            } catch (error) {
-                const message =
-                    selectedFiles.length === 1
-                        ? `${i18next.t('messages.FailedDeletingFile')}`
-                        : `${i18next.t('messages.FailedDeletingFiles')}`;
-                toast.error(message);
-            }
+            handleRemoveFiles(selectedFiles, dispatch);
         }
     };
 

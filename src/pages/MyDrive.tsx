@@ -8,14 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getFiles, handleDropFile } from '../api/files';
+import { getFiles } from '../api/files';
 import TableMenuHeader from '../components/BreadCrumbs';
 import Grid from '../components/fileView/grids/index';
 import NoFiles from '../components/fileView/NoFiles';
 import Table from '../components/fileView/tables/MyDrive';
 import { MyDriveIcon, NoFilesBox } from '../components/fileView/tables/NoFilesElements';
-import SimpleSnackbar from '../components/snackbars/simple';
-import StatusSnackbar from '../components/snackbars/status';
+import { handleUploadFiles } from '../functions/apiHandlers';
 import { useFiles } from '../hooks/useFiles';
 import { filesActions } from '../store/files';
 
@@ -76,7 +75,7 @@ const MyDrive = () => {
     );
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
-        handleDropFile(parentFolderId, dispatch, acceptedFiles, history);
+        handleUploadFiles(parentFolderId, dispatch, acceptedFiles, history);
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, noClick: true });

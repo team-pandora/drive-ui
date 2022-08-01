@@ -1,8 +1,11 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
+import i18next from 'i18next';
+import { toast } from 'react-toastify';
 import { filesActions } from '../store/files';
 import { notificationsActions } from '../store/notifications';
-import { getRootPath } from '../utils/files';
+import { getRootPath, selectGetFilesFunc } from '../utils/files';
 import { checkIfRecent } from '../utils/time';
 /* eslint-disable consistent-return */
 
@@ -103,10 +106,12 @@ export const download = async (file: any) => {
 // };
 
 export const createFolder = async (name: string, parent: string | null | undefined) => {
-    await axios.post('/api/users/fs/folder', {
-        name,
-        parent,
-    });
+    return (
+        await axios.post('/api/users/fs/folder', {
+            name,
+            parent,
+        })
+    ).data;
 };
 
 export const RenameFile = async (file: any, newName: string) => {
@@ -193,27 +198,6 @@ export const getFullPath = async (fsObjectId: string) => {
 
 export const generateShareLink = async (fsObjectId: string, permission: string, expirationInSec: number) => {
     return axios.post(`/api/users/fs/${fsObjectId}/share/token`, { permission, expirationInSec });
-};
-
-export const handleDropFile = (parentFolderId: string, dispatch: any, acceptedFiles: string[], history: any) => {
-    if (parentFolderId === 'null') history.push('/my-drive');
-    const filesWithStatus = acceptedFiles.map((file: any) => {
-        return { name: file.name, status: 'uploading' };
-    });
-
-    dispatch(filesActions.setUploaded(filesWithStatus));
-    dispatch(notificationsActions.setUploadOpen());
-
-    for (const file of acceptedFiles) {
-        uploadFile(file, parentFolderId)
-            .then(async () => {
-                dispatch(filesActions.setFiles(await getFiles(parentFolderId)));
-                dispatch(filesActions.setUploadedDone(file));
-            })
-            .catch(() => {
-                dispatch(filesActions.setUploadedFailed(file));
-            });
-    }
 };
 
 export const fetchFiles = async (parent: string, limit: number, pageParam: number) => {

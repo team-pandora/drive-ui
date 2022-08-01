@@ -1,7 +1,7 @@
-import { handleRemoveFiles } from '../../functions/apiHandlers';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import { popupActions } from '../../store/popups';
+import { filesActions } from '../store/files';
+import { globalActions } from '../store/global';
+import { popupActions } from '../store/popups';
+import { handleRemoveFiles } from './apiHandlers';
 
 export const handleClick = (event: React.MouseEvent<unknown>, file: any, selectedFiles: any, dispatch: any) => {
     const selectedIndex = selectedFiles.indexOf(file);
@@ -73,8 +73,4 @@ export const handleDoubleClick = async (event: any, file: any, history: any, dis
         history.push(`/folder/${file.fsObjectId}`);
         dispatch(filesActions.setSelected([]));
     }
-};
-
-export const isSelected = (file: any, selectedFiles: any) => {
-    return selectedFiles.some((fileObject: any) => fileObject === file);
 };

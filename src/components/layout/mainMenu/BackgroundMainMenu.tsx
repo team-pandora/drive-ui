@@ -3,14 +3,14 @@
 import { CreateNewFolderOutlined, DriveFolderUpload, UploadFile } from '@mui/icons-material';
 import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { handleDropFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
 import Word from '../../../assets/Word.png';
+import { handleUploadFiles, handleUploadFolder } from '../../../functions/apiHandlers';
 import { globalActions } from '../../../store/global';
 import { popupActions } from '../../../store/popups';
 import NewFolderPopup from '../../popups/newFolderPopup';
@@ -26,16 +26,15 @@ const BackgroundMainMenu: React.FC<props> = ({ handleClose, showMenu }) => {
     const history = useHistory();
     const dir = i18next.dir(i18next.language);
     const backgroundMenuPosition = useSelector((state: any) => state.global.backgroundMenuPosition);
-    const parentFolderId =
-        window.location.pathname.slice(1).split('/')[0] === 'folder'
-            ? window.location.pathname.slice(1).split('/')[1]
-            : 'null';
-    const onDrop = useCallback(
-        async (acceptedFiles: any) => {
-            handleDropFile(parentFolderId, dispatch, acceptedFiles, history);
-        },
-        [parentFolderId],
-    );
+    const uploadFolderRef = useRef<any>();
+
+    const onDrop = useCallback(async (acceptedFiles: any) => {
+        const parentFolderId =
+            window.location.pathname.slice(1).split('/')[0] === 'folder'
+                ? window.location.pathname.slice(1).split('/')[1]
+                : 'null';
+        handleUploadFiles(parentFolderId, dispatch, acceptedFiles, history);
+    }, []);
 
     const { open } = useDropzone({
         onDrop,
@@ -87,7 +86,24 @@ const BackgroundMainMenu: React.FC<props> = ({ handleClose, showMenu }) => {
                         <UploadFile />
                     </Button>
 
-                    <Button onClick={handleClose} text={`${i18next.t('mainMenu.UploadFolder')}`}>
+                    <Button
+                        onClick={() => {
+                            uploadFolderRef.current?.click();
+                        }}
+                        text={`${i18next.t('mainMenu.UploadFolder')}`}
+                    >
+                        <input
+                            onChange={() => {
+                                handleClose();
+                                handleUploadFolder(Array.from(uploadFolderRef.current?.files));
+                            }}
+                            ref={uploadFolderRef}
+                            type="file"
+                            webkitdirectory=""
+                            directory=""
+                            multiple
+                            hidden
+                        />
                         <DriveFolderUpload />
                     </Button>
 

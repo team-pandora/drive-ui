@@ -50,6 +50,7 @@ const RemoveBody: React.FC = () => {
             .then(async () => {
                 dispatch(filesActions.setFiles(await getTrashFiles()));
                 dispatch(notificationsActions.setSimpleOpen(successMessage));
+                dispatch(filesActions.setSelected([]));
             })
             .catch(handleErrorMsg(errorMessage, 'trash'))
             .finally(() => handleClose());

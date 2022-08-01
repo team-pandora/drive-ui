@@ -7,10 +7,10 @@ import { useCallback, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { handleDropFile } from '../../../api/files';
 import Excel from '../../../assets/Excel.png';
 import PowerPoint from '../../../assets/PowerPoint.png';
 import Word from '../../../assets/Word.png';
+import { handleUploadFiles, handleUploadFolder } from '../../../functions/apiHandlers';
 import { popupActions } from '../../../store/popups';
 import NewFolderPopup from '../../popups/newFolderPopup';
 import Button from './Button';
@@ -25,7 +25,6 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const dir = i18next.dir(i18next.language);
-    const folderInputAttributes: any = { directory: '', webkitdirectory: '' };
     const uploadFolderRef = useRef<any>();
 
     const onDrop = useCallback(async (acceptedFiles: any) => {
@@ -33,7 +32,7 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
             window.location.pathname.slice(1).split('/')[0] === 'folder'
                 ? window.location.pathname.slice(1).split('/')[1]
                 : 'null';
-        handleDropFile(parentFolderId, dispatch, acceptedFiles, history);
+        handleUploadFiles(parentFolderId, dispatch, acceptedFiles, history);
     }, []);
 
     const { open } = useDropzone({
@@ -44,10 +43,6 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
     const handleDialog = () => {
         open();
         handleClose();
-    };
-
-    const handleUploadFolder = () => {
-        uploadFolderRef?.current?.click();
     };
 
     const handleNewFolderDialog = () => {
@@ -84,15 +79,20 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
 
                     <Button
                         onClick={() => {
-                            handleUploadFolder();
+                            handleClose();
+                            uploadFolderRef.current?.click();
                         }}
                         text={`${i18next.t('mainMenu.UploadFolder')}`}
                     >
                         <input
-                            onClick={handleClose}
+                            onChange={() => {
+                                handleUploadFolder(Array.from(uploadFolderRef.current?.files));
+                            }}
                             ref={uploadFolderRef}
                             type="file"
-                            {...folderInputAttributes}
+                            webkitdirectory=""
+                            directory=""
+                            multiple
                             hidden
                         />
                         <DriveFolderUpload />
@@ -117,5 +117,13 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
         </>
     );
 };
+
+declare module 'react' {
+    interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+        // extends React's HTMLAttributes
+        directory?: string; // remember to make these attributes optional....
+        webkitdirectory?: string;
+    }
+}
 
 export default MainMenu;
