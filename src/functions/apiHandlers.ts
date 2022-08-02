@@ -27,7 +27,7 @@ export const handleUploadFiles = (parentFolderId: string, dispatch: any, accepte
     }
 };
 
-export const handleUploadFolder = async (filesArray: any[]) => {
+export const handleUploadFolder = async (filesArray: any[], dispatch: any) => {
     const parentFolderId =
         window.location.pathname.slice(1).split('/')[0] === 'folder'
             ? window.location.pathname.slice(1).split('/')[1]
@@ -55,6 +55,8 @@ export const handleUploadFolder = async (filesArray: any[]) => {
 
         await uploadFile(file, folders[file.webkitRelativePath.substring(0, file.webkitRelativePath.lastIndexOf('/'))]);
     }
+
+    dispatch(filesActions.setFiles(await selectGetFilesFunc()(parentFolderId || 'null')));
 };
 
 export const handleRemoveFiles = async (selectedFiles: any[], dispatch: any) => {

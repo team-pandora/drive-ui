@@ -5,7 +5,13 @@ import { handleRemoveFiles } from './apiHandlers';
 
 export const handleClick = (event: React.MouseEvent<unknown>, file: any, selectedFiles: any, dispatch: any) => {
     const selectedIndex = selectedFiles.indexOf(file);
+    console.log(file);
     let newSelected: readonly string[] = [];
+
+    if (!file) {
+        dispatch(filesActions.setSelected([]));
+        return;
+    }
 
     if (event.ctrlKey) {
         if (selectedIndex === -1) {

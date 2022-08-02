@@ -1,17 +1,20 @@
-import { InsertDriveFile } from '@mui/icons-material';
 import { Box, Paper, styled, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { FavoritesI } from '../../../data/fakedata';
-import { fileSizeFormatter } from '../../../utils/files';
+import {
+    handleClick,
+    handleContextMenuClick,
+    handleDoubleClick,
+    handleKeyDown,
+} from '../../../functions/clickHandlers';
+import { fileSizeFormatter, isSelected } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/FavoritesHeader';
 
 type Order = 'asc' | 'desc';

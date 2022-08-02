@@ -86,7 +86,7 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
                     >
                         <input
                             onChange={() => {
-                                handleUploadFolder(Array.from(uploadFolderRef.current?.files));
+                                handleUploadFolder(Array.from(uploadFolderRef.current?.files), dispatch);
                             }}
                             ref={uploadFolderRef}
                             type="file"

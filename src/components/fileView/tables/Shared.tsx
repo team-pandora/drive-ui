@@ -18,11 +18,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { scrollStyle } from '../../../constants/index';
 import { SharedI } from '../../../data/fakedata';
+import {
+    handleClick,
+    handleContextMenuClick,
+    handleDoubleClick,
+    handleKeyDown,
+} from '../../../functions/clickHandlers';
+import { isSelected } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import getRandomColor, { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
 import TableHeader from '../tableHeaders/SharedHeader';
 
 type Order = 'asc' | 'desc';
@@ -61,7 +67,14 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                     hover
                     onClick={(event) => handleClick(event, file.state, selectedFiles, dispatch)}
                     onContextMenu={(event) => handleContextMenuClick(event, file.state, selectedFiles, dispatch)}
-                    onKeyDown={(event) => handleKeyDown(event, filesArray, selectedFiles, dispatch)}
+                    onKeyDown={(event) =>
+                        handleKeyDown(
+                            event,
+                            filesArray.map((element: any) => element.state),
+                            selectedFiles,
+                            dispatch,
+                        )
+                    }
                     onDoubleClick={(event) => handleDoubleClick(event, file.state, history, dispatch)}
                     role="checkbox"
                     aria-checked={isItemSelected}

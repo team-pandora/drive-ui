@@ -95,7 +95,7 @@ const BackgroundMainMenu: React.FC<props> = ({ handleClose, showMenu }) => {
                         <input
                             onChange={() => {
                                 handleClose();
-                                handleUploadFolder(Array.from(uploadFolderRef.current?.files));
+                                handleUploadFolder(Array.from(uploadFolderRef.current?.files), dispatch);
                             }}
                             ref={uploadFolderRef}
                             type="file"

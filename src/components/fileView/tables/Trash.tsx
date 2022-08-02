@@ -14,21 +14,21 @@ import i18next from 'i18next';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { deleteFile, getTrashFiles } from '../../../api/files';
-import Logo from '../../../assets/empty.svg';
 import { TrashI } from '../../../data/fakedata';
+import {
+    handleClick,
+    handleContextMenuClick,
+    handleDoubleClick,
+    handleKeyDown,
+} from '../../../functions/clickHandlers';
 import { filesActions } from '../../../store/files';
 import { popupActions } from '../../../store/popups';
-import { fileSizeFormatter } from '../../../utils/files';
+import { fileSizeFormatter, isSelected } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import TrashContextMenu from '../../contextMenu/TrashContextMenu';
 import FileType from '../FileType';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/TrashHeader';
-import { NoFilesBox, SLogo } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 

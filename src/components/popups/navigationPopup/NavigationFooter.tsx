@@ -1,10 +1,12 @@
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import { Box, Button, styled } from '@mui/material';
+import i18next from 'i18next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import i18next from 'i18next';
 import { copy, createShortcut, getFile, move } from '../../../api/files';
+import { filesActions } from '../../../store/files';
 import { popupActions } from '../../../store/popups';
+import { selectGetFilesFunc } from '../../../utils/files';
 import NavigationNewFolderPopup from './navigationNewFolder';
 
 const FooterContent = styled(Box)({
@@ -69,13 +71,16 @@ const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectIds }) =
         for await (const fsObjectId of fsObjectIds) {
             const file = await getFile(fsObjectId);
 
-            if (action === 'shortcut')
+            if (action === 'shortcut') {
                 createShortcut(fsObjectId, `Shortcut to ${file.name}`, folderId === null ? parent : folderId);
-            else if (action === 'move') move(fsObjectId, folderId === null ? parent : folderId, file.type);
-            else if (action === 'copy')
+            } else if (action === 'move') {
+                move(fsObjectId, folderId === null ? parent : folderId, file.type);
+            } else if (action === 'copy') {
                 copy(fsObjectId, `Copy of ${file.name}`, folderId === null ? parent : folderId, file.size);
+            }
         }
 
+        dispatch(filesActions.setFiles(await selectGetFilesFunc()((await getFile(fsObjectIds[0])).parent || 'null')));
         dispatch(popupActions.setNavigation());
     };
 
