@@ -36,7 +36,7 @@ const SearchAutoComplete = () => {
             setSearchedUsers(data);
         },
         onError: (error: any) => {
-            toast.error('Failed searching files');
+            toast.error('Failed searching users');
         },
     });
 

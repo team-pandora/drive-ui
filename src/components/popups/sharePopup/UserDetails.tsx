@@ -40,7 +40,7 @@ const UserDetail: React.FC<props> = ({ user }) => {
     };
 
     return (
-        <UserTab sx={{ direction: dir }}>
+        <UserTab key={user.id} sx={{ direction: dir }}>
             <UserAvatar name={user.fullName} mail={user.mail} color={user.color} isDisabled={false} />
             <ListItemText sx={{}}>
                 <Typography variant="body2">{user.fullName}</Typography>

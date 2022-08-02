@@ -38,7 +38,7 @@ const SelectMenu: React.FC<props> = ({ label, menuItems, selectClick }) => {
                 >
                     {menuItems.map((_, index) => {
                         return (
-                            <MenuItem dir={dir} value={menuItems[index]}>
+                            <MenuItem key={index} dir={dir} value={menuItems[index]}>
                                 {menuItems[index]}
                             </MenuItem>
                         );

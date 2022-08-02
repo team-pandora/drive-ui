@@ -11,7 +11,7 @@ const SharePopup = () => {
     };
 
     return (
-        <Grid direction="column">
+        <Grid>
             <Grid item>
                 <ShareUsers isOpen={isOpen} handleChange={handleChange} />
             </Grid>

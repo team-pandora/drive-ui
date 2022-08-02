@@ -3,10 +3,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, IconButton, Menu, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { useState } from 'react';
+import { answersListEn, answersListHe } from '../../../constants/answers';
+import { questionListEn, questionListHe } from '../../../constants/questions';
 
 const Help = () => {
     const dir = i18next.dir(i18next.language);
-
+    const questions = dir === 'ltr' ? questionListEn : questionListHe;
+    const answers = dir === 'ltr' ? answersListEn : answersListHe;
     const [showSettingsMenu, setShowSettingsMenu] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -20,19 +23,18 @@ const Help = () => {
         setShowSettingsMenu(true);
     };
 
-    const arr = [];
-    for (let i = 1; i <= 10; i += 1) {
-        arr.push(
-            <Accordion sx={{ padding: '10px', backgroundColor: '#fff' }} disableGutters>
+    const helpQA = questions.map((question, index) => {
+        return (
+            <Accordion key={index} dir={dir} sx={{ padding: '10px', backgroundColor: '#fff' }} disableGutters>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-                    <Typography sx={{ fontWeight: '500' }}>{`${i18next.t(`Help.Questions.Question${i}`)}`}</Typography>
+                    <Typography sx={{ fontWeight: '500' }}>{question}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>{`${i18next.t(`Help.Answers.Answer${i}`)}`}</Typography>
+                    <Typography>{answers[index]}</Typography>
                 </AccordionDetails>
-            </Accordion>,
+            </Accordion>
         );
-    }
+    });
 
     return (
         <>
@@ -60,7 +62,7 @@ const Help = () => {
                     },
                 }}
             >
-                {arr}
+                {helpQA}
             </Menu>
         </>
     );

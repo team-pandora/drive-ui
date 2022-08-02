@@ -44,8 +44,6 @@ export const scrollStyle = {
         borderWidth: '1px 6px 1px 1px',
         minHeight: '28px',
         padding: '100px 0 0',
-        '-webkit-box-shadow': 'inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%)',
-        boxShadow: 'inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%)',
     },
     '&::-webkit-scrollbar-track': {
         backgroundClip: 'padding-box',

@@ -17,10 +17,10 @@ const Owners = () => {
                 {`${i18next.t('titles.PeopleWithAccess')}`}
             </Typography>
             <OwnersBox sx={{ overflowY: `${filePermissionsData.permittedUsers.length > 3 ? 'scroll' : 'hidden'}` }}>
-                {filePermissionsData.permittedUsers.map((user: any) => {
+                {filePermissionsData.permittedUsers.map((user: any, index: number) => {
                     return (
                         <UserDetail
-                            key={user.user.userId}
+                            key={index}
                             user={{
                                 id: user.state.userId,
                                 fsObjectId: user.state.fsObjectId,
