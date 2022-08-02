@@ -70,7 +70,7 @@ const NavigationBody: React.FC<props> = ({ parent, setParent, files, fsObjectIds
     }, [handleNavigationKeyDown]);
 
     useEffect(() => {
-        if (files.length) dispatch(popupActions.setNavigationSelectedFolder(files[0].fsObjectId));
+        if (files.length) dispatch(popupActions.setNavigationSelectedFolder(null));
     }, [files]);
 
     const formattedFiles = files.map((file: any, index: number) => {
