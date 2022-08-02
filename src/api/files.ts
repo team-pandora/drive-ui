@@ -166,9 +166,9 @@ export const createShortcut = async (fsObjectId: string, name: string, parent: s
     return response.data;
 };
 
-export const move = async (fsObjectId: string, newParent: string, fileType: 'file' | 'folder' | 'shortcut') => {
+export const move = async (fsObjectId: string, newParent: string | null, fileType: 'file' | 'folder' | 'shortcut') => {
     const response = await axios.patch(`/api/users/fs/${fileType}/${fsObjectId}`, {
-        parent: newParent,
+        parent: newParent || null,
     });
     return response.data;
 };
