@@ -1,4 +1,11 @@
 export const fetchNum = 15;
+export const Permissions = {
+    read: 'read',
+    write: 'write',
+    owner: 'owner',
+    removeAccess: 'removeAccess',
+    ownership: 'ownership',
+};
 
 export const EnTimeLimitObject: any = {
     300: '5 min',

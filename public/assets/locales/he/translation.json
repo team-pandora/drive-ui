@@ -113,7 +113,8 @@
     "FailedRestoreFiles": "שגיאה בשחזור הקבצים",
     "SearchHelp": "T חיפוש אנשים לפי שם, מייל או ",
     "PermissionChanged": "הרשאת הגישה עודכנה",
-    "DragFilesHere": "קבצים שמשוחררים כאן ייעול מידיית לכאן"
+    "DragFilesHere": "קבצים שמשוחררים כאן ייעול מידיית לכאן",
+    "RemovePermission": "הגישה הוסרה"
   },
   "noFilesMessages": {
     "myDrive": {

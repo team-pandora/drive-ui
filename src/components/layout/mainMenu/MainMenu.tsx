@@ -79,12 +79,12 @@ const MainMenu: React.FC<props> = ({ handleClose, anchorEl, showMenu }) => {
 
                     <Button
                         onClick={() => {
-                            handleClose();
                             uploadFolderRef.current?.click();
                         }}
                         text={`${i18next.t('mainMenu.UploadFolder')}`}
                     >
                         <input
+                            onClick={handleClose}
                             onChange={() => {
                                 handleUploadFolder(Array.from(uploadFolderRef.current?.files), dispatch);
                             }}
