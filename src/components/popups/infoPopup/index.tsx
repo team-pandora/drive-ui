@@ -13,8 +13,6 @@ interface IUser {
 }
 
 const InfoDialog = () => {
-    // console.log('info');
-
     const dispatch = useDispatch();
     const [owner, setOwner] = useState<IUser | null>();
     const [permittedUsers, setPermittedUsers] = useState<IUser[]>([]);
@@ -27,23 +25,20 @@ const InfoDialog = () => {
     };
 
     useEffect(() => {
-        if (selectedFiles.length) {
+        if (infoPopup) {
             getPermittedUsers(selectedFiles[0].fsObjectId).then((users) => {
                 const tempUsers: IUser[] = [];
-
                 users.forEach((user: any) => {
+                    const tempUser = {
+                        name: user.user.fullName,
+                        mail: user.user.mail,
+                        color: getRandomColor(user.user.fullName),
+                    };
+
                     if (user.state.permission === 'owner') {
-                        setOwner({
-                            name: user.user.fullName,
-                            mail: user.user.mail,
-                            color: getRandomColor(user.user.fullName),
-                        });
+                        setOwner(tempUser);
                     } else {
-                        tempUsers.push({
-                            name: user.user.fullName,
-                            mail: user.user.mail,
-                            color: getRandomColor(user.user.fullName),
-                        });
+                        tempUsers.push(tempUser);
                     }
 
                     setPermittedUsers([...tempUsers]);
