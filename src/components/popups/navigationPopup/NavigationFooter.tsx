@@ -72,11 +72,11 @@ const NavigationFooter: React.FC<props> = ({ parent, fetchFunc, fsObjectIds }) =
             const file = await getFile(fsObjectId);
 
             if (action === 'shortcut') {
-                createShortcut(fsObjectId, `Shortcut to ${file.name}`, folderId === null ? parent : folderId);
+                await createShortcut(fsObjectId, `Shortcut to ${file.name}`, folderId === null ? parent : folderId);
             } else if (action === 'move') {
-                move(fsObjectId, folderId === null ? parent : folderId, file.type);
+                await move(fsObjectId, folderId === null ? parent : folderId, file.type);
             } else if (action === 'copy') {
-                copy(fsObjectId, `Copy of ${file.name}`, folderId === null ? parent : folderId, file.size);
+                await copy(fsObjectId, `Copy of ${file.name}`, folderId === null ? parent : folderId, file.size);
             }
         }
 

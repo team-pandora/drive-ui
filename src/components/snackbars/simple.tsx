@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { SnackbarContent, styled } from '@mui/material';
+import { Slide, SnackbarContent, styled } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import i18next from 'i18next';
@@ -35,12 +35,17 @@ const SimpleSnackbar: React.FC = () => {
     //     </>
     // );
 
+    // function Transition(props: any) {
+    //     return <Slide {...props} direction="up" />;
+    // }
+
     return (
         <Snackbar
             open={open}
             autoHideDuration={3000}
             anchorOrigin={{ vertical: 'bottom', horizontal: dir === 'rtl' ? 'left' : 'right' }}
             onClose={handleClose}
+            // TransitionComponent={Transition}
         >
             <SContent message={content} />
         </Snackbar>

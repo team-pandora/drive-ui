@@ -9,7 +9,7 @@ import { selectGetFilesFunc } from '../utils/files';
 export const handleUploadFiles = (parentFolderId: string, dispatch: any, acceptedFiles: string[], history: any) => {
     if (parentFolderId === 'null') history.push('/my-drive');
     const filesWithStatus = acceptedFiles.map((file: any) => {
-        return { name: file.name, status: 'uploading' };
+        return { name: file.name, type: 'file', status: 'uploading' };
     });
 
     dispatch(filesActions.setUploaded(filesWithStatus));
@@ -35,6 +35,10 @@ export const handleUploadFolder = async (filesArray: any[], dispatch: any) => {
 
     const folders: any = {};
 
+    const mainFolder = { name: filesArray[0].webkitRelativePath.split('/')[0], type: 'folder', status: 'uploading' };
+    dispatch(filesActions.setUploaded([mainFolder]));
+    dispatch(notificationsActions.setUploadOpen());
+
     for (const file of filesArray) {
         let path = file.webkitRelativePath.substring(0, file.webkitRelativePath.lastIndexOf('/'));
         const arr = [];
@@ -56,6 +60,7 @@ export const handleUploadFolder = async (filesArray: any[], dispatch: any) => {
         await uploadFile(file, folders[file.webkitRelativePath.substring(0, file.webkitRelativePath.lastIndexOf('/'))]);
     }
 
+    dispatch(filesActions.setUploadedDone(mainFolder));
     dispatch(filesActions.setFiles(await selectGetFilesFunc()(parentFolderId || 'null')));
 };
 

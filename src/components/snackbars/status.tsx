@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
-import { CircularProgress, Divider, IconButton, List, SnackbarContent } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import { CircularProgress, Divider, Icon, IconButton, List, SnackbarContent } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import i18next from 'i18next';
 import React from 'react';
@@ -67,7 +68,13 @@ const StatusSnackbar: React.FC = () => {
         return (
             <>
                 <SContent
-                    message={file.name}
+                    message={
+                        (
+                            <Icon>
+                                <InsertDriveFileIcon />
+                            </Icon>
+                        ) + file.name
+                    }
                     action={statusAction(file.status)}
                     dir={dir}
                     sx={{ backgroundColor: 'white', color: '#222', borderRadius: '0 0 0 0' }}
