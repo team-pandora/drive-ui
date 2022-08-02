@@ -204,3 +204,7 @@ export const fetchFiles = async (parent: string, limit: number, pageParam: numbe
     const files = await getFiles(parent);
     return files.slice(pageParam, pageParam + limit);
 };
+
+export const updateFsObjectPermission = async (fsObjectId: string, userId: string, permission: string) => {
+    return (await axios.patch(`/api/users/fs/${fsObjectId}/permission`, { userId, permission })).data;
+};

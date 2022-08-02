@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getSharedUsers as searchUsers } from '../../../api/users';
 import { usersActions } from '../../../store/users';
+import getRandomColor from '../../../utils/time';
 
 const AutoCompleteStyle = {
     width: '600px',
@@ -61,10 +62,13 @@ const SearchAutoComplete = () => {
                                 <Grid item xs={2}>
                                     <Avatar
                                         sx={{
-                                            width: '40px',
-                                            height: '40px',
+                                            backgroundColor: getRandomColor(options.fullName),
+                                            width: '32px',
+                                            height: '32px',
                                         }}
-                                    />
+                                    >
+                                        <Typography variant="body1">{options.fullName[0]}</Typography>
+                                    </Avatar>
                                 </Grid>
                                 <Grid item xs={10}>
                                     <Typography variant="body2">{options.fullName}</Typography>
