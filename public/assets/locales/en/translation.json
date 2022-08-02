@@ -113,7 +113,8 @@
     "FailedRestoreFiles": "Failed restoring the files",
     "SearchHelp": "Search for users by name, mail or T",
     "PermissionChanged": "Access updated",
-    "DragFilesHere": "Files that are released here will be immediately optimized here"
+    "DragFilesHere": "Files that are released here will be immediately optimized here",
+    "RemovePermission": "Access removed successfully"
   },
   "noFilesMessages": {
     "myDrive": {

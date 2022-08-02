@@ -1,11 +1,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
-import i18next from 'i18next';
-import { toast } from 'react-toastify';
-import { filesActions } from '../store/files';
-import { notificationsActions } from '../store/notifications';
-import { getRootPath, selectGetFilesFunc } from '../utils/files';
+import { getRootPath } from '../utils/files';
 import { checkIfRecent } from '../utils/time';
 /* eslint-disable consistent-return */
 
@@ -207,4 +203,8 @@ export const fetchFiles = async (parent: string, limit: number, pageParam: numbe
 
 export const updateFsObjectPermission = async (fsObjectId: string, userId: string, permission: string) => {
     return (await axios.patch(`/api/users/fs/${fsObjectId}/permission`, { userId, permission })).data;
+};
+
+export const unshareFsObject = async (fsObjectId: string, sharedUserId: string) => {
+    return (await axios.delete(`/api/users/fs/${fsObjectId}/share`, { data: { sharedUserId } })).data;
 };

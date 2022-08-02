@@ -2,7 +2,8 @@ import { Box, ListItemText, styled, Typography } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch } from 'react-redux';
 import { handleErrorMsg } from '../../../api/error';
-import { updateFsObjectPermission } from '../../../api/files';
+import { unshareFsObject, updateFsObjectPermission } from '../../../api/files';
+import { Permissions } from '../../../constants';
 import { notificationsActions } from '../../../store/notifications';
 import UserAvatar from '../../layout/Avatar';
 import ChangePermissionMenu from './permissions/ChangePermissionMenu';
@@ -21,13 +22,21 @@ const UserDetail: React.FC<props> = ({ user }) => {
     const dir = i18next.dir(i18next.language);
     const dispatch = useDispatch();
 
+    // TODO: refetch permittedUsers (owners file)
     const changePermission = async (newPermission: string) => {
-        updateFsObjectPermission(user.fsObjectId, user.id, newPermission)
-            .then((res) => {
-                // TODO: refetch permittedUsers (owners file)
-                dispatch(notificationsActions.setSimpleOpen(i18next.t('messages.PermissionChanged')));
-            })
-            .catch(handleErrorMsg('Failed patching permission', window.location.pathname.slice(1)));
+        if (newPermission === Permissions.removeAccess) {
+            unshareFsObject(user.fsObjectId, user.id)
+                .then(() => {
+                    dispatch(notificationsActions.setSimpleOpen(i18next.t('messages.RemovePermission')));
+                })
+                .catch(handleErrorMsg('Failed removing access', window.location.pathname.slice(1)));
+        } else {
+            updateFsObjectPermission(user.fsObjectId, user.id, newPermission)
+                .then(() => {
+                    dispatch(notificationsActions.setSimpleOpen(i18next.t('messages.PermissionChanged')));
+                })
+                .catch(handleErrorMsg('Failed changing permission', window.location.pathname.slice(1)));
+        }
     };
 
     return (
