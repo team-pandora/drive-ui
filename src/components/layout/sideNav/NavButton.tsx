@@ -35,6 +35,7 @@ const NavButton: React.FC<props> = ({ path, label, children }) => {
     const iconButtonStyle = {
         backgroundColor: `${children === null ? '#f4f2ed' : 'none'}`,
         borderRadius: `${dir}`,
+        cursor: isActive ? 'default' : 'pointer',
     };
 
     const handleClick = (event: any) => {

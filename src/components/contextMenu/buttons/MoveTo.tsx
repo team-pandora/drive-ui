@@ -6,12 +6,13 @@ import MovePopup from '../../popups/navigationPopup';
 type props = {
     handleClick: () => void;
     fsObjectIds: string[];
+    disabled?: boolean;
 };
 
-const MoveTo: React.FC<props> = ({ handleClick, fsObjectIds }) => {
+const MoveTo: React.FC<props> = ({ handleClick, fsObjectIds, disabled }) => {
     return (
         <>
-            <MenuItem onClick={handleClick}>
+            <MenuItem disabled={disabled} onClick={handleClick}>
                 <ListItemIcon>
                     <DriveFileMoveOutlinedIcon />
                 </ListItemIcon>

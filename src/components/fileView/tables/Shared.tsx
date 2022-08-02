@@ -141,7 +141,7 @@ const SharedTable: React.FC<props> = ({ filesArray, isLoading }) => {
                     </Table>
                 </TableContainer>
             </Paper>
-            <ContextMenu page="Shared" />
+            <ContextMenu disabled={{ moveTo: true }} page="Shared" />
         </Box>
     );
 };

@@ -20,9 +20,20 @@ import Shortcut from './buttons/Shortcut';
 
 type props = {
     page: string;
+    disabled?: {
+        share?: boolean;
+        shortcut?: boolean;
+        moveTo?: boolean;
+        favorites?: boolean;
+        copy?: boolean;
+        rename?: boolean;
+        info?: boolean;
+        download?: boolean;
+        remove?: boolean;
+    };
 };
 
-const ContextMenu: React.FC<props> = ({ page }) => {
+const ContextMenu: React.FC<props> = ({ page, disabled }) => {
     const dir = i18next.dir(i18next.language);
     const dispatch = useDispatch();
     const contextMenu = useSelector((state: any) => state.global.contextMenu);
@@ -141,13 +152,17 @@ const ContextMenu: React.FC<props> = ({ page }) => {
             >
                 <Share handleClick={handleShare} />
                 <Shortcut handleClick={handleShortcut} fsObjectIds={getSelectedFilesIds(selectedFiles)} />
-                <MoveTo handleClick={handleMove} fsObjectIds={getSelectedFilesIds(selectedFiles)} />
+                <MoveTo
+                    handleClick={handleMove}
+                    fsObjectIds={getSelectedFilesIds(selectedFiles)}
+                    disabled={disabled!.moveTo}
+                />
                 <Favorite
                     action={selectedFiles[0]?.favorite ? 'Unfavorite' : 'Favorite'}
                     disabled={!checkFavorites()}
                 />
                 <Copy handleClick={handleCopy} fsObjectIds={getSelectedFilesIds(selectedFiles)} />
-                {selectedFiles.length === 1 && <Rename handleClick={handleRename} />}
+                <Rename handleClick={handleRename} disabled={selectedFiles.length !== 1} />
                 <Divider />
                 <Info handleClose={handleClose} disabled={selectedFiles.length !== 1} />
                 <Download handleClick={handleDownload} />
@@ -156,6 +171,20 @@ const ContextMenu: React.FC<props> = ({ page }) => {
             </MenuList>
         </Menu>
     );
+};
+
+ContextMenu.defaultProps = {
+    disabled: {
+        share: false,
+        shortcut: false,
+        moveTo: false,
+        favorites: false,
+        copy: false,
+        rename: false,
+        info: false,
+        download: false,
+        remove: false,
+    },
 };
 
 export default ContextMenu;

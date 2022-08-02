@@ -3,12 +3,15 @@ import { ListItemIcon, ListItemText, MenuItem, Typography } from '@mui/material'
 import i18next from 'i18next';
 import RenamePopup from '../../popups/renamePopup';
 
-type props = { handleClick: () => void };
+type props = {
+    handleClick: () => void;
+    disabled: boolean;
+};
 
-const Rename: React.FC<props> = ({ handleClick }) => {
+const Rename: React.FC<props> = ({ handleClick, disabled }) => {
     return (
         <>
-            <MenuItem onClick={handleClick} disabled={false}>
+            <MenuItem onClick={handleClick} disabled={disabled}>
                 <ListItemIcon>
                     <BorderColorOutlinedIcon />
                 </ListItemIcon>
