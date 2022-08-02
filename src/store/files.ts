@@ -9,7 +9,6 @@ const filesSlice = createSlice({
         hierarchy: <any>JSON.parse(localStorage.getItem('hierarchy')!) || [],
         lastPopped: {},
         uploaded: <any>[],
-        selectedPermission: 'write',
         parentFolderId:
             window.location.pathname.slice(1).split('/')[0] === 'folder'
                 ? window.location.pathname.slice(1).split('/')[1]
@@ -46,9 +45,6 @@ const filesSlice = createSlice({
         setUploadedFailed: (state, action) => {
             const index = state.uploaded.findIndex((file: any) => file.name === action.payload.name);
             state.uploaded[index].status = 'failed';
-        },
-        setPermission: (state, action) => {
-            state.selectedPermission = action.payload;
         },
         setParentFolderId: (state, action) => {
             state.parentFolderId = action.payload;

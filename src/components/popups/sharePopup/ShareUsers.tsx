@@ -12,11 +12,13 @@ import {
     Zoom,
 } from '@mui/material';
 import i18next from 'i18next';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleErrorMsg } from '../../../api/error';
-import { shareFile } from '../../../api/files';
+import { getPermittedUsers, shareFile } from '../../../api/files';
+import { Permissions } from '../../../constants/index';
 import { notificationsActions } from '../../../store/notifications';
+import { permissionActions } from '../../../store/permissions';
 import { popupActions } from '../../../store/popups';
 import { usersActions } from '../../../store/users';
 import Owners from './Owners';
@@ -32,7 +34,7 @@ const SBox = styled(Box)({
     display: 'flex',
     margin: '0 10px',
     justifyContent: 'flex-end',
-    marginTop: '40px',
+    marginTop: '20px',
 });
 
 const SummaryBoxStyle = styled(Box)({
@@ -54,7 +56,23 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
     const dir = i18next.dir(i18next.language);
     const selectedUsers = useSelector((state: any) => state.users.selectedUsers);
     const selectedFiles = useSelector((state: any) => state.files.selected);
-    const selectedPermission = useSelector((state: any) => state.files.selectedPermission);
+    const selectedPermission = useSelector((state: any) => state.permissions.selectedPermission);
+    const currentUser = useSelector((state: any) => state.users.user);
+
+    useQuery('permittedUsers', () => getPermittedUsers(selectedFiles[0].fsObjectId), {
+        onSuccess: (data) => {
+            dispatch(
+                permissionActions.setFilePermissionsData({
+                    fileId: selectedFiles[0].fsObjectId,
+                    owner: data.find((user: any) => user.state.permission === Permissions.owner),
+                    currentUserPermission: data.find((permission: any) => permission.state.userId === currentUser.id)
+                        .state.permission,
+                    permittedUsers: data,
+                }),
+            );
+        },
+        onError: handleErrorMsg('Failed loading shared users', 'my-drive'),
+    });
 
     const { isLoading, mutateAsync } = useMutation(
         (shareObject: any) => shareFile(shareObject.fsObjectId, shareObject.userId, shareObject.permission),
@@ -126,13 +144,11 @@ const ShareUsers: React.FC<props> = ({ isOpen, handleChange }) => {
 
             <AccordionDetails>
                 <SearchUsers />
-                {selectedUsers.length === 0 && <Owners />}
-                {selectedUsers.length > 0 && (
-                    <SBox>
-                        <SButton onClick={handleClose} variant="text">{`${i18next.t('buttons.Cancel')}`}</SButton>
-                        <SButton onClick={handleClick} variant="contained">{`${i18next.t('buttons.Share')}`}</SButton>
-                    </SBox>
-                )}
+                <Owners />
+                <SBox>
+                    <SButton onClick={handleClose} variant="text">{`${i18next.t('buttons.Cancel')}`}</SButton>
+                    <SButton onClick={handleClick} variant="contained">{`${i18next.t('buttons.Share')}`}</SButton>
+                </SBox>
             </AccordionDetails>
         </Accordion>
     );
