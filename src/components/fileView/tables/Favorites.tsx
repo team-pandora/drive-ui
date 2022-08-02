@@ -5,15 +5,18 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { FavoritesI } from '../../../data/fakedata';
-import { fileSizeFormatter } from '../../../utils/files';
+import {
+    handleClick,
+    handleContextMenuClick,
+    handleDoubleClick,
+    handleKeyDown,
+} from '../../../functions/clickHandlers';
+import { fileSizeFormatter, isSelected } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import FileType from '../FileType';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
-import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/FavoritesHeader';
-import { NoFilesBox, StarredIcon } from './NoFilesElements';
 
 type Order = 'asc' | 'desc';
 

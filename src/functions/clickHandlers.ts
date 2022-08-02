@@ -1,18 +1,17 @@
-import i18next from 'i18next';
-import { toast } from 'react-toastify';
-import { moveToTrash } from '../../api/files';
-// import { useDispatch } from 'react-redux';
-import { filesActions } from '../../store/files';
-import { globalActions } from '../../store/global';
-import { notificationsActions } from '../../store/notifications';
-import { popupActions } from '../../store/popups';
-import { selectGetFilesFunc } from '../../utils/files';
-
-// const dispatch = useDispatch();
+import { filesActions } from '../store/files';
+import { globalActions } from '../store/global';
+import { popupActions } from '../store/popups';
+import { handleRemoveFiles } from './apiHandlers';
 
 export const handleClick = (event: React.MouseEvent<unknown>, file: any, selectedFiles: any, dispatch: any) => {
     const selectedIndex = selectedFiles.indexOf(file);
+    console.log(file);
     let newSelected: readonly string[] = [];
+
+    if (!file) {
+        dispatch(filesActions.setSelected([]));
+        return;
+    }
 
     if (event.ctrlKey) {
         if (selectedIndex === -1) {
@@ -41,22 +40,7 @@ export const handleKeyDown = async (event: any, files: any, selectedFiles: any, 
         if (url === 'trash') {
             dispatch(popupActions.setRemove());
         } else {
-            try {
-                await Promise.all(selectedFiles.map(moveToTrash));
-
-                const message =
-                    selectedFiles.length === 1
-                        ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                        : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-                dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
-                dispatch(notificationsActions.setSimpleOpen(message));
-            } catch (error) {
-                const message =
-                    selectedFiles.length === 1
-                        ? `${i18next.t('messages.FailedDeletingFile')}`
-                        : `${i18next.t('messages.FailedDeletingFiles')}`;
-                toast.error(message);
-            }
+            handleRemoveFiles(selectedFiles, dispatch);
         }
     } else if (event.key === 'Escape') {
         dispatch(filesActions.setSelected([]));
@@ -71,8 +55,6 @@ export const handleKeyDown = async (event: any, files: any, selectedFiles: any, 
         const newIndex =
             files.indexOf(selectedFiles[0]) + 1 < files.length ? files.indexOf(selectedFiles[0]) + 1 : files.length - 1;
         dispatch(filesActions.setSelected([files[newIndex]]));
-    } else if (event.key === 'F2') {
-        dispatch(popupActions.setRename());
     }
 };
 
@@ -97,8 +79,4 @@ export const handleDoubleClick = async (event: any, file: any, history: any, dis
         history.push(`/folder/${file.fsObjectId}`);
         dispatch(filesActions.setSelected([]));
     }
-};
-
-export const isSelected = (file: any, selectedFiles: any) => {
-    return selectedFiles.some((fileObject: any) => fileObject === file);
 };

@@ -2,8 +2,14 @@ import { Box, Grid, styled } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import {
+    handleClick,
+    handleContextMenuClick,
+    handleDoubleClick,
+    handleKeyDown,
+} from '../../../functions/clickHandlers';
+import { isSelected } from '../../../utils/files';
 import ContextMenu from '../../contextMenu/ContextMenu';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
 import GridHeader from './GridHeader';
 import GridObject from './GridObject';
 

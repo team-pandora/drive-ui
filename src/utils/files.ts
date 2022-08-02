@@ -65,3 +65,7 @@ export const getSelectedFilesIds = (files: any) => {
         return file.fsObjectId;
     });
 };
+
+export const isSelected = (file: any, selectedFiles: any) => {
+    return selectedFiles.some((fileObject: any) => fileObject === file);
+};

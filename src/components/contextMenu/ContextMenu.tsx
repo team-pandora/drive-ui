@@ -2,12 +2,11 @@ import { Divider, Menu, MenuList } from '@mui/material';
 import i18next from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { download, moveToTrash } from '../../api/files';
-import { filesActions } from '../../store/files';
+import { download } from '../../api/files';
+import { handleRemoveFiles } from '../../functions/apiHandlers';
 import { globalActions } from '../../store/global';
-import { notificationsActions } from '../../store/notifications';
 import { popupActions } from '../../store/popups';
-import { getSelectedFilesIds, selectGetFilesFunc } from '../../utils/files';
+import { getSelectedFilesIds } from '../../utils/files';
 import { Copy } from './buttons/Copy';
 import Download from './buttons/Download';
 import Favorite from './buttons/Favorite';
@@ -45,24 +44,8 @@ const ContextMenu: React.FC<props> = ({ page, disabled }) => {
     };
 
     const handleRemove = async () => {
-        try {
-            await Promise.all(selectedFiles.map(moveToTrash));
-
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FileDeletedSuccessfully')}`
-                    : `${i18next.t('messages.FilesDeletedSuccessfully')}`;
-            dispatch(filesActions.setFiles(await selectGetFilesFunc()(selectedFiles[0].parent)));
-            dispatch(notificationsActions.setSimpleOpen(message));
-        } catch (error) {
-            const message =
-                selectedFiles.length === 1
-                    ? `${i18next.t('messages.FailedDeletingFile')}`
-                    : `${i18next.t('messages.FailedDeletingFiles')}`;
-            toast.error(message);
-        } finally {
-            handleClose();
-        }
+        handleRemoveFiles(selectedFiles, dispatch);
+        handleClose();
     };
 
     const handleRename = () => {

@@ -8,14 +8,19 @@ import { useHistory, useParams } from 'react-router-dom';
 import { fetchFiles } from '../../../api/files';
 import { fetchNum, scrollStyle } from '../../../constants/index';
 import { MyDriveI } from '../../../data/fakedata';
+import {
+    handleClick,
+    handleContextMenuClick,
+    handleDoubleClick,
+    handleKeyDown,
+} from '../../../functions/clickHandlers';
 import { globalActions } from '../../../store/global';
-import { fileSizeFormatter } from '../../../utils/files';
+import { fileSizeFormatter, isSelected } from '../../../utils/files';
 import { getComparator, stableSort } from '../../../utils/sort';
 import { ISOStringToDateString } from '../../../utils/time';
 import ContextMenu from '../../contextMenu/ContextMenu';
 import BackgroundMainMenu from '../../layout/mainMenu/BackgroundMainMenu';
 import FileType from '../FileType';
-import { handleClick, handleContextMenuClick, handleDoubleClick, handleKeyDown, isSelected } from '../functions';
 import NoFiles from '../NoFiles';
 import TableHeader from '../tableHeaders/MyDriveHeader';
 import { MyDriveIcon, NoFilesBox } from './NoFilesElements';
